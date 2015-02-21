@@ -1,0 +1,180 @@
+.banner {
+    background-color: #555;
+    position: fixed;
+    right: 0px;
+    left: 0px;
+    background-image: 
+        /* Top jagged */
+        linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%),
+        linear-gradient(-135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%),
+        /* Bottom jagged */
+        linear-gradient(45deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%),
+        linear-gradient(-45deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%),
+        /* Top and bottom fade  */
+        linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%),
+        linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%);
+
+    background-position:
+        /* Top jagged */
+        top center, top center,
+        /* Bottom jagged */
+        bottom center, bottom center,
+        /* Top fade */
+        top center,
+        /* Bottom fade */
+        bottom center;
+    background-size:
+        /* Top + bottom jagged */
+        0.75rem 0.75rem, 0.75rem 0.75rem, 0.75rem 0.75rem, 0.75rem 0.75rem,
+        /* Top + bottom fade */
+        100% 1rem, 100% 1rem;
+    background-repeat: repeat-x;
+    color: #ccc;
+    /*font-family: Montserrat, Helvetica Neue, Helvetica, Arial, sans-serif;*/
+    /*letter-spacing: 1px;*/
+    /*margin: 0 -1rem 2rem;*/
+    padding: 3rem 0;
+    /*position: center;*/
+    /*text-align: center;*/
+    transition: all .25s ease-in-out;
+  
+  &.clear-side {
+    background-color: #555;
+    background-image:
+        /* Top jagged */
+        linear-gradient(135deg, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%),
+        linear-gradient(-135deg, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%),
+        /* Bottom jagged */
+        linear-gradient(45deg, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%),
+        linear-gradient(-45deg, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%),
+        /* Top and bottom fade  */
+        linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%),
+        linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%),
+        /* Sides */
+        linear-gradient(90deg, rgba(200,200,200,1) 2%, rgba(200,200,200,0) 2%, rgba(200,200,200,0) 97%, rgba(200,200,200,1) 97%);
+    background-position:
+        /* Top jagged */
+        top center, top center,
+        /* Bottom jagged */
+        bottom center, bottom center,
+        /* Top fade */
+        top center,
+        /* Bottom fade */
+        bottom center,
+        /* Sides */
+        center center;
+    background-size:
+        /* Top + bottom jagged */
+        0.75rem 0.75rem, 0.75rem 0.75rem, 0.75rem 0.75rem, 0.75rem 0.75rem,
+        /* Top + bottom fade */
+        100% 1rem, 100% 1rem,
+        /* Sides */
+        100% 100%;
+    background-repeat:
+        /* All jagged and fade */
+        repeat-x, repeat-x, repeat-x, repeat-x, repeat-x, repeat-x,
+        /* Sides */
+        repeat-y;    
+  }
+}
+
+#bImage {
+    position:relative;
+    height: 90px;
+    margin-left:10px;
+    background:url("images/logo_small.png");
+    background-repeat: no-repeat;
+}
+
+#bText  {
+    vertical-align: middle;
+    color: #ccc;
+    font-family: Montserrat, Helvetica Neue, Helvetica, Arial, sans-serif;
+    letter-spacing: 1px;
+    margin-left:110px;
+    font-size: 200%;
+    position:absolute;
+    top: 25px;
+}
+
+#LeftNavBarTop > ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.Navigation    {
+    list-style-type: none;
+    position:fixed;
+    top: 85px;
+    margin-left:60px;
+}
+
+li.navItem {
+    display: inline;
+    margin: 10px;
+    float: left;
+}
+
+a.navHyper {
+    display: block;
+    color: #FFFFCC;
+}
+
+a.navHyper:link {
+    text-decoration: none;
+}
+
+a.navHyper:hover {
+    color: #008AE6;
+}
+
+#SearchBar  {
+    margin-left:600px;
+}
+
+input[type=search]  {
+    border-radius:5px;
+    color: #ccc;
+    height: 20px;
+    border: 0;
+    background:url("images/magGlass.png");
+    background-position:right center;
+    background-repeat: no-repeat;
+    background-color: #1A1A1A;
+}
+
+p
+{
+	border: 2px solid;
+	border-radius: 5px;
+	border-color: #929292;
+	background-color: #e0ffff;
+    text-align:justify;
+	color: #666666;
+    font-family:"Times New Roman", Times, serif;
+	max-width: 600px;
+}
+
+
+body
+{
+	/*min-height: 600px;
+    background-image: url("images/logo_main.png");
+    background-repeat: no-repeat;
+    background-position: right bottom;*/
+    background-color: #fefefe;
+}
+
+
+
+
+
+
+/*http://geektnt.com/how-to-remove-x-from-search-input-field-on-chrome-and-ie.html*/
+input[type=text]::-ms-clear {  display: none; width : 0; height: 0; }
+input[type=text]::-ms-reveal {  display: none; width : 0; height: 0; }
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration { display: none; }

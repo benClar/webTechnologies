@@ -1,0 +1,45 @@
+<!DOCTYPE html5>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+	<script src="scripts.js"></script>
+	<link rel="stylesheet" type="style/css" href="mainStyle.css"/>
+</head>
+<div class="banner">
+    <div id="bImage"> 
+    	<div id="bText">learnHistory</div>
+    	<div id="Navigation">
+    		<ul>
+  				<li><a href="./page1.html">Parallax</a></li>
+  				<li><a href="news.asp">News</a></li>
+  				<li><a href="contact.asp">Contact</a></li>
+  				<li><a href="about.asp">About</a></li>
+			</ul>
+		</div>
+		<div id="SearchBar"> 
+			<input type="search" style="width:200px" id="inputOne" value="Search LearnHistory.org" />
+		</div>
+    </div>
+ </div>
+<!--<a href="./index.html">
+	<img id ="banner" src="images/Banner_main.png" alt="Banner" style="width:600px;height=228px"/> 
+</a>-->
+
+<body style="background-color:Gainsboro">
+	<h1 style="color:coral"> My First Heading</h1>
+	<p id="main">
+				This is content.This is content.This is content.
+				This is This is content.This is content.This is 
+				content.This is This is content.This is content.
+				This is content.This is This is content.This is content.
+				This is content.This is content. 
+	</p>
+	<button type="button" onclick="changeElement('main','Goodbye World!')"> Change Element</button>
+	<br/>
+	<button type="button" onclick="displayAlert('Alert!')"> Display Alert</button>
+	<br/>
+	<input id="inputOne" value="default text" />
+	<button onclick="compareElement('inputOne','test','comparisonOutput','Correct','Incorrect')">Click to Compare</button>
+	<p id="comparisonOutput">Type test to match</p>
+	<br/>
+</body>
+</html>

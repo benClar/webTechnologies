@@ -1,0 +1,109 @@
+.ArticleList    {
+    position: fixed;
+    left:200px;
+    bottom:0;
+    top:186px;
+    right:0;
+}
+
+.ArticleElement {
+    /*border: 1px solid #0000FF;*/
+    min-height: 57px;
+    padding-bottom: .5cm;
+    padding-top: .5cm;
+}
+
+.ArticleThumbNail   {
+    
+}
+
+.ArticleThumbNail > img {
+    float: left;
+    width:10%;
+    height:57px
+}
+
+.ArticleTitle   {
+    float:left;
+    min-height: 57px;
+    overflow: auto;
+    background-color: #669900;
+    font-family: 'Open Sans', Sans-serif;
+    width: 60%;
+    font-weight: 300;
+    font-size: 20px;
+    color:#FFFFFF;
+}
+
+ul.ArticleKeyWords    {
+    list-style-type: none;
+    font-family: "Arial", Verdana, sans-serif;
+    font-size: 12px;
+    text-transform: capitalize;
+    color:#FFFFFF;
+    margin-left: -40px;
+}
+
+li.keywordItem{
+    float: left;
+    position: relative;
+    top:-12px;
+    padding-right: 20px;
+}
+
+a.keywordHyper{
+    display: block;
+    color: #575757; 
+    background-color: #DADADA;
+    border-radius:3px;
+    width: 120%;
+    height:150%;
+    border: 1px solid #575757;
+    text-align: center;
+}
+
+a.keywordHyper:link {
+    text-decoration: none;
+}
+
+a.keywordHyper:hover {
+    background-color: #AEAEAE;
+}
+
+.ArticleThumbNail > img:hover{
+    transition: opacity 0.3s ease;
+    opacity: 0.3; 
+    filter: alpha(opacity=30);
+}
+
+.ArticleRatings{
+    float:left;
+    width: 30%;
+    min-height: 57px;
+}
+
+.upvotes    {
+    float:left;
+    font-family: 'Open Sans', Sans-serif;
+    font-weight: 600;
+    background-color: #FF9900;
+    color:#FFFFFF; 
+    text-align: center;
+    width: 50%;
+    min-height: 57px;
+}
+
+.downvotes  {
+    float:right;
+    font-family: 'Open Sans', Sans-serif;
+    font-weight: 600;
+    color:#FFFFFF;
+    background-color: #0066FF;
+    width: 50%;
+    min-height: 57px;
+    text-align: center;
+}
+
+html,body {
+    height:100%;
+}
