@@ -1,97 +1,29 @@
 .banner {
-    background-color: #555;
+    background-color: #000000;
     position: fixed;
     right: 0px;
     left: 0px;
-    background-image: 
-        /* Top jagged */
-        linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%),
-        linear-gradient(-135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%),
-        /* Bottom jagged */
-        linear-gradient(45deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%),
-        linear-gradient(-45deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%),
-        /* Top and bottom fade  */
-        linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%),
-        linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%);
 
-    background-position:
-        /* Top jagged */
-        top center, top center,
-        /* Bottom jagged */
-        bottom center, bottom center,
-        /* Top fade */
-        top center,
-        /* Bottom fade */
-        bottom center;
-    background-size:
-        /* Top + bottom jagged */
-        0.75rem 0.75rem, 0.75rem 0.75rem, 0.75rem 0.75rem, 0.75rem 0.75rem,
-        /* Top + bottom fade */
-        100% 1rem, 100% 1rem;
-    background-repeat: repeat-x;
+    
     color: #ccc;
-    /*font-family: Montserrat, Helvetica Neue, Helvetica, Arial, sans-serif;*/
-    /*letter-spacing: 1px;*/
-    /*margin: 0 -1rem 2rem;*/
-    padding: 3rem 0;
-    /*position: center;*/
-    /*text-align: center;*/
-    transition: all .25s ease-in-out;
-  
-  &.clear-side {
-    background-color: #555;
-    background-image:
-        /* Top jagged */
-        linear-gradient(135deg, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%),
-        linear-gradient(-135deg, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%),
-        /* Bottom jagged */
-        linear-gradient(45deg, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%),
-        linear-gradient(-45deg, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%),
-        /* Top and bottom fade  */
-        linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%),
-        linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%),
-        /* Sides */
-        linear-gradient(90deg, rgba(200,200,200,1) 2%, rgba(200,200,200,0) 2%, rgba(200,200,200,0) 97%, rgba(200,200,200,1) 97%);
-    background-position:
-        /* Top jagged */
-        top center, top center,
-        /* Bottom jagged */
-        bottom center, bottom center,
-        /* Top fade */
-        top center,
-        /* Bottom fade */
-        bottom center,
-        /* Sides */
-        center center;
-    background-size:
-        /* Top + bottom jagged */
-        0.75rem 0.75rem, 0.75rem 0.75rem, 0.75rem 0.75rem, 0.75rem 0.75rem,
-        /* Top + bottom fade */
-        100% 1rem, 100% 1rem,
-        /* Sides */
-        100% 100%;
-    background-repeat:
-        /* All jagged and fade */
-        repeat-x, repeat-x, repeat-x, repeat-x, repeat-x, repeat-x,
-        /* Sides */
-        repeat-y;    
-  }
+    padding: 10px 0;
 }
 
 #bImage {
     position:relative;
     height: 90px;
-    margin-left:10px;
+    margin-left:100px;
     background:url("images/logo_small.png");
     background-repeat: no-repeat;
+    background-position: 100px
 }
 
 #bText  {
     vertical-align: middle;
-    color: #ccc;
+    color: #E84319;
     font-family: Montserrat, Helvetica Neue, Helvetica, Arial, sans-serif;
     letter-spacing: 1px;
-    margin-left:110px;
+    left:200px;
     font-size: 200%;
     position:absolute;
     top: 25px;
@@ -104,21 +36,24 @@
 }
 
 ul.Navigation    {
+    font-family: 'Roboto Condensed', sans-serif;
+    float: right;
     list-style-type: none;
-    position:fixed;
-    top: 85px;
-    margin-left:60px;
+    top: 20px;
+    position: relative;
 }
 
 li.navItem {
     display: inline;
-    margin: 10px;
+    padding-right: 50px;
     float: left;
 }
 
 a.navHyper {
     display: block;
-    color: #FFFFCC;
+    color: #FFFFFF;
+    padding:5px;
+    border: 2px solid #FFFFFF;
 }
 
 a.navHyper:link {
@@ -126,22 +61,27 @@ a.navHyper:link {
 }
 
 a.navHyper:hover {
-    color: #008AE6;
+    transition: color 0.3s ease, border-color  0.3s ease;
+    color: #E84319;
+    border: 2px solid #E84319;
 }
 
-#SearchBar  {
-    margin-left:600px;
+.SearchBar  {
+    position: fixed;
+    top: 75px;
+    left:300px;
 }
 
 input[type=search]  {
     border-radius:5px;
-    color: #ccc;
+    color: ##1A1A1A;
     height: 20px;
     border: 0;
     background:url("images/magGlass.png");
     background-position:right center;
     background-repeat: no-repeat;
-    background-color: #1A1A1A;
+    background-color: #A1A1A1;
+
 }
 
 p

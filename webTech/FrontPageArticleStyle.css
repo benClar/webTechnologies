@@ -1,8 +1,9 @@
 .ArticleList    {
     position: fixed;
+    overflow: auto;
     left:200px;
     bottom:0;
-    top:186px;
+    top:130px;
     right:0;
 }
 
@@ -27,7 +28,7 @@
     float:left;
     min-height: 57px;
     overflow: auto;
-    background-color: #669900;
+    background-color: #03a59c;
     font-family: 'Open Sans', Sans-serif;
     width: 60%;
     font-weight: 300;
@@ -86,7 +87,7 @@ a.keywordHyper:hover {
     float:left;
     font-family: 'Open Sans', Sans-serif;
     font-weight: 600;
-    background-color: #FF9900;
+    background-color: #FF5C33;
     color:#FFFFFF; 
     text-align: center;
     width: 50%;
