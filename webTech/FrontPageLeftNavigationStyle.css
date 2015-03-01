@@ -1,20 +1,19 @@
 .leftNavBarNavigation{
     position: absolute;
-    top:0px;
-    left: -15px
-
+    float: left;
+    top:90px;
+    right:30px;
 }
 ul.leftNavBarNavigation {
     list-style-type: none;
     overflow: auto;
-    width: 170px;
-    top:0;
-    display:table-cell;
+    top: 150px; 
+    border: 1px solid #000000;
 }
 
 li.lNavItem {
     display: inline;
-    margin: 10px;
+    margin-left: 10px;
     float: left;
 }
 
@@ -32,13 +31,42 @@ a.lNavHyper:link{
 
 /*http://alistapart.com/article/customunderlines*/
 a.lNavHyper:hover {
-    color: #000000;
+    color: #1e1e1e;
     text-decoration: none;
     background-image: url(images/lNavUnderlineSmall.png);
     background-repeat: repeat-x;
     background-position: 100% 100%; 
     padding-bottom: 4px;
     white-space: nowrap;
+}
+
+
+.createNew  {
+    background-color: #1e1e1e; 
+    position: relative;
+    float: left;
+    top:30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    padding-left: 20px;   
+    font-family: 'Oxygen', sans-serif;
+    font-size: 20px;
+    margin-bottom: 10px;
+    width:150px;
+}
+
+a.createNew {
+    color:#FFFFFF;   
+}
+
+a.createNew:link    {
+    text-decoration: none;
+}
+
+a.createNew:hover{
+    transition: color 0.3s ease;
+    color: #E84319; 
 }
 
 .LeftNavBar {
@@ -55,19 +83,23 @@ a.lNavHyper:hover {
     bottom:0px;
     overflow: auto;
     border-right-width: 2px;
-    border-right-color: #000000;
+    border-right-color: #1e1e1e;
 
 }
 
 #navBarBreak {
-    color: #000000;
-    background-color: #000000;
+    position: relative;
+    color: #1e1e1e;
+    background-color: #1e1e1e;
     height: 4px;
     width:70px;
     border: none;
+    float: left;
+    left: 60px;
 }
 
 .CatListElement {
+    float: left;
     background-color:  #FFFFFF;
     margin-top: .3cm;
     padding-top: .1cm;
@@ -76,7 +108,7 @@ a.lNavHyper:hover {
     margin-left: 5px;
     margin-bottom: .3cm;
     overflow: auto;
-    width: 168px 
+    width: 168px;
 }
 
 .CatInfo    {
@@ -107,8 +139,11 @@ a.lNavHyper:hover {
 
 .leftNavBarSection{
     position: relative;  
-    top: 60px; 
+    top: 130px; 
+    right:0px;
 }
+
+
 
 
 #LeftNavBarContent_MostRecent  {

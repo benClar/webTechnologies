@@ -1,9 +1,9 @@
 .banner {
-    background-color: #000000;
-    position: fixed;
+    background-color: #1e1e1e;
+    position: absolute;
     right: 0px;
     left: 0px;
-
+    top:0px;
     
     color: #ccc;
     padding: 10px 0;
@@ -60,6 +60,10 @@ a.navHyper:link {
     text-decoration: none;
 }
 
+a:link {
+    text-decoration: none;
+}
+
 a.navHyper:hover {
     transition: color 0.3s ease, border-color  0.3s ease;
     color: #E84319;
@@ -74,7 +78,7 @@ a.navHyper:hover {
 
 input[type=search]  {
     border-radius:5px;
-    color: ##1A1A1A;
+    color: #1A1A1A;
     height: 20px;
     border: 0;
     background:url("images/magGlass.png");
@@ -86,14 +90,7 @@ input[type=search]  {
 
 p
 {
-	border: 2px solid;
-	border-radius: 5px;
-	border-color: #929292;
-	background-color: #e0ffff;
     text-align:justify;
-	color: #666666;
-    font-family:"Times New Roman", Times, serif;
-	max-width: 600px;
 }
 
 
@@ -103,7 +100,12 @@ body
     background-image: url("images/logo_main.png");
     background-repeat: no-repeat;
     background-position: right bottom;*/
-    background-color: #fefefe;
+    width:100%;
+    height: 100%;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+    background-color: #e5e5e5; 
 }
 
 
@@ -118,3 +120,239 @@ input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration { display: none; }
+
+@charset "UTF-8";
+@import url(http://fonts.googleapis.com/css?family=Oxygen+Mono);
+
+/*http://cssmenumaker.com/blog/flat-dropdown-menu-tutorial*/
+#cssmenu {
+    padding: 0; 
+    margin: 0; 
+    border: 0;
+}
+
+#cssmenu ul, #cssmenu li {
+    list-style: none; 
+    margin: 0; 
+    padding: 0;
+}
+
+#cssmenu ul {
+    position: relative; 
+    z-index: 597; 
+}
+#cssmenu ul li { 
+    float: left; 
+    min-height: 1px; 
+    vertical-align: middle;
+}
+#cssmenu ul li.hover,
+#cssmenu ul li:hover {
+    position: relative; 
+    z-index: 599; 
+    cursor: default;
+}
+
+#cssmenu ul ul {
+    visibility: hidden; 
+    position: absolute; 
+    top: 100%; left: 0; 
+    z-index: 598; 
+    width: 100%;
+}
+
+#cssmenu ul ul li {
+    float: none;
+}
+#cssmenu ul ul ul {top: 0; 
+    left: auto; 
+    right: -99.5%; 
+}
+
+#cssmenu ul li:hover > ul { 
+    visibility: visible;
+}
+#cssmenu ul ul {
+    bottom: 0; 
+    left: 0;
+}
+#cssmenu ul ul {
+    margin-top: 0; 
+}
+#cssmenu ul ul li {
+    font-weight: normal;
+}
+#cssmenu a { 
+    display: block; 
+    line-height: 1em; 
+    text-decoration: none; 
+}
+
+#cssmenu {
+    background: #1e1e1e;
+    position: absolute;
+    font-family: 'Oxygen Mono', Tahoma, Arial, sans-serif;
+    font-size: 12px; 
+    left: 400px;
+    top:35px;
+    display:none;
+    z-index: 20;
+}
+
+  #cssmenu > ul { *display: inline-block; }
+
+  #cssmenu:after, #cssmenu ul:after {
+    content: '';
+    display: block;
+    clear: both; 
+}
+
+#cssmenu a {
+    background: #1e1e1e;
+    color: #1e1e1e;
+    padding: 0 20px; 
+}
+#cssmenu ul { text-transform: uppercase; }
+
+#cssmenu ul ul {
+    border-top: 4px solid #1e1e1e;
+    text-transform: none;
+    min-width: 70px; 
+}
+
+#cssmenu ul ul a {
+    background: #1e1e1e;
+    color: #FFFFFF;
+    border: 1px solid #1e1e1e;
+    border-top: 0 none;
+    line-height: 150%;
+}
+#cssmenu ul ul ul { 
+    border-top: 0 none; 
+}
+
+#cssmenu ul ul li { 
+    position: relative 
+}
+
+#cssmenu > ul > li > a { }
+
+#cssmenu ul ul li:first-child > a { 
+    border-top: 1px solid #E84319; 
+}
+
+#cssmenu ul ul li:hover > a { 
+    background: #1e1e1e; 
+}
+
+#cssmenu ul ul li:last-child > a {
+    border-radius: 0 0 3px 3px;
+    box-shadow: 0 1px 0 #1e1e1e; 
+}
+#cssmenu ul ul li:last-child:hover > a { 
+    border-radius: 0 0 0 3px; 
+}
+
+#cssmenu ul ul li.has-sub > a:after {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    margin-top: -8px;
+}
+
+#cssmenu ul li:hover > a, #cssmenu ul li.active > a {
+    background: #1e1e1e;
+    color: #03a59c;
+}
+
+#cssmenu ul li.has-sub > a:after {
+}
+
+#cssmenu ul li.last ul {
+    left: auto;
+    right: 0; 
+}
+
+#cssmenu ul li.last ul ul {
+    left: auto;
+    right: 99.5%;
+}
+
+.LogIn{
+    display: none;
+    position: absolute;
+    left: 25%;
+    top: 0%;
+    height: 70%;
+    width: 50%;
+    background-color: #FFFFFF;
+    z-index: 1000;
+    border-radius: 3px 3px 3px 3px;
+    border: 3px solid #FFFFFF; 
+    box-shadow: 0px 0px 20px #1B1B1B;
+    z-index: 1000;
+    color: #03a59c;
+    font-family: 'Oxygen', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    opacity: 0.0;
+}
+
+.blurBackground {
+    position:fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 999;
+    background-color: #000000;
+    min-height:100%;
+    min-width: 100%;
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+    display: none;
+}
+
+.loginHeader    {
+    position: absolute;
+    top: 20px;
+    left: 25%;
+}
+
+#LoginForm  {
+    position: absolute;
+    top:100px;
+    left: 50px;
+
+}
+
+#RegisterForm   {
+    position: absolute;
+    top:100px;
+    right: 50px;
+}
+
+input.LogInContents {
+    border-radius:5px;
+    color: #1A1A1A;
+    height: 20px;
+    border: 1px solid #757575;
+    background-color: #FFFFFF;
+    margin: 10px;
+    box-shadow: 1px 1px 1px #757575 inset;
+}
+
+#closeLogin {
+    background-image: url('./images/lightX.png');
+    background-repeat: no-repeat;
+    height: 27px;
+    width: 21px;
+    position:relative;
+    float: right;
+}
+
+#closeLogin:hover {
+    background-image: url('./images/darkX.png');
+}
+
+
+
+

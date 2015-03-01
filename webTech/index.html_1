@@ -1,10 +1,10 @@
 <!DOCTYPE html5>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
-<head onload="hideElement('cssmenu')">
+<head>
 	<script src="scripts.js"></script>
-	<link rel="stylesheet" type="text/css" href="FrontPageBannerStyle.css"/>
-	<link rel="stylesheet" type="text/css" href="FrontPageArticleStyle.css"/>
-	<link rel="stylesheet" type="text/css" href="FrontPageLeftNavigationStyle.css"/>
+	<link rel="stylesheet" type="style/css" href="FrontPageBannerStyle.css"/>
+	<link rel="stylesheet" type="style/css" href="FrontPageArticleStyle.css"/>
+	<link rel="stylesheet" type="style/css" href="FrontPageLeftNavigationStyle.css"/>
 	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700' rel='stylesheet' type='text/css'/>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'/>
 	<link href='http://fonts.googleapis.com/css?family=Oxygen:700' rel='stylesheet' type='text/css'/>
@@ -12,58 +12,20 @@
 
 <div class="banner">
     <div id="bImage"> 
-    	<a id="bText" href="./index.html">learnHistory</a>
-    		<ul id="wideNavBar" class="Navigation">
-  				<li onclick="showClass('blurBackground'); showClass('LogIn');transitionVerticlePosition('LogIn','10')" class="navItem"><a class="navHyper" href="javascript:void(0)">Log In</a></li>
-  				<li class="navItem"><a class="navHyper" href="./page1.html">About</a></li>
+    	<div id="bText">learnHistory</div>
+    		<ul class="Navigation">
+  				<li class="navItem"><a class="navHyper" href="./page1.html">Log In</a></li>
+  				<li class="navItem"><a class="navHyper" href="./tabTest.html">About</a></li>
 			</ul>
-			<div id='cssmenu'>
-				<ul>
-				 <li class='has-sub '><a href='#'><img src="./images/smallMenu.png"/></a>
-				    <ul>
-				       <li class='has-sub '><a href='#'>Log In</a>
-				       </li>
-				       <li class='has-sub '><a href='#'>About</a>
-				       </li>
-				    </ul>
-				 </li>
-				</ul>
-			</div>
 		<div class="SearchBar"> 
 			<input type="search" style="width:200px" id="inputOne" value="Search LearnHistory.org" />
 		</div>
     </div>
  </div>
 
-<body onresize="changeNavigation()">
-	<div class="blurBackground">		
-	</div>
-	<div class="LogIn">
-		<div onclick="hideClass('LogIn'); hideClass('blurBackground')" id="closeLogin"></div>
-		<div class="loginHeader">
-			You need to be signed in to submit stuff.
-		</div>
-		<div class = "LogInContents" id="LoginForm">
-			Sign In
-			<form>
-  				<input class ="LogInContents" type="text" value="Username"/><br/>
-  				<input class ="LogInContents" type="password" value="Password"/><br/>
- 			 	<input type="submit" value="Submit"/>
-			</form>
-		</div>
-		<div class = "LogInContents" id="RegisterForm">
-			Create a new account
-			<form>
-  				<input class ="LogInContents" type="text" value="Username"/><br/>
-  				<input class ="LogInContents" type="password" value="Password"/><br/>
-  				<input class ="LogInContents" type="text" value="Email (Optional)"/><br/>
- 			 	<input type="submit" value="Submit"/>
-			</form>
-		</div>
-	</div>
+<body>
 	<div class ="LeftNavBar">
 		<a class="createNew" href="./newArticle.html">Submit Article</a>
-		<a class="createNew" href="./newArticle.html">Go To</a>
 		<ul class="leftNavBarNavigation">
 		    <li class="lNavItem"><a class="lNavHyper" href="javascript:void(0)" onclick="hideElement('LeftNavBarContent_MostRecent');
 		    		showElement('LeftNavBarTop');">Top</a></li>
@@ -148,7 +110,7 @@
 					</div>
 
 					<div class="ArticleTitle">
-						<a href="./article.html">President Kennedy's economic policy</a> 
+						President Kennedy's economic policy 
 						<ul class="ArticleKeyWords">
 							<li class="keywordItem"><a class="keywordHyper" href="none.asp">USA</a></li>
 								<li class="keywordItem"><a class="keywordHyper" href="none.asp">Cold War</a></li>

@@ -128,8 +128,7 @@
     z-index: 3; /* slide under groups 1 and 3 */
   }
   #group2 .parallax__layer--back {
-    /*background: rgb(123,210,102);*/
-    background-image: url("./images/VW_BG.jpg");
+    background: rgb(123,210,102);
   }
 
   #group3 {
