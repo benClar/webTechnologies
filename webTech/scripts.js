@@ -1,11 +1,10 @@
 "use strict";
 
-window.onload = function() {
-  start(); 
-};
+addEventListener("load",function() {
+    start(); 
+});
 
-var STATE_DISLIKE = 0;
-var STATE_LIKE = 0;
+var goTo_clickState = 0;
 
 //Changes element with ID equal to s1
 function changeElement(elementID,content) {
@@ -114,15 +113,42 @@ function changeNavigation()	{
 }
 
 function start()	{
-	var i = document.getElementById("dislike");
-    i.addEventListener('click', function(e) {
-        e.preventDefault();
-		ToggleDislike();
-     });
+    document.getElementById("goToText").addEventListener('click',function(e)	{
+    	e.preventDefault();
+    	if(goTo_clickState == 0)	{
+    		turnGoToStyleOn();
+    	}
+    });
 
-    document.getElementById("like").addEventListener('click',function(e)	{
-        e.preventDefault();
-		ToggleLike();
+    document.getElementById("goToClose").addEventListener('click',function(e)	{
+    	e.preventDefault();
+    	if(goTo_clickState == 1)	{
+    		turnGoToStyleOff();
+    	}
+    });
+
+    document.getElementById("logInNav").addEventListener('click',function(e)	{
+    	showClass('blurBackground');
+    	showClass('LogIn');
+    	transitionVerticlePosition('LogIn','10');
+    });
+
+    document.getElementById("closeLogin").addEventListener('click',function(e)	{
+    	hideClass('LogIn'); 
+    	hideClass('blurBackground');
+    });
+
+    document.getElementById("topTagsLeftNav").addEventListener('click',function(e)	{
+    	hideElement('LeftNavBarContent_MostRecent'); 
+    	showElement('LeftNavBarTop');
+    });
+    document.getElementById("mostRecentTagsLeftNav").addEventListener('click',function(e)	{
+    	hideElement('LeftNavBarTop'); 
+    	showElement('LeftNavBarContent_MostRecent');
+    });
+    window.addEventListener('resize',function(e)	{
+    	changeNavigation();
+    	console.log("OUTTT");
     });
 }
 
@@ -130,26 +156,17 @@ function swap(element,image)	{
     element.style.backgroundImage = "url("+image+ ")";
 }
 
-
-function ToggleLike() {
-  var el = document.getElementById('like');
-  var dl = document.getElementById('dislike');
-	el.classList.toggle('likeClicked');
-
-	if(dl.classList.contains('dislikeClicked'))	{
-  		dl.classList.toggle('dislikeClicked')
- 	}
+function turnGoToStyleOn()	{
+		goTo_clickState++;
+		console.log(goTo_clickState);
+		document.getElementById('goToClose').style.display = "block";
+		document.getElementById('goTo').classList.toggle('goToClick');
 }
 
-function ToggleDislike() {
-  var el = document.getElementById('dislike');
-  var l = document.getElementById('like');
-
-	el.classList.toggle('dislikeClicked');
-
-	if(l.classList.contains('likeClicked'))	{
-		l.classList.toggle('likeClicked');
-  	}
+function turnGoToStyleOff()	{
+	goTo_clickState--;
+	document.getElementById('goToClose').style.display = "none";
+	document.getElementById('goTo').classList.toggle('goToClick');
 }
 
 // document.getElementById('toggler').addEventListener('click', function() {

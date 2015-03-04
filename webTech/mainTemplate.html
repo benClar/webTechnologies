@@ -39,31 +39,34 @@
 	<div class="blurBackground">		
 	</div>
 	<div class="LogIn">
-		<div onclick="hideClass('LogIn'); hideClass('blurBackground')" id="closeLogin"></div>
+		<div id="closeLogin"></div>
 		<div class="loginHeader">
 			You need to be signed in to submit stuff.
 		</div>
 		<div class = "LogInContents" id="LoginForm">
 			Sign In
 			<form>
-  				<input class ="LogInContents" type="text" value="Username"/><br/>
-  				<input class ="LogInContents" type="password" value="Password"/><br/>
+  				<input class ="LogInContents" type="text" placeholder="Username"/><br/>
+  				<input class ="LogInContents" type="password" placeholder="Password"/><br/>
  			 	<input type="submit" value="Submit"/>
 			</form>
 		</div>
 		<div class = "LogInContents" id="RegisterForm">
 			Create a new account
 			<form>
-  				<input class ="LogInContents" type="text" value="Username"/><br/>
-  				<input class ="LogInContents" type="password" value="Password"/><br/>
-  				<input class ="LogInContents" type="text" value="Email (Optional)"/><br/>
+  				<input class ="LogInContents" type="text" placeholder="Username"/><br/>
+  				<input class ="LogInContents" type="password" placeholder="Password"/><br/>
+  				<input class ="LogInContents" type="text" placeholder="Email (Optional)"/><br/>
  			 	<input type="submit" value="Submit"/>
 			</form>
 		</div>
 	</div>
 	<div class ="LeftNavBar">
-		<a class="createNew" href="./newArticle.html">Submit Article</a>
-		<a class="createNew" href="./newArticle.html">Go To</a>
+		<a class="topLeftBrowser" id='createNew' href="./newArticle.html">Submit Article</a>
+		<a class="topLeftBrowser" id="goTo">
+			<div id="goToClose"></div>
+			<div id="goToText">Go To</div>
+			<input type="search" id="tagSearch" style="width:100px" value="go to tag..." /></a>
 		<ul class="leftNavBarNavigation">
 		    <li class="lNavItem"><a class="lNavHyper" href="javascript:void(0)" onclick="hideElement('LeftNavBarContent_MostRecent');
 		    		showElement('LeftNavBarTop');">Top</a></li>

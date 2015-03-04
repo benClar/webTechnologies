@@ -1,0 +1,43 @@
+.ArticleForm	{
+	width: 50%;
+	position: absolute;
+	left:0px;
+}
+
+.ArticleSubmitTitle, .ArticleSubmitTags, .ArticleSubmitBody, .ArticleImageSubmit	{
+	text-align: left;
+	position: relative;
+	border: 1px solid #000000;
+	padding: 10px;
+	margin: 20px;
+	border-radius:3px;
+	background-color: #DADADA;
+}
+
+#titleSubBox,#tagSubBox,#ASubBox,#AImgeSubmit	{
+	position: relative;
+	width: 100%;
+}
+
+textarea	{
+	outline: none;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+#ArticleWordCount, #ArticleTitleCount, #TagCount	{
+	position: relative;
+ 	float: right;
+}
+
+#TagBoxes	{
+	position: relative;
+	float: left;
+	padding-bottom: 5px;
+}
+
+#ArticleSubmitButton	{
+	position: relative;
+	float: right;
+}
