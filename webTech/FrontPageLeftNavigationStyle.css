@@ -98,7 +98,9 @@ a.lNavHyper:hover {
     transition: display 0.3s ease;
 }
 
-
+#goToText   {
+    color:#FFFFFF; 
+}
 
 a.topLeftBrowser {
     color:#FFFFFF;   
@@ -112,6 +114,11 @@ a.topLeftBrowser {
 
 a.topLeftBrowser:link    {
     text-decoration: none;
+}
+
+#goToText:hover{
+    transition: color 0.3s ease;
+    color: #E84319; 
 }
 
 a.topLeftBrowser:hover{
@@ -137,7 +144,7 @@ a.topLeftBrowser:hover{
 
 }
 
-#navBarBreak {
+.navBarBreak {
     position: relative;
     color: #1e1e1e;
     background-color: #1e1e1e;

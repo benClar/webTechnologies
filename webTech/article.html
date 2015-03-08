@@ -1,18 +1,24 @@
-<!DOCTYPE html5>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
-<head onload="hideElement('cssmenu')">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  lang="en-GB" xml:lang="en-GB">
+<head>
+	<meta charset="UTF-8"/>
+	<title>LearnHistory</title>
 	<script src="scripts.js"></script>
 	<script src="articleScripts.js"></script>
 	<link rel="stylesheet" type="text/css" href="FrontPageBannerStyle.css"/>
 	<link rel="stylesheet" type="text/css" href="FrontPageArticleStyle.css"/>
 	<link rel="stylesheet" type="text/css" href="FrontPageLeftNavigationStyle.css"/>
-	<link rel="stylesheet" type="style/css" href="articleStyle.css"/>
+	<link rel="stylesheet" type="text/css" href="articleStyle.css"/>
 	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700' rel='stylesheet' type='text/css'/>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'/>
 	<link href='http://fonts.googleapis.com/css?family=Oxygen:700' rel='stylesheet' type='text/css'/>
 </head>
 
-<div class="banner">
+
+
+<body id="pageBody">
+	<div class="banner">
     <div id="bImage"> 
     	<a id="bText" href="./index.html">learnHistory</a>
     		<ul id="wideNavBar" class="Navigation">
@@ -25,7 +31,7 @@
 			</ul>
 			<div id='cssmenu'>
 				<ul>
-				 <li class='has-sub '><a href='#'><img src="./images/smallMenu.png"/></a>
+				 <li class='has-sub '><a href='#'><img alt="smallMenu" src="./images/smallMenu.png"/></a>
 				    <ul>
 				       <li class='has-sub '><a href='#'>Log In</a>
 				       </li>
@@ -40,8 +46,6 @@
 		</div>
     </div>
  </div>
-
-<body id="pageBody">
 	<div class="blurBackground">		
 	</div>
 	<div class="LogIn">
@@ -51,7 +55,7 @@
 		</div>
 		<div class = "LogInContents" id="LoginForm">
 			Sign In
-			<form>
+			<form action="UserPage.html">
   				<input class ="LogInContents" type="text" placeholder="Username"/><br/>
   				<input class ="LogInContents" type="password" placeholder="Password"/><br/>
  			 	<input type="submit" value="Submit"/>
@@ -59,7 +63,7 @@
 		</div>
 		<div class = "LogInContents" id="RegisterForm">
 			Create a new account
-			<form>
+			<form action="UserPage.html">
   				<input class ="LogInContents" type="text" placeholder="Username"/><br/>
   				<input class ="LogInContents" type="password" placeholder="Password"/><br/>
   				<input class ="LogInContents" type="text" placeholder="Email (Optional)"/><br/>
@@ -69,10 +73,12 @@
 	</div>
 	<div class ="LeftNavBar">
 		<a class="topLeftBrowser" id="createNew" href="./newArticle.html">Submit Article</a>
-		<a class="topLeftBrowser" id="goTo">
+		<div class="topLeftBrowser" id="goTo">
 			<div id="goToClose"></div>
 			<div id="goToText">Go To</div>
-			<input type="search" id="tagSearch" style="width:100px" value="go to tag..." /></a>
+			<input type="search" id="tagSearch" style="width:100px" value="go to tag..." />
+		</div>
+			
 		<ul class="leftNavBarNavigation">
 		    <li class="lNavItem">
 		    	<a class="lNavHyper" href="javascript:void(0)" id="topTagsLeftNav">Top</a>
@@ -84,91 +90,91 @@
 		<div class="leftNavBarSection" id="LeftNavBarTop">
 			<div class = "CatListElement">
 				<div class="CatInfo">
-					<img src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
+					<img alt="thumbnail" src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
 					<ul class="LeftArticleKeyWords">
-				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="none.asp">WW2</a></li>
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="sub_page.html">WW2</a></li>
 					</ul>
 					<div class="CatTotal">10 articles</div>
 				</div>
 			</div>
 
-			<hr id="navBarBreak" />		
+			<hr class="navBarBreak" />		
 
 			<div class = "CatListElement">
 				<div class="CatInfo">
-					<img src="./images/russiaThumbnail.jpg" style="width:50px;height:50px"/>
+					<img alt="thumbnail" src="./images/russiaThumbnail.jpg" style="width:50px;height:50px"/>
 					<ul class="LeftArticleKeyWords">
-				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="none.asp">Russia</a></li>
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="sub_page.html">Russia</a></li>
 					</ul>
 					<div class="CatTotal">10 articles</div>
 				</div>
 			</div>
 
-			<hr id="navBarBreak" />		
+			<hr class="navBarBreak" />		
 
 			<div class = "CatListElement">
 				<div class="CatInfo">
-					<img src="./images/MaoThumbnail.jpg" style="width:50px;height:50px"/>
+					<img alt="thumbnail" src="./images/MaoThumbnail.jpg" style="width:50px;height:50px"/>
 					<ul class="LeftArticleKeyWords">
-				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="none.asp">Mao's China</a></li>
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="sub_page.html">Mao's China</a></li>
 					</ul>	
 					<div class="CatTotal">10 articles</div>
 				</div>
 			</div>
 
-			<hr id="navBarBreak" />		
+			<hr class="navBarBreak" />		
 
 			<div class = "CatListElement">
 				<div class="CatInfo">
-					<img src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
+					<img alt="thumbnail" src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
 					<ul class="LeftArticleKeyWords">
-				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="none.asp">US Founding Fathers</a></li>
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="sub_page.html">US Founding Fathers</a></li>
 					</ul>
 					<div class="CatTotal">10 articles</div>
 				</div>
 			</div>
-			<hr id="navBarBreak" />
+			<hr class="navBarBreak" />
 			<div class = "CatListElement">
 				<div class="CatInfo">
-					<img src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
+					<img alt="thumbnail" src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
 					<ul class="LeftArticleKeyWords">
-				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="none.asp">WW2</a></li>
-					</ul>
-					<div class="CatTotal">10 articles</div>
-				</div>
-			</div>
-
-			<hr id="navBarBreak" />		
-
-			<div class = "CatListElement">
-				<div class="CatInfo">
-					<img src="./images/russiaThumbnail.jpg" style="width:50px;height:50px"/>
-					<ul class="LeftArticleKeyWords">
-				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="none.asp">Russia</a></li>
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="sub_page.html">WW2</a></li>
 					</ul>
 					<div class="CatTotal">10 articles</div>
 				</div>
 			</div>
 
-			<hr id="navBarBreak" />		
+			<hr class="navBarBreak" />		
 
 			<div class = "CatListElement">
 				<div class="CatInfo">
-					<img src="./images/MaoThumbnail.jpg" style="width:50px;height:50px"/>
+					<img alt="thumbnail" src="./images/russiaThumbnail.jpg" style="width:50px;height:50px"/>
 					<ul class="LeftArticleKeyWords">
-				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="none.asp">Mao's China</a></li>
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="sub_page.html">Russia</a></li>
+					</ul>
+					<div class="CatTotal">10 articles</div>
+				</div>
+			</div>
+
+			<hr class="navBarBreak" />		
+
+			<div class = "CatListElement">
+				<div class="CatInfo">
+					<img alt="thumbnail" src="./images/MaoThumbnail.jpg" style="width:50px;height:50px"/>
+					<ul class="LeftArticleKeyWords">
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="sub_page.html">Mao's China</a></li>
 					</ul>	
 					<div class="CatTotal">10 articles</div>
 				</div>
 			</div>
 
-			<hr id="navBarBreak" />		
+			<hr class="navBarBreak" />		
 
 			<div class = "CatListElement">
 				<div class="CatInfo">
-					<img src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
+					<img alt="thumbnail" src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
 					<ul class="LeftArticleKeyWords">
-				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="none.asp">US Founding Fathers</a></li>
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="sub_page.html">US Founding Fathers</a></li>
 					</ul>
 					<div class="CatTotal">10 articles</div>
 				</div>
@@ -179,19 +185,16 @@
 
 						<div class = "CatListElement">
 				<div class="CatInfo">
-					<img src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
+					<img alt="thumbnail" src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
 					<ul class="LeftArticleKeyWords">
-				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="none.asp">WW2</a></li>
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="sub_page.html">WW2</a></li>
 					</ul>
 					<div class="CatTotal">10 articles</div>
 				</div>
 			</div>
 
-			<hr id="navBarBreak" />		
-
-			
+			<hr class="navBarBreak" />		
 		</div>
-		
 	</div>
 
 
@@ -206,7 +209,7 @@
       </div>
     </div>
 
-        <div id="group1" class="parallax__group">
+    <div id="group1" class="parallax__group">
       <div class="parallax__layer parallax__layer--base">
      		<div class="ArticlePageContent">
      			<div class="ArticleHeader">
@@ -217,10 +220,10 @@
      				<div id="dislike"></div>
      				<div id="like"></div>
 						<ul id="InArticle_ArticleKeyWords">
-						<li class="keywordItem"><a class="keywordHyper" href="none.asp">USA</a></li>
-							<li class="keywordItem"><a class="keywordHyper" href="none.asp">Cold War</a></li>
-							<li class="keywordItem"><a class="keywordHyper" href="none.asp">Leaders</a></li>
-							<li class="keywordItem"><a class="keywordHyper" href="none.asp">Kennedy</a>
+						<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">USA</a></li>
+							<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">Cold War</a></li>
+							<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">Leaders</a></li>
+							<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">Kennedy</a>
 							</li>
 						</ul>
      			</div>
@@ -232,10 +235,10 @@
 <br/>
 
 <p>Phasellus elit arcu, auctor vitae suscipit et, dictum sit amet nisl. Vestibulum id lobortis ante. Vestibulum pretium augue lectus, id euismod orci rhoncus in. Phasellus nibh purus, mattis eget mi vitae, dignissim lobortis arcu. Duis aliquet porta ex, id tristique felis porta nec. Praesent hendrerit sed mauris sed dignissim. Nam quis leo orci. Cras nulla purus, faucibus non sodales malesuada, iaculis eget leo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas cursus, mauris eget efficitur hendrerit, sapien risus posuere lacus, nec suscipit arcu mauris non purus. Curabitur imperdiet est nunc, non condimentum lacus tempor eget. Pellentesque congue vulputate felis in sollicitudin.</p>
-     			</div>
-     		</div>
-      </div>
-    </div>
+	     			</div>
+	     		</div>
+	      </div>
+	    </div>
 </div>
 </div>
 </body>

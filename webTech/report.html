@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  lang="en-GB" xml:lang="en-GB">
+<head>
+<meta c="UTF-8"/>
+<title>Report</title>
+</head>
+<body>
+<h1>Introduction</h1>
+<h2>Website Purpose</h2>
+
+<h3>Topic of the site</h3>
+<p>The website's aim to to provide a platform for users to quickly learn and share information on a variety of historical topics.  All users can submit articles, which have a limit of 300 characters and can be voted as "liked" or "disliked". The site aims to build on elements of Wikipedia, Reddit and Twitter.</p>
+
+<h3>Accessing Content</h3>
+<p>The Site provides several means of accessing content.  The site has a 'front page' which lists a selection of all new articles submitted to the site.  This 'Front Page' allows new articles to be listed by their popularity, their submission date or how 'controversial' they are.  Controversial articles are those which have received relatively large amounts of 'likes' and 'dislikes'.<br/> <br/>
+Articles are also accessible by their 'tag'.  Users can associate up to four 'tags' with each article submitted:
+</p>
+<img alt="reportimg" src="Diagrams/article_tags.jpg"/>
+<p>In a way that mirrors the 'front page', 'sub-pages' are made up of articles with the same tag.  Users are allowed to choose their own tags: if an article with a tag that does not currently exist is submitted, this article will be the only article in this tag's 'sub-page'.  Articles will appear in more than one 'sub-page'.</p>
+<img alt="reportimg" src="Diagrams/subpage.jpeg"/>
+<p>Users can also directly go to a tag 'sub-page' of their choice:</p>
+<img alt="reportimg" src="Diagrams/goto.jpeg"/>
+
+<h2>Design of the site</h2>
+<p>Many of my pages have a relatively complex HTML structure, with a wide variety of HTML elements used.  In this section, I will diagrammatically show the structure of each page in my site, and outline all the types of HTML elements that I utilised.</p>
+
+<h1>HTML</h1>
+
+<p>Many of my pages have a relatively complex HTML structure, with a wide variety of HTML elements used.  In this section, I will diagrammatically show the structure of each page in my site, and outline all the types of HTML elements that I utilised.</p>
+
+<h2>Main Template</h2>
+<p>The Main Template for the site includes the left and top navigation bar.  The content on each page is displayed in the third page section:
+</p>
+<img alt="reportimg" src="Diagrams/maintemplate.jpg"/>
+<p>New elements Used:</p>
+
+<ul>
+  <li>&lt;a&gt; <br/> Used for multiple links, including the top banner and top and left navigation items. </li>
+  <li>&lt;ul&gt; and &lt;li&gt;<br/>For creating top and left Navigation bars, and lists of tags for each article. <br/> <img alt="reportimg" src="Diagrams/listEle.jpeg"/></li>
+  <li>&lt;div&gt; <br/> Extensive use to build page structure.</li>
+  <li>&lt;hr&gt; <br/> used to separate tag sub page listing in left navigation bar.<br/> <img alt="reportimg" src="Diagrams/usinghr.jpeg"/></li>
+  <li>&lt;input&gt; <br/>Various uses of different types of input tags, including text, password and search.  Different attributes such as placeholder and value.<br/><img alt="reportimg" src="Diagrams/templateInput.jpeg"/></li>
+  <li>&lt;img&gt; <br/>Many of the pictures on these pages have been implemented using the img tag.</li>
+</ul>
+
+<h2>index.html &amp; sub_page.html</h2>
+
+<p>The article listing section was challenging due to the number of different types of elements required to be placed and positioned within each other.</p>
+<img alt="reportimg" src="Diagrams/index_html.jpg"/>
+<p>New Elements Used:</p>
+<ul>
+	<li>&lt;input&gt; <br/>Used input of type radio button to create the "tab" structure on this page<br/><img alt="reportimg" src="Diagrams/radioinput.jpeg"/></li>
+</ul>
+
+<h2>newArticle.html</h2>
+<p>This page is the form that users would use to submit an article.</p>
+<img alt="reportimg" src="Diagrams/article.jpg"/>
+<p>New Elements Used:</p>
+<ul>
+	<li>&lt;Form&gt; <br/>Used to group form elements in this page.  Get method used to send information to next page on submission of form.</li>
+	<li>&lt; Input Type: File&gt; <br/>Used to allow users to upload an image to be associated with their article</li>
+	<li>&lt;Textarea&gt; <br/>   Used instead of input box as it is a more appropriate element for use to write larger amount of text.  Placeholder attribute used instead of value.</li>
+	<li>&lt;Input Type: Submit&gt; <br/></li>
+	<li>Uses &lt;method="get"&gt; to send data entered in textareas to article page</li>
+</ul>
+<img alt="reportimg" src="Diagrams/articleform.jpeg"/>
+
+<h2>article.html</h2>
+<p>This is a mock up of how an example user submitted article would look.  This page has a complex HTML structure due to the number of functionalities and styles that I aimed to achieve within it.  Despite this, I believe the article page still has a clean and minimalist feel.</p>
+<img alt="reportimg" src="Diagrams/article_page.jpg">
+<p>New Elements Used:</p>
+<ul>
+	<li>&lt;p &gt; <br/> Used to hold the main text content of each article.</li>
+</ul>
+
+<h1>CSS</h1>
+<p>The complex structure of many of my pages required a significant time investment to ensure all elements were positioned correctly.  I made significant use of the box model, editing the padding and margin of elements.  Additionally, making the site look good was a key aim, and I spent a lot of time styling individual elements.  I will pick out some examples of how I have used CSS in this site: literally every element has some kind of CSS styling, and it is not feasible to discuss them all.  However, I will try to convey the amount of detail I have applied to styling elements in my site.</p>
+
+<h2>Tags</h2>
+
+<ul>
+	<li>stylized the outer  &lt;ul &gt; element that contained the tag items, changing its margin size, setting font to be used and setting text to be capitalised automatically.</li>
+	<li>set background colour of list items, and increased the padding to give the appearance of a 'box' round the text.</li>
+	<li>Set a border and set a border-radius to give curved corners.</li>
+	<li> Set margin to give some space between list items.</li>
+	<li> set the on hover behaviour (as shown below) to change background colour.</li>
+</ul>
+	<img alt="reportimg" src="Diagrams/csstags.jpeg">
+
+<h2>Banner</h2>
+<ul>
+	<li>Significant stylizing and positioning of search bar: Rounded corners, changing the background and placing a background image of a magnifying glass to replace the default.</li>
+	<li>Stylizing wide-screen navigation bar.  Placing border round text.  On hover behaviour (as shown below) of changing colour.  This on hover behaviour is further stylised via putting in place a transition of the colour change.</li>
+	<li>css background image property used to place logo.</li>
+	<li>Used tutorial to create drop down menu for smaller screens.  Changed the CSS significantly to fit with my site style and requirements.</li>
+</ul>
+<img alt="reportimg" src="Diagrams/cssbanner.jpeg">
+
+<h2>Log-In Box</h2>
+
+<ul>
+	<li>Stylized form elements to have rounded corners and inner drop shadows.</li>
+	<li>positioning and correct scaling of size of login box.</li>
+	<li>background set to transparency to give the effect that the content behind the login box is inaccessible.</li>
+	<li>on hover behaviour of 'X' on login screen.  Changes to darker colour.</li>
+	<li>using google API font Oxygen.</li>
+	<li>used z-index to ensure login screen appeared on top of all over elements.</li>
+</ul>
+<img alt="reportimg" src="Diagrams/csslogin.jpeg">
+
+<h2>Go-To Browser</h2>
+
+<ul>
+	<li>rotated position 90 degrees.  Changes in position are transitioned over .3 seconds.</li>
+	<li>Transitions on hover colour change to orange.</li>
+	<li>stylized search bar with customer background picture.</li>
+	<li>positioning and width changes to allow javascript to rotate element for use when clicked.</li>
+</ul>
+<img alt="reportimg" src="Diagrams/cssgoto.jpeg">
+
+<h2>Left Navigation Bar</h2>
+<ul>
+	<li>Positioning the subpage summary elements was challenging: each is made up of a list of one tags, text, and a thumbnail.  Used float right.</li>
+	<li>Styled the 'top' and 'Most Recent' links: turns to black and underlined with green.  Used a background image of a block of colour that is repeated along the x axis to create underline.  Changed margin to create space between text and underline.</li>
+	<li>Edited tag spacing and positioning to be appropriate for left navigation bar format.</li>
+	<li> &lt;hr&gt; tag customised with CSS to create a black, thick line to separate elements.</li>
+</ul>
+<img alt="reportimg" src="Diagrams/cssleftnav.jpeg">
+
+<h2>Article Page Tabs</h2>
+<ul>
+	<li>Followed tutorial to create tab container for article list.  Again, I changed the style and appearance of the tabs significantly from the tutorial.  Getting the content box to hold all my article elements was challenging.  Works on firefox, chrome and safari.</li>
+	<li>Uses heavily styled radio buttons and z-indexes to achieve tab effect.  Each tab is actually a radio button, which brings another content page to the top to be displayed.</li>
+</ul>
+<img alt="reportimg" src="Diagrams/csstabs.jpeg">
+
+<h2>Article Banners</h2>
+<ul>
+	<li>Followed parallax scrolling tutorial to create attractive scroll effect within articles.  Had to adapt and change tutorial code significantly for my site.  Achieved through using perspective and z-indexes, works on safari, firefox and chrome.</li>
+	<li>created transparent block to behind article title using opacity settings.</li>
+	<li>Used % width to create blocks of colour to represent votes that articles will get.</li>
+	<li>list of tags css adapted for use in article headers</li>
+</ul>
+<img alt="reportimg" src="Diagrams/csspara.jpeg">
+<h1>Javascript</h1>
+<h2>Log In Box</h2>
+<ul>
+	<li>Login Box is hidden element on page load</li>
+	<li>transitionVerticlePosition() and showClass() attached to click event on "login" button in the banner.</li>
+	<li>hideClass() is attached to "x" on login box</li>
+	<li>transitionVerticlePosition() simultainiously moves verticle position of login box and increases opacity, to create an attractive transition in.  I did not use a tutorial for this.</li>
+	<li>I used information from the web on the technique used to slow the effect, using a nested, recursive function call to setTimeout().</li>
+</ul>
+
+<h2>Go To Browser</h2>
+<ul>
+	<li>turnGoToStyleOn() attached to goto text on side of the screen for click event.</li>
+	<li>Toggles a second css styled class to take effect on 'goto'.  This causes the rotation and width of the element to change, and swing out to reveal a search bar.</li>
+	<li>The 'x' on this element causes it to 'swing' back to being hidden by removing the class style.</li>
+	<li>Tutorial not used for this.</li>
+</ul>
+<img alt="reportimg" src="Diagrams/jsgoto.jpeg">
+
+<h2>Mobile/ Small Screen navigation bar</h2>
+
+<ul>	
+	<li> resize event listener attached to window.  When window width becomes 740, changeNavigation() removes the 'wide-screen' navigation bar and replaces with drop-down.</li>
+</ul>
+<img alt="reportimg" src="Diagrams/jsNavChange.jpeg">
+
+<h2>Left Navigation Bar</h2>
+
+<ul>	
+	<li>'top' and 'Most Recent' show and hide 'LeftNavBarContent_MostRecent' and 'LeftNavBarTop' elements and all the child elements they contain.</li>
+</ul>
+
+<h2>Counting Words</h2>
+
+<ul>	
+	<li>count() is attached to the Title and Article submission TextAreas.</li>
+	<li>Counts the amount of words in these area through retrieving all entered characters in the corresponding text area, and placing them in an array.  This array is then splut by delimiter ' ', and the length of this array counted.</li>
+	<li>The correct html is generated and placed into the appropiate element on page.</li>
+	<li>If the number of words in a text area is greater than a specified amount, all keystrokes except "delete" are disabled, preventing further text entry.  Additionally, the counter is turned red.</li>
+	<li>A slight delay has been placed between a 'click' event and count() being called.  This allows the current keystroke to be taken into consideration (It was being ignored if count() was immediately called).</li>
+</ul>
+<img alt="reportimg" src="Diagrams/jsaTitle.jpeg">
+
+<h2>Generating Tags</h2>
+<ul>
+	<li>The tag input box on the article submission page has extra functionality: It will show the user the tags they are creating, which are delimited by ';'</li>
+	<li>The data in the textarea is placed into an array upon each click event, and split by delimiter ';'.  Spaces are trimmed, and empty tags removed from the array e.g. Tag1; tag2;;;;;; tag3</li>
+	<li>The relevant HTML is generated above the tag box to display the tag elements that are seen accross the website.</li>
+	<li>After the user has entered four tags, they will be unable to enter anything further.</li>
+</ul>
+
+<img alt="reportimg" src="Diagrams/jstags.jpeg">
+
+<h2>Creating A New Article</h2>
+<ul>
+	<li>As an example of what will happen with a user submits a new article, when you press "Submit" on the article submission page, a new article template will be filled in with the data.</li>
+	<li>All formating (such as paragraph breaks) is kept in the body of the article</li>
+	<li>Tags are generated in the header</li>
+	<li>The title is generated.</li>
+</ul>
+
+<img alt="reportimg" src="Diagrams/jsNewA.jpeg">
+
+<h2>Article Voting</h2>
+
+<ul>
+	<li>Click events are attached to 'dislike' and 'like' elements in the article pages.</li>
+	<li>When the thumbs up or thumbs down is clicked, it becomes coloured to show it is active</li>
+	<li>If, when a button is clicked, the other is active, the colours will switch: You cannot vote an article up AND down.</li>
+</ul>
+
+<img alt="reportimg" src="Diagrams/jsthumbs.jpeg">
+
+<h2>User Page</h2>
+
+<ul>
+	<li>Real time searchable drop and drag tag preferences box.  I found this very challenging, as I had to track what the user had put in each box to generate the correct HTML each time they did a search.
+	<li>  The tags that the user can choose are loaded from tagTracker object.  In future, this object will be populated from database.
+	<li> The tagTracker objects holds two arrays, one storing a list of tags that the user has
+</ul>
+
+<h1>Painting Skills</h1>
+
+<h1>Drawing Skills</h1>
+</body>
+</html>

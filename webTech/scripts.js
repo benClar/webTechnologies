@@ -2,6 +2,7 @@
 
 addEventListener("load",function() {
     start(); 
+    hideElement('cssmenu');
 });
 
 var goTo_clickState = 0;
@@ -148,7 +149,6 @@ function start()	{
     });
     window.addEventListener('resize',function(e)	{
     	changeNavigation();
-    	console.log("OUTTT");
     });
 }
 

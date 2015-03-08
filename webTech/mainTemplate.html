@@ -1,6 +1,9 @@
-<!DOCTYPE html5>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
-<head onload="hideElement('cssmenu')">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  lang="en-GB" xml:lang="en-GB">
+<head>
+	<meta charset="UTF-8"/>
+	<title>LearnHistory</title>
 	<script src="scripts.js"></script>
 	<link rel="stylesheet" type="text/css" href="FrontPageBannerStyle.css"/>
 	<link rel="stylesheet" type="text/css" href="FrontPageArticleStyle.css"/>
@@ -10,16 +13,23 @@
 	<link href='http://fonts.googleapis.com/css?family=Oxygen:700' rel='stylesheet' type='text/css'/>
 </head>
 
-<div class="banner">
+
+
+<body id="pageBody">
+	<div class="banner">
     <div id="bImage"> 
     	<a id="bText" href="./index.html">learnHistory</a>
     		<ul id="wideNavBar" class="Navigation">
-  				<li onclick="showClass('blurBackground'); showClass('LogIn');transitionVerticlePosition('LogIn','10')" class="navItem"><a class="navHyper" href="javascript:void(0)">Log In</a></li>
-  				<li class="navItem"><a class="navHyper" href="./page1.html">About</a></li>
+  				<li class="navItem">
+  					<a class="navHyper" id="logInNav" href="javascript:void(0)">Log In</a>
+  				</li>
+  				<li class="navItem">
+  					<a class="navHyper" href="./page1.html">About</a>
+  				</li>
 			</ul>
 			<div id='cssmenu'>
 				<ul>
-				 <li class='has-sub '><a href='#'><img src="./images/smallMenu.png"/></a>
+				 <li class='has-sub '><a href='#'><img alt="smallMenu" src="./images/smallMenu.png"/></a>
 				    <ul>
 				       <li class='has-sub '><a href='#'>Log In</a>
 				       </li>
@@ -34,8 +44,6 @@
 		</div>
     </div>
  </div>
-
-<body onresize="changeNavigation()">
 	<div class="blurBackground">		
 	</div>
 	<div class="LogIn">
@@ -62,82 +70,133 @@
 		</div>
 	</div>
 	<div class ="LeftNavBar">
-		<a class="topLeftBrowser" id='createNew' href="./newArticle.html">Submit Article</a>
-		<a class="topLeftBrowser" id="goTo">
+		<a class="topLeftBrowser" id="createNew" href="./newArticle.html">Submit Article</a>
+		<div class="topLeftBrowser" id="goTo">
 			<div id="goToClose"></div>
 			<div id="goToText">Go To</div>
-			<input type="search" id="tagSearch" style="width:100px" value="go to tag..." /></a>
+			<input type="search" id="tagSearch" style="width:100px" value="go to tag..." />
+		</div>
+			
 		<ul class="leftNavBarNavigation">
-		    <li class="lNavItem"><a class="lNavHyper" href="javascript:void(0)" onclick="hideElement('LeftNavBarContent_MostRecent');
-		    		showElement('LeftNavBarTop');">Top</a></li>
-			<li class="lNavItem"><a class="lNavHyper" href="javascript:void(0)" onclick="hideElement('LeftNavBarTop');
-					showElement('LeftNavBarContent_MostRecent');">Most Recent</a></li>
+		    <li class="lNavItem">
+		    	<a class="lNavHyper" href="javascript:void(0)" id="topTagsLeftNav">Top</a>
+		    </li>
+			<li class="lNavItem">
+				<a class="lNavHyper" href="javascript:void(0)" id="mostRecentTagsLeftNav">Most Recent</a>
+			</li>
 		</ul>
 		<div class="leftNavBarSection" id="LeftNavBarTop">
 			<div class = "CatListElement">
 				<div class="CatInfo">
-					<img src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
-					<div class="CatTitle">WW2</div>
+					<img alt="thumbnail" src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
+					<ul class="LeftArticleKeyWords">
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="none.asp">WW2</a></li>
+					</ul>
 					<div class="CatTotal">10 articles</div>
 				</div>
 			</div>
 
-			<hr id="navBarBreak" />
+			<hr class="navBarBreak" />		
 
 			<div class = "CatListElement">
 				<div class="CatInfo">
-					<img src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
-					<div class="CatTitle">WW2</div>
+					<img alt="thumbnail" src="./images/russiaThumbnail.jpg" style="width:50px;height:50px"/>
+					<ul class="LeftArticleKeyWords">
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="none.asp">Russia</a></li>
+					</ul>
 					<div class="CatTotal">10 articles</div>
 				</div>
 			</div>
 
-			<hr id="navBarBreak" />
-			<div class = "CatListElement">
-				<div class="CatInfo">
-					<img src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
-					<div class="CatTitle">WW2</div>
-					<div class="CatTotal">10 articles</div>
-				</div>
-			</div>
-
-			<hr id="navBarBreak" />
+			<hr class="navBarBreak" />		
 
 			<div class = "CatListElement">
 				<div class="CatInfo">
-					<img src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
-					<div class="CatTitle">WW2</div>
+					<img alt="thumbnail" src="./images/MaoThumbnail.jpg" style="width:50px;height:50px"/>
+					<ul class="LeftArticleKeyWords">
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="none.asp">Mao's China</a></li>
+					</ul>	
 					<div class="CatTotal">10 articles</div>
 				</div>
 			</div>
 
-			<hr id="navBarBreak" />			
+			<hr class="navBarBreak" />		
+
+			<div class = "CatListElement">
+				<div class="CatInfo">
+					<img alt="thumbnail" src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
+					<ul class="LeftArticleKeyWords">
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="none.asp">US Founding Fathers</a></li>
+					</ul>
+					<div class="CatTotal">10 articles</div>
+				</div>
+			</div>
+			<hr class="navBarBreak" />
+			<div class = "CatListElement">
+				<div class="CatInfo">
+					<img alt="thumbnail" src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
+					<ul class="LeftArticleKeyWords">
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="none.asp">WW2</a></li>
+					</ul>
+					<div class="CatTotal">10 articles</div>
+				</div>
+			</div>
+
+			<hr class="navBarBreak" />		
+
+			<div class = "CatListElement">
+				<div class="CatInfo">
+					<img alt="thumbnail" src="./images/russiaThumbnail.jpg" style="width:50px;height:50px"/>
+					<ul class="LeftArticleKeyWords">
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="none.asp">Russia</a></li>
+					</ul>
+					<div class="CatTotal">10 articles</div>
+				</div>
+			</div>
+
+			<hr class="navBarBreak" />		
+
+			<div class = "CatListElement">
+				<div class="CatInfo">
+					<img alt="thumbnail" src="./images/MaoThumbnail.jpg" style="width:50px;height:50px"/>
+					<ul class="LeftArticleKeyWords">
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="none.asp">Mao's China</a></li>
+					</ul>	
+					<div class="CatTotal">10 articles</div>
+				</div>
+			</div>
+
+			<hr class="navBarBreak" />		
+
+			<div class = "CatListElement">
+				<div class="CatInfo">
+					<img alt="thumbnail" src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
+					<ul class="LeftArticleKeyWords">
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="none.asp">US Founding Fathers</a></li>
+					</ul>
+					<div class="CatTotal">10 articles</div>
+				</div>
+			</div>
+
 		</div>
 		<div class="leftNavBarSection" id="LeftNavBarContent_MostRecent">
 
-			<div class = "CatListElement">
+						<div class = "CatListElement">
 				<div class="CatInfo">
-					<img src="./images/ancientRome.jpg" style="width:50px;height:50px"/>
-					<div class="CatTitle">Ancient Rome</div>
+					<img alt="thumbnail" src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
+					<ul class="LeftArticleKeyWords">
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="none.asp">WW2</a></li>
+					</ul>
 					<div class="CatTotal">10 articles</div>
 				</div>
 			</div>
-			
-			<hr id="navBarBreak" />
 
-			<div class = "CatListElement">
-				<div class="CatInfo">
-					<img src="./images/ancientRome.jpg" style="width:50px;height:50px"/>
-					<div class="CatTitle">Ancient Rome</div>
-					<div class="CatTotal">10 articles</div>
-				</div>
-			</div>
+			<hr class="navBarBreak" />		
+
 			
-			<hr id="navBarBreak" />
 		</div>
 		
 	</div>
-
 
 <div class="PageContent">
 	Test

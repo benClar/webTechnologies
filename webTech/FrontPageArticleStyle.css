@@ -227,8 +227,20 @@ ul.currentArticleKeyWords    {
     top:5px;
 }
 
-li.currentkeywordItem{
+#PageTag   {
+    list-style-type: none;
+    font-family: "Arial", Verdana, sans-serif;
+    font-size: 20px;
+    text-transform: capitalize;
+    right: 30px;
+    top:5px;
+}
 
+li.currentkeywordItem{
+    position: relative;
+    float: right;
+    padding-right: 10px;
+    padding-top: 5px;
 }
 
 a.currentkeywordHyper{

@@ -1,0 +1,24 @@
+.DragContent	{
+	color: #000000;
+
+}
+
+#UserTags, #AllTags {
+	position: relative;
+	float: left;
+	margin-right: 10px;
+	width: 200px;
+	height: 400px;
+	border: 1px solid #000000;
+	margin: 20px auto;
+}
+section {
+width: 415px;
+  height: 200px;
+  background:gray;
+  margin: 20px auto;
+}
+
+#TagSearch	{
+	
+}
