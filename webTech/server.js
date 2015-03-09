@@ -100,6 +100,7 @@ function fail(response, code) {
 // browser to get relative links right).
 function serve(request, response) {
     var file = request.url;
+    file = file.split("?")[0];
     if (file == '/') return redirect(response, prefix + '/');
     if (! starts(file,prefix)) return fail(response, NotFound);
     file = file.substring(prefix.length);

@@ -124,7 +124,6 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 @charset "UTF-8";
 @import url(http://fonts.googleapis.com/css?family=Oxygen+Mono);
 
-/*http://cssmenumaker.com/blog/flat-dropdown-menu-tutorial*/
 #cssmenu {
     padding: 0; 
     margin: 0; 

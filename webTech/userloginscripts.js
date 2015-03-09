@@ -5,7 +5,7 @@ addEventListener("load",function() {
 });
 
 // var tagList = ;
-var tagTracker = { userTags:[], allTags:["Cold War","WW1","WW2","20th Century Iraq"," Iran","Napolean","French Revolution", "Ancient Rome"]};
+var tagTracker = { userTags:[], allTags:["Cold War","WW1","WW2","20th Century Iraq"," Iran","Napolean","French Revolution", "Ancient Rome","Credit Crunch","US Slavery","Ancient Egypt","Aztecs","Saxons","Vikings","Ancient Man","Korean War","Vietnam War","Spanish Armada","History of Medicine","Home Rule","Easter Rising"]};
 
 var savedUserTags = localStorage.getItem("savedUserTags");	
 
@@ -36,8 +36,11 @@ function dragDrop(ev) {
    		generateUserTag();
    		generateTags();
    } else if(ev["target"]["id"] == "AllTags")	{
-   		tagTracker["allTags"] = removeElements("",ev["target"]["innerText"].split('\n'));
+   		document.getElementById("TagSearch").value = "";
+   		generateTags();
+   		tagTracker["allTags"] = removeElements("",ev["target"]["innerText"].split('\n')); 		
    		tagTracker["userTags"] = removeElements(tagTracker["allTags"][tagTracker["allTags"].length -1],tagTracker["userTags"]);
+   		//document.getElementById("TagSearch").value = "";
    		destroyTag(data);
    		generateTags();
    		generateUserTag();
@@ -51,6 +54,7 @@ function removeElements(val,array)	{
 
 	for(var curr = 0; curr < array.length; curr++)	{
 		if(array[curr] == val )	{
+			console.log("delete");
 			array.splice(curr,1);
 			curr--;
 		}
@@ -59,8 +63,9 @@ function removeElements(val,array)	{
 }
 
 function generateTags()	{
-	var searchString = new RegExp(document.getElementById("TagSearch").value, "gi");
-
+	console.log(tagTracker["allTags"]);
+	var searchString = new RegExp(document.getElementById("TagSearch").value, "i");
+	console.log(searchString);
 	var output = "";
 	for(var curr = 0; curr < tagTracker["allTags"].length; curr++)	{
 		if(searchString.test(tagTracker["allTags"][curr]))	{

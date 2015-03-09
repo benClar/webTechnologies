@@ -33,8 +33,6 @@ function compareElement(inputElement,
 
 function hideElement(elementID)	{
 	document.getElementById(elementID).style.display = "none";
-	//$("#elementID").hide();
-	//$('#elementID').style.display = 'none';
 }
 
 function hideClass(classID)	{
@@ -75,16 +73,6 @@ function transitionVerticlePosition(classID, FinalHeight)	{
 function showElement(elementID)	{
 	document.getElementById(elementID).style.display = "block";
 }
-
-function draw(elementID) {
-  // get a reference to the <canvas> tag
-  var canvas = document.getElementById(elementID);
- 	// if the browser support canvas
- 	if (canvas.getContext) {
-    var ctx = canvas.getContext('2d');
-    // Apply JavaScript APIs for drawing
- 	}
- }
 
  function getWindowWidth() {
     return window.outerWidth;    
@@ -168,10 +156,6 @@ function turnGoToStyleOff()	{
 	document.getElementById('goToClose').style.display = "none";
 	document.getElementById('goTo').classList.toggle('goToClick');
 }
-
-// document.getElementById('toggler').addEventListener('click', function() {
-//   colorToggle();
-// });
 
 
 

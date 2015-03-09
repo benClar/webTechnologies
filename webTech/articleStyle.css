@@ -51,27 +51,14 @@
   }
 
 
-  /* demo styles
-  --------------------------------------------- */
 
   body, html {
     overflow: hidden;
   }
 
-  body {
-    
-  }
 
-  * {
-    margin:0;
-    padding:0;
-  }
 
-  .parallax {
-    
-  }
 
-   /* centre the content in the parallax layers */
   div.title {
     /*opacity: 0.4;*/
     background-color: #ffffff;
@@ -162,16 +149,10 @@
 }
 
 
-
-
-  /* style the groups
-  --------------------------------------------- */
-
   #group1 {
     z-index: 5; /* slide over group 2 */
   }
   #group1 .parallax__layer--base {
-    /*background: rgb(102,204,102);*/
     background-color: #fefefe;  }
 
   #group2 {
@@ -209,9 +190,7 @@
 .dislikeClicked {
   background-image: url("./images/dislike.png") !important;
 }
-
-/*http://sidelinesportsreport.com/wp-content/uploads/2014/08/Thumbs-up-thumbs-down-_zps93f6ab9d.gif
-*/  
+ 
 #like {
     background-image: url("./images/likenonclick.png");
 }
@@ -220,16 +199,3 @@
     background-image: url("./images/dislikenonclick.png");
     right:300px;
 }
-
-
-  /* misc
-  --------------------------------------------- */
-  .demo__info {
-    position: absolute;
-    z-index:100;
-    bottom: 1vh;
-    top: auto;
-    font-size:80%;
-    text-align:center;
-    width: 100%;
-  }

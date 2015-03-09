@@ -155,7 +155,7 @@ body, html {
 .tabs li{
     float: left;
 }
-/*http://www.onextrapixel.com/2013/07/31/creating-content-tabs-with-pure-css/*/
+
 .tabs label {
     margin-right: 10px;
     background-color: #a0a0a0;

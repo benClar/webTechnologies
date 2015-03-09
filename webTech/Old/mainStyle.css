@@ -1,0 +1,387 @@
+.banner {
+    background-color: #555;
+    
+    background-image: 
+        /* Top jagged */
+        linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%),
+        linear-gradient(-135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%),
+        /* Bottom jagged */
+        linear-gradient(45deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%),
+        linear-gradient(-45deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%),
+        /* Top and bottom fade  */
+        linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%),
+        linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%);
+
+    background-position:
+        /* Top jagged */
+        top center, top center,
+        /* Bottom jagged */
+        bottom center, bottom center,
+        /* Top fade */
+        top center,
+        /* Bottom fade */
+        bottom center;
+    background-size:
+        /* Top + bottom jagged */
+        0.75rem 0.75rem, 0.75rem 0.75rem, 0.75rem 0.75rem, 0.75rem 0.75rem,
+        /* Top + bottom fade */
+        100% 1rem, 100% 1rem;
+    background-repeat: repeat-x;
+    color: #ccc;
+    /*font-family: Montserrat, Helvetica Neue, Helvetica, Arial, sans-serif;*/
+    /*letter-spacing: 1px;*/
+    /*margin: 0 -1rem 2rem;*/
+    padding: 3rem 0;
+    /*position: center;*/
+    /*text-align: center;*/
+    transition: all .25s ease-in-out;
+  
+  &.clear-side {
+    background-color: #555;
+    background-image:
+        /* Top jagged */
+        linear-gradient(135deg, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%),
+        linear-gradient(-135deg, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%),
+        /* Bottom jagged */
+        linear-gradient(45deg, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%),
+        linear-gradient(-45deg, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%),
+        /* Top and bottom fade  */
+        linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%),
+        linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%),
+        /* Sides */
+        linear-gradient(90deg, rgba(200,200,200,1) 2%, rgba(200,200,200,0) 2%, rgba(200,200,200,0) 97%, rgba(200,200,200,1) 97%);
+    background-position:
+        /* Top jagged */
+        top center, top center,
+        /* Bottom jagged */
+        bottom center, bottom center,
+        /* Top fade */
+        top center,
+        /* Bottom fade */
+        bottom center,
+        /* Sides */
+        center center;
+    background-size:
+        /* Top + bottom jagged */
+        0.75rem 0.75rem, 0.75rem 0.75rem, 0.75rem 0.75rem, 0.75rem 0.75rem,
+        /* Top + bottom fade */
+        100% 1rem, 100% 1rem,
+        /* Sides */
+        100% 100%;
+    background-repeat:
+        /* All jagged and fade */
+        repeat-x, repeat-x, repeat-x, repeat-x, repeat-x, repeat-x,
+        /* Sides */
+        repeat-y;    
+  }
+}
+
+#bImage {
+    position:relative;
+    height: 90px;
+    margin-left:10px;
+    background:url("images/logo_small.png");
+    background-repeat: no-repeat;
+}
+
+#bText  {
+    vertical-align: middle;
+    color: #ccc;
+    font-family: Montserrat, Helvetica Neue, Helvetica, Arial, sans-serif;
+    letter-spacing: 1px;
+    margin-left:110px;
+    font-size: 200%;
+    position:absolute;
+    top: 25px;
+}
+
+#LeftNavBarTop > ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.Navigation    {
+    list-style-type: none;
+    position:fixed;
+    top: 85px;
+    margin-left:60px;
+}
+
+li.navItem {
+    display: inline;
+    margin: 10px;
+    float: left;
+}
+
+a.navHyper {
+    display: block;
+    color: #FFFFCC;
+}
+
+a.navHyper:link {
+    text-decoration: none;
+}
+
+a.navHyper:hover {
+    color: #008AE6;
+}
+
+ul.leftNavBarNavigation {
+    list-style-type: none;
+    overflow: auto;
+    width: 100%
+    top:0;
+    display:table-cell;
+    vertical-align: middle;
+}
+
+li.lNavItem {
+    display: inline;
+    margin: 10px;
+    float: left;
+}
+
+a.lNavHyper {
+    display: block;
+    color: #008AE6;
+    font-family: 'Oxygen', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+a.lNavHyper:link{
+    text-decoration: none;
+}
+
+
+a.lNavHyper:hover {
+    color: #000000;
+    text-decoration: none;
+    background-image: url(images/underline.png);
+    background-repeat: repeat-x;
+    background-position: 100% 100%; 
+    padding-bottom: 4px;
+    white-space: nowrap;
+}
+
+ul.ArticleKeyWords    {
+    list-style-type: none;
+    position:relative;
+    display: inline;
+    font-family: "Arial", Verdana, sans-serif;
+    font-size: 12px;
+    text-transform: capitalize;
+    color:#FFFFFF;
+    margin-left: -40px;
+    width:40%;
+}
+
+li.keywordItem{
+    display: inline;
+    float: left;
+    margin: 7px;
+}
+
+a.keywordHyper{
+    display: block;
+    color: #575757; 
+    background-color: #DADADA;
+    border-radius:3px;
+    width: 120%;
+    height:150%;
+    border: 1px solid #575757;
+    text-align: center;
+  
+}
+
+a.keywordHyper:link {
+    text-decoration: none;
+}
+
+a.keywordHyper:hover {
+    background-color: #AEAEAE;
+}
+
+#SearchBar  {
+    margin-left:600px;
+}
+
+input[type=search]  {
+    border-radius:5px;
+    color: #ccc;
+    height: 20px;
+    border: 0;
+    background:url("images/magGlass.png");
+    background-position:right center;
+    background-repeat: no-repeat;
+    background-color: #1A1A1A;
+}
+
+#LeftNavBarTop {
+    /*border: 1px solid #000000;
+    overflow: auto;
+    width: 100%*/
+}
+
+#LeftNavBarContent_top  {
+   /* border: 1px solid #000000;
+    overflow: auto;
+    width: 100%*/
+}
+
+.LeftNavBar {
+    /*border: 1px solid #000000;*/
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    position:fixed;
+    background-color: #fefefe;
+    border-right-style: solid;
+    width:200px;
+    left:0px;
+    top:186px;
+    bottom:0px;
+    overflow: auto;
+    border-right-width: 2px;
+    border-right-color: 
+
+}
+
+.leftNavBarSection> hr {
+    color: #000000;
+    background-color: #000000;
+    height: 4px;
+    width:70%;
+    border: none;
+}
+
+.CatListElement {
+    margin-left: 20px;
+    overflow: auto;
+    width: 100%
+}
+
+.CatListElement > img{
+    float:left;
+}
+
+.CatTitle   {
+    width: 70%;
+    float:right;
+}
+
+.CatTotal   {
+    width: 70%;
+    float:right;
+    overflow: auto;
+}
+
+.CatTotal, .CatTitle {
+    font-family: 'Open Sans', Sans-serif;
+    font-size: 15px;
+}
+
+.leftNavBarSection{
+    position:fixed;
+    top:220px;
+}
+
+.ArticleList    {
+    position: fixed;
+    overflow: auto;
+    left:200px;
+    bottom:0px;
+    top:186px;
+    right:0px;
+}
+
+.ArticleElement {
+    overflow: auto;
+    width:100%;
+    border: 1px solid #000000;
+    height: 57px;
+}
+
+.ArticleThumbNail   {
+    float:left;
+    height: 100%;
+}
+
+.ArticleTitle   {
+    float:left;
+    width:40%;
+    background-color: #669900;
+    height:100%;
+    font-family: 'Open Sans', Sans-serif;
+    font-size: 20px;
+    color:#FFFFFF;
+}
+
+.CatListElement > img   {
+}
+
+#ArticleThumbNail > img:hover{
+    transition: opacity 0.3s ease;
+    opacity: 0.3; 
+    filter: alpha(opacity=30);
+}
+
+.ArticleRatings {
+    left:60%;
+    right:0;
+    height:100%;
+    overflow: auto;
+}
+
+.upvotes    {
+    background-color: #FF9900;
+    float:left;
+    min-width:50%;
+    height: 100%; 
+}
+
+.downvotes  {
+    background-color: #0066FF;
+    float:right;
+    min-width:50%;
+    height: 100%; 
+}
+
+#LeftNavBarContent_MostRecent  {
+    display:none;
+}
+
+p
+{
+	border: 2px solid;
+	border-radius: 5px;
+	border-color: #929292;
+	background-color: #e0ffff;
+    text-align:justify;
+	color: #666666;
+    font-family:"Times New Roman", Times, serif;
+	max-width: 600px;
+}
+
+
+body
+{
+	/*min-height: 600px;
+    background-image: url("images/logo_main.png");
+    background-repeat: no-repeat;
+    background-position: right bottom;*/
+    background-color: #fefefe;
+}
+
+
+
+
+
+
+input[type=text]::-ms-clear {  display: none; width : 0; height: 0; }
+input[type=text]::-ms-reveal {  display: none; width : 0; height: 0; }
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration { display: none; }
