@@ -25,6 +25,13 @@
     height:57px
 }
 
+.ArticleNavigationButtons {
+    border: 1px solid #000000;
+}
+
+.ArticleNavigationButtons #previousButton   {
+    float:right;
+}
 
 .ArticleTitle   {
     float:left;

@@ -25,7 +25,7 @@
   					<a class="navHyper" id="logInNav" href="javascript:void(0)">Log In</a>
   				</li>
   				<li class="navItem">
-  					<a class="navHyper" href="./page1.html">About</a>
+  					<a class="navHyper" href="./about.html">About</a>
   				</li>
 			</ul>
 			<div id='cssmenu'>
@@ -202,18 +202,23 @@
         	<input type="radio" checked="checked" name="tabs" id="tab1"/>
          	<label for="tab1">Your Tags</label>
          	<div id="tab-content1" class="tab-content animated fadeIn">
+
          		<input id="TagSearch" type="text" placeholder="Find Tags"/>
-         		<div class="DragContent">
-         			<div id="UserTags" ondragenter="return dragEnter(event)" ondrop="return dragDrop(event)" ondragover="return dragOver(event)">
+         			<div id="TagBoxWrapper">
+         				<div id="aTagLabel">Your Tags</div>
+         				<div id="UserTags" ondragenter="return dragEnter(event)" ondrop="return dragDrop(event)" ondragover="return dragOver(event)">
 
+         				</div>
          			</div>
+					
+					<div id="TagBoxWrapper">
+						<div id="aTagLabel">All Tags</div>
+						<div id="AllTags" ondragenter="return dragEnter(event)" ondrop="return dragDrop(event)" ondragover="return dragOver(event)">
+							<ul class="ArticleKeyWords" id="allTags">
 
-					<div id="AllTags" ondragenter="return dragEnter(event)" ondrop="return dragDrop(event)" ondragover="return dragOver(event)">
-						<ul class="ArticleKeyWords" id="allTags">
-
-						</ul>
+							</ul>
+						</div>
 					</div>
-				</div>
 				
          	</div>
         </li>

@@ -1,0 +1,20 @@
+				<div class="ArticleElement">
+					<div class="ArticleThumbNail">
+						<img alt="thumbnail" src="./images/pres_Kennedy.jpg"/>
+					</div>
+
+					<div class="ArticleTitle">
+						<a href="./article.html">President Kennedy's economic policy</a> 
+						<ul class="ArticleKeyWords">
+							<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">USA</a></li>
+								<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">Cold War</a></li>
+								<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">Leaders</a></li>
+								<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">Kennedy</a>
+								</li>
+						</ul>
+					</div>
+					<div class="ArticleRatings">
+						<div class="upvotes">50%</div>
+						<div class="downvotes">50%</div>
+					</div>
+				</div>

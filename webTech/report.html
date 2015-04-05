@@ -10,20 +10,32 @@
 <h2>Website Purpose</h2>
 
 <h3>Topic of the site</h3>
-<p>The website's aim to to provide a platform for users to quickly learn and share information on a variety of historical topics.  All users can submit articles, which have a limit of 300 characters and can be voted as "liked" or "disliked". The site aims to build on elements of Wikipedia, Reddit and Twitter.</p>
+<p>The website's aim to to provide a platform for users to quickly learn and share information on a variety of historical topics.  The site is made up of articles, which are stored and groups by 'tags'.  Articles can have four tags.
+<br/><br/>
+All users can submit articles, which have a limit of 300 characters and can be voted as "liked" or "disliked". The site aims to build on elements of Wikipedia, Reddit and Twitter.</p>
 
 <h3>Accessing Content</h3>
-<p>The Site provides several means of accessing content.  The site has a 'front page' which lists a selection of all new articles submitted to the site.  This 'Front Page' allows new articles to be listed by their popularity, their submission date or how 'controversial' they are.  Controversial articles are those which have received relatively large amounts of 'likes' and 'dislikes'.<br/> <br/>
-Articles are also accessible by their 'tag'.  Users can associate up to four 'tags' with each article submitted:
+<p>The Site provides several means of accessing content.  The site has a 'front page' which lists a selection of all new articles submitted to the site accross all tags.  This 'Front Page' allows new articles to be listed by their popularity, their submission date or how 'controversial' they are.  Controversial articles are those which have received relatively large amounts of 'likes' and 'dislikes'.<br/> <br/>
+Articles are also accessible by their 'tag'.  This allows users to view all articles which have a particlar tag together.  Users can associate up to four 'tags' with each article submitted:
 </p>
 <img alt="reportimg" src="Diagrams/article_tags.jpg"/>
 <p>In a way that mirrors the 'front page', 'sub-pages' are made up of articles with the same tag.  Users are allowed to choose their own tags: if an article with a tag that does not currently exist is submitted, this article will be the only article in this tag's 'sub-page'.  Articles will appear in more than one 'sub-page'.</p>
 <img alt="reportimg" src="Diagrams/subpage.jpeg"/>
 <p>Users can also directly go to a tag 'sub-page' of their choice:</p>
 <img alt="reportimg" src="Diagrams/goto.jpeg"/>
+<p>For reasons described in the report, You must use the node.js server I have included in this upload for the form pages of the site to work.</p>
 
-<h2>Design of the site</h2>
-<p>Many of my pages have a relatively complex HTML structure, with a wide variety of HTML elements used.  In this section, I will diagrammatically show the structure of each page in my site, and outline all the types of HTML elements that I utilised.</p>
+<h2>Design and Content of the site</h2>
+
+<p>As this is only the client side of the website, most pages are "dummy" placeholder pages.  For example, every single article will link to the same page.  Every tag will link to the same tag sub page.  These are dummy pages whose content will be generated from the server side in stage two of this assignment.<br/><br/>
+
+The site has been tested within Firfox, Safari and Chrome.  I have went to some effort to ensure that it works in a useable way accross all three.  However, the site has mainly been developed on Chrome, and thus is best viewed in Chrome.  I was unable to test with an up-to-date version of IE.<br/><br/>
+
+There is no validation on the log in page, or when submitting a form.  These are simply demonstrations of what will happen when the server-side of the site is complete.<br/><br/>
+
+My overall approach to the site has been to make as much of it myself, avoiding frameworks, copy-pasted code and plug-ins, as possible.  I believe I have suceeded in this regard.  Any tutorials I have followed have been significantly adapted, and are all references at the bottom of this page. I achieved good results and functionality using vanilla JS, HTML and CSS.  <br/><br/>
+
+I have placed strong emphasis on a consistent theme and design accross the site.  I spent a lot of time creating an attractive and functional layout, using HTML and CSS.  Additionally, I tried to implement a good amount of dynamic content using javascript, which will be outlined in this report.  Finally, significant time was spent creating 'drawing', creating icons, pictures and logos in Inkscape.</p>
 
 <h1>HTML</h1>
 
@@ -74,8 +86,13 @@ Articles are also accessible by their 'tag'.  Users can associate up to four 'ta
 	<li>&lt;p &gt; <br/> Used to hold the main text content of each article.</li>
 </ul>
 
+<h2>userPage.html</h2>
+<p>This is a mock up of what the user will be greeted with when they log in/ Register.  They will be able to view all of their articles, and also select tags that they wish to appear on the "front page" for them.</p>
+
+<img alt="reportimg" src="images/htmlUserPage.png"/>
+
 <h1>CSS</h1>
-<p>The complex structure of many of my pages required a significant time investment to ensure all elements were positioned correctly.  I made significant use of the box model, editing the padding and margin of elements.  Additionally, making the site look good was a key aim, and I spent a lot of time styling individual elements.  I will pick out some examples of how I have used CSS in this site: literally every element has some kind of CSS styling, and it is not feasible to discuss them all.  However, I will try to convey the amount of detail I have applied to styling elements in my site.</p>
+<p>The complex structure of many of my pages required a large time investment to ensure all elements were positioned correctly.   Detailed use of the box model was key, editing the padding and margin of elements.  Additionally, making the site look good was a key aim, and I spent a lot of time styling individual elements.  I will pick out some examples of how I have used CSS in this site: literally every element has some kind of CSS styling, and it is not feasible to discuss them all.  However, I will try to convey the amount of detail I have applied to styling elements in my site.</p>
 
 <h2>Tags</h2>
 
@@ -93,7 +110,7 @@ Articles are also accessible by their 'tag'.  Users can associate up to four 'ta
 	<li>Significant stylizing and positioning of search bar: Rounded corners, changing the background and placing a background image of a magnifying glass to replace the default.</li>
 	<li>Stylizing wide-screen navigation bar.  Placing border round text.  On hover behaviour (as shown below) of changing colour.  This on hover behaviour is further stylised via putting in place a transition of the colour change.</li>
 	<li>css background image property used to place logo.</li>
-	<li>Used tutorial to create drop down menu for smaller screens.  Changed the CSS significantly to fit with my site style and requirements.</li>
+	<li>Used tutorial to create drop down menu for smaller screens.  Adapted the CSS to fit with my site style and requirements.</li>
 </ul>
 <img alt="reportimg" src="Diagrams/cssbanner.jpeg"/>
 
@@ -137,7 +154,7 @@ Articles are also accessible by their 'tag'.  Users can associate up to four 'ta
 
 <h2>Article Banners</h2>
 <ul>
-	<li>Followed parallax scrolling tutorial to create attractive scroll effect within articles.  Had to adapt and change tutorial code significantly for my site.  Achieved through using perspective and z-indexes, works on safari, firefox and chrome.</li>
+	<li>Followed parallax scrolling tutorial to create attractive scroll effect within articles.  Had to adapt and change tutorial code for my site.  Achieved through using perspective and z-indexes, works on safari, firefox and chrome.</li>
 	<li>created transparent block to behind article title using opacity settings.</li>
 	<li>Used % width to create blocks of colour to represent votes that articles will get.</li>
 	<li>list of tags css adapted for use in article headers</li>
@@ -174,6 +191,7 @@ Articles are also accessible by their 'tag'.  Users can associate up to four 'ta
 <ul>	
 	<li>'top' and 'Most Recent' show and hide 'LeftNavBarContent_MostRecent' and 'LeftNavBarTop' elements and all the child elements they contain.</li>
 </ul>
+<img alt="reportimg" src="Diagrams/cssleftnav.jpeg"/>
 
 <h2>Counting Words</h2>
 
@@ -237,26 +255,39 @@ Articles are also accessible by their 'tag'.  Users can associate up to four 'ta
 
 <h1>Painting Skills</h1>
 
-<p> I tried both gimp and photoshop.  I used Gimp for the small menu icon, but found that I could not achieve the effect I wanted for a more complex picture, due to less custom brush options. </p>
+<p> I tried both gimp and photoshop.  I used Gimp for small icons, but found that I could not achieve the effect I wanted for a more complex picture, due to less custom brush options. </p>
 
-<img src="images/smallMenu.png"/>
+<img alt="reportimg" src="images/smallMenu.png"/>
+<img alt="reportimg" src="images/magGlass.png"/>
+<img alt="reportimg" src="images/lightX.png"/>
+<img alt="reportimg" src="images/gotocloseDark.png"/>
+<img alt="reportimg" src="images/darkX.png"/>
 
 <p>This picture was made by creating and defining my own custom brushes, and then creating the grungy background with them.  I then used them to blend in various pictures of images.  Finally, I sharpened the image, and placed some colour balance layors over the black and grey brushwork. <br/> This image is created for article banners when the user has not uploaded any.</p>
-<img src="images/defaultArticle.png"/>
+<img alt="reportimg" src="images/defaultArticle.png"/>
 
 <h1>Drawing Skills</h1>
 
-<p>Most of the images used on the site have been designed by me in Inkscape.  The strategy that I used for creating images was finding stock images on the web, and then making vector images out of them.  I had to identify the best way to draw them, and pick good-looking "layers" to create shape and shade.  I saved my images using svg and png formats. <br/> Some of the images I have listed below may seem quite trivial, but I have included them to emphaize that I made everything myself.</p>
+<p>Most of the images used on the site have been designed by me in Inkscape.  The strategy that I used for creating images was finding stock images on the web, and then making vector images out of them.  I had to identify the best way to draw them, and pick good-looking "layers" to create shape and shade.  I saved my images using svg and png formats.</p> <br/> 
 
 <img alt="reportimg" src="images/dislikenonclick.png"/>
 <img alt="reportimg" src="images/likenonclick.png"/>
 <img alt="reportimg" src="images/like.png"/>
 <img alt="reportimg" src="images/dislike.png"/>
-<img alt="reportimg" src="images/darkX.png"/>
 <img alt="reportimg" src="images/logo_main.png"/>
-<img alt="reportimg" src="images/magGlass.png"/>
-<img alt="reportimg" src="images/lightX.png"/>
-<img alt="reportimg" src="images/gotocloseDark.png"/>
+
+	<object data="./images/gladiator.svg" type="image/svg+xml">
+  		<img src="./images/gladiator.svg" />
+	</object>
+
+	<object data="./images/iwojima.svg" type="image/svg+xml">
+  		<img src="./images/iwojima.svg" />
+	</object>
+
+	<object data="./images/spaceman.svg" type="image/svg+xml">
+  		<img src="./images/spaceman.svg" />
+	</object>
+
 
 <h1>References</h1>
 <p><cite>http://alistapart.com/article/customunderlines</cite> : Creating Custom Underlines</p>
@@ -266,11 +297,5 @@ Articles are also accessible by their 'tag'.  Users can associate up to four 'ta
 <p><cite>http://www.onextrapixel.com/2013/07/31/creating-content-tabs-with-pure-css/</cite> : Tutorial for creating content tabs</p>
 <p><cite>http://geektnt.com/how-to-remove-x-from-search-input-field-on-chrome-and-ie.html</cite> : Tutorial for customising input fields</p>
 <p><cite>http://cssmenumaker.com/blog/flat-dropdown-menu-tutorial</cite> : Tutorial for making drop down menus</p>
-
-
-
-
 </body>
-
-
 </html>

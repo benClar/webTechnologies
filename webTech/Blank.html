@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  lang="en-GB" xml:lang="en-GB">
+<head>
+	<meta charset="UTF-8"/>
+	<title>LearnHistory</title>
+	<script src="scripts.js"></script>
+	<script src="ajax.js"></script>
+	<link rel="stylesheet" type="text/css" href="FrontPageBannerStyle.css"/>
+	<link rel="stylesheet" type="text/css" href="FrontPageArticleStyle.css"/>
+	<link rel="stylesheet" type="text/css" href="FrontPageLeftNavigationStyle.css"/>
+	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700' rel='stylesheet' type='text/css'/>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'/>
+	<link href='http://fonts.googleapis.com/css?family=Oxygen:700' rel='stylesheet' type='text/css'/>
+</head>
+
+<body id="pageBody">
+	<div class="banner">
+    <div id="bImage"> 
+    	<a id="bText" href="./index.html">learnHistory</a>
+    		<ul id="wideNavBar" class="Navigation">
+  				<li class="navItem">
+  					<a class="navHyper" id="logInNav" href="javascript:void(0)">Log In</a>
+  				</li>
+  				<li class="navItem">
+  					<a class="navHyper" href="./about.html">About</a>
+  				</li>
+			</ul>
+			<div id='cssmenu'>
+				<ul>
+				 <li class='has-sub '><a href='#'><img alt="smallMenu" src="./images/smallMenu.png"/></a>
+				    <ul>
+				       <li class='has-sub '><a href='#'>Log In</a>
+				       </li>
+				       <li class='has-sub '><a href='#'>About</a>
+				       </li>
+				    </ul>
+				 </li>
+				</ul>
+			</div>
+		<div class="SearchBar"> 
+			<input type="search" style="width:200px" id="inputOne" value="Search LearnHistory.org"/>
+		</div>
+    </div>
+ </div>
+	<div class="blurBackground">		
+	</div>
+	<div class="LogIn">
+		<div id="closeLogin"></div>
+		<div class="loginHeader">
+			You need to be signed in to submit stuff.
+		</div>
+		<div class = "LogInContents" id="LoginForm">
+			Sign In
+			<form action="UserPage.html">
+  				<input class ="LogInContents" type="text" placeholder="Username"/><br/>
+  				<input class ="LogInContents" type="password" placeholder="Password"/><br/>
+ 			 	<input type="submit" value="Submit"/>
+			</form>
+		</div>
+		<div class = "LogInContents" id="RegisterForm">
+			Create a new account
+			<form action="UserPage.html">
+  				<input class ="LogInContents" type="text" placeholder="Username"/><br/>
+  				<input class ="LogInContents" type="password" placeholder="Password"/><br/>
+  				<input class ="LogInContents" type="text" placeholder="Email (Optional)"/><br/>
+ 			 	<input type="submit" value="Submit"/>
+			</form>
+		</div>
+	</div>
+	<div class ="LeftNavBar">
+		<a class="topLeftBrowser" id="createNew" href="./newArticle.html">Submit Article</a>
+		<div class="topLeftBrowser" id="goTo">
+			<div id="goToClose"></div>
+			<div id="goToText">Go To</div>
+			<input type="search" id="tagSearch" style="width:100px" value="go to tag..." />
+		</div>
+			
+		<ul class="leftNavBarNavigation">
+		    <li class="lNavItem">
+		    	<a class="lNavHyper" href="javascript:void(0)" id="topTagsLeftNav">Top</a>
+		    </li>
+			<li class="lNavItem">
+				<a class="lNavHyper" href="javascript:void(0)" id="mostRecentTagsLeftNav">Most Recent</a>
+			</li>
+		</ul>
+		<div class="leftNavBarSection" id="LeftNavBarTop">
+			<div class = "CatListElement">
+				<div class="CatInfo">
+					<img alt="thumbnail" src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
+					<ul class="LeftArticleKeyWords">
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="sub_page.html">WW2</a></li>
+					</ul>
+					<div class="CatTotal">10 articles</div>
+				</div>
+			</div>
+
+			<hr class="navBarBreak" />		
+
+			<div class = "CatListElement">
+				<div class="CatInfo">
+					<img alt="thumbnail" src="./images/russiaThumbnail.jpg" style="width:50px;height:50px"/>
+					<ul class="LeftArticleKeyWords">
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="sub_page.html">Russia</a></li>
+					</ul>
+					<div class="CatTotal">10 articles</div>
+				</div>
+			</div>
+
+			<hr class="navBarBreak" />		
+
+			<div class = "CatListElement">
+				<div class="CatInfo">
+					<img alt="thumbnail" src="./images/MaoThumbnail.jpg" style="width:50px;height:50px"/>
+					<ul class="LeftArticleKeyWords">
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="sub_page.html">Mao's China</a></li>
+					</ul>	
+					<div class="CatTotal">10 articles</div>
+				</div>
+			</div>
+
+			<hr class="navBarBreak" />		
+
+			<div class = "CatListElement">
+				<div class="CatInfo">
+					<img alt="thumbnail" src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
+					<ul class="LeftArticleKeyWords">
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="sub_page.html">US Founding Fathers</a></li>
+					</ul>
+					<div class="CatTotal">10 articles</div>
+				</div>
+			</div>
+			<hr class="navBarBreak" />
+			<div class = "CatListElement">
+				<div class="CatInfo">
+					<img alt="thumbnail" src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
+					<ul class="LeftArticleKeyWords">
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="sub_page.html">WW2</a></li>
+					</ul>
+					<div class="CatTotal">10 articles</div>
+				</div>
+			</div>
+
+			<hr class="navBarBreak" />		
+
+			<div class = "CatListElement">
+				<div class="CatInfo">
+					<img alt="thumbnail" src="./images/russiaThumbnail.jpg" style="width:50px;height:50px"/>
+					<ul class="LeftArticleKeyWords">
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="sub_page.html">Russia</a></li>
+					</ul>
+					<div class="CatTotal">10 articles</div>
+				</div>
+			</div>
+
+			<hr class="navBarBreak" />		
+
+			<div class = "CatListElement">
+				<div class="CatInfo">
+					<img alt="thumbnail" src="./images/MaoThumbnail.jpg" style="width:50px;height:50px"/>
+					<ul class="LeftArticleKeyWords">
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="sub_page.html">Mao's China</a></li>
+					</ul>	
+					<div class="CatTotal">10 articles</div>
+				</div>
+			</div>
+
+			<hr class="navBarBreak" />		
+
+			<div class = "CatListElement">
+				<div class="CatInfo">
+					<img alt="thumbnail" src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
+					<ul class="LeftArticleKeyWords">
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="sub_page.html">US Founding Fathers</a></li>
+					</ul>
+					<div class="CatTotal">10 articles</div>
+				</div>
+			</div>
+
+		</div>
+		<div class="leftNavBarSection" id="LeftNavBarContent_MostRecent">
+
+						<div class = "CatListElement">
+				<div class="CatInfo">
+					<img alt="thumbnail" src="./images/ww2_content.jpg" style="width:50px;height:50px"/>
+					<ul class="LeftArticleKeyWords">
+				<li class="LeftkeywordItem"><a class="LeftkeywordHyper" href="sub_page.html">WW2</a></li>
+					</ul>
+					<div class="CatTotal">10 articles</div>
+				</div>
+			</div>
+
+			<hr class="navBarBreak" />		
+		</div>
+	</div>
+
+<div class="PageContent">
+<ul class="tabs">
+			<li class="currentkeywordItem">
+				<a id="PageTag" class="currentkeywordHyper" href="none.asp">Front Page</a>
+			</li>
+    	<li>
+        	<input type="radio" checked="checked" name="tabs" id="tab1"/>
+         	<label for="tab1">All</label>
+         	<div id="tab-content1" class="tab-content animated fadeIn">
+				
+			<div id="AllContent">
+
+			</div>
+
+			<div class="ArticleNavigationButtons" id="articleListNavigation_all">
+				<button class="nextButton" id="nextArticleAll" type="button">Next</button>
+				<button class="previousButton" id="prevArticleAll" type="button">Previous</button>
+			</div>
+
+         	</div>
+        </li>
+        <li>
+          <input type="radio" name="tabs" id="tab2"/>
+          <label for="tab2">New</label>
+          <div id="tab-content2" class="tab-content animated fadeIn">
+
+			<div id="NewContent">
+
+			</div>
+
+			<div class="ArticleNavigationButtons" id="articleListNavigation_new">
+				<button class="nextButton" id="nextArticleNew" type="button">Next</button>
+				<button class="previousButton" id="prevArticleNew" type="button">Previous</button>
+			</div>
+            
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="tabs" id="tab3"/>
+          <label for="tab3">Controversial</label>
+          <div id="tab-content3" class="tab-content animated fadeIn">
+			<div id="ControversialContent">
+
+			</div>
+
+			<div class="ArticleNavigationButtons" id="articleListNavigation_ControversialContent">
+				<button class="nextButton" id="nextArticleControversial" type="button">Next</button>
+				<button class="previousButton" id="prevArticleControversial" type="button">Previous</button>
+			</div>
+
+          </div>
+        </li>
+</ul>	
+
+</div>
+</body>
+</html>

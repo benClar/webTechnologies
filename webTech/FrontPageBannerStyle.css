@@ -198,7 +198,7 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
     z-index: 20;
 }
 
-  #cssmenu > ul { *display: inline-block; }
+  #cssmenu > ul { display: inline-block; }
 
   #cssmenu:after, #cssmenu ul:after {
     content: '';
