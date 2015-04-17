@@ -57,7 +57,6 @@ function transitionVerticlePosition(classID, FinalHeight)	{
 	function delayedLoop () {           //  create a loop function
 		setTimeout(function () {    //  call a 3s setTimeout when the loop is called
 			divs[0].style.top= b + "%";
-			console.log(opacity);
 			opacity = opacity + opacityIncrement;
 			divs[0].style.opacity = opacity;
 			b = b + 0.3;                    //  increment the counter
@@ -146,7 +145,6 @@ function swap(element,image)	{
 
 function turnGoToStyleOn()	{
 		goTo_clickState++;
-		console.log(goTo_clickState);
 		document.getElementById('goToClose').style.display = "block";
 		document.getElementById('goTo').classList.toggle('goToClick');
 }

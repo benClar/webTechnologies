@@ -6,26 +6,23 @@ addEventListener("load",function() {
 
 function startArticleScripts()	{
 	document.getElementById("nextArticleAll").addEventListener('click',function(e)	{
-		getArticles("next","AllContent")
-	}
-function startArticleScripts()	{
+		getArticles("next","AllContent");
+	});
+
 	document.getElementById("prevArticleAll").addEventListener('click',function(e)	{
-		getArticles("prev","AllContent")
-	}
-function startArticleScripts()	{
+		getArticles("prev","AllContent");
+	});
 	document.getElementById("nextArticleNew").addEventListener('click',function(e)	{
-		getArticles("next","NewContent")
-	}
-function startArticleScripts()	{
+		getArticles("next","NewContent");
+	});
 	document.getElementById("prevArticleNew").addEventListener('click',function(e)	{
-		getArticles("prev","NewContent")
-	}
-function startArticleScripts()	{
+		getArticles("prev","NewContent");
+	});
 	document.getElementById("nextArticleControversial").addEventListener('click',function(e)	{
-		getArticles("next","ControversialContent")
-	}
-function startArticleScripts()	{
+		getArticles("next","ControversialContent");
+	});
+
 	document.getElementById("prevArticleControversial").addEventListener('click',function(e)	{
-		getArticles("prev","ControversialContent")
-	}
+		getArticles("prev","ControversialContent");
+	});
 }

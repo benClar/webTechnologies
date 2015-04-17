@@ -1,0 +1,28 @@
+SELECT a.title, a.articleID, a.groupedTags,  (SUM(vote.upvote)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 AS upvotePercentage, 
+(SUM(vote.downvote)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 AS downvotePercentage
+FROM( 
+	SELECT article.title, article.articleID, GROUP_CONCAT(articleTag.tag,';') as groupedTags
+	FROM article
+	JOIN articleTag
+	ON article.articleID = articleTag.articleID
+	WHERE article.articleID > 0 AND article.articleID < 10
+	GROUP BY article.articleID, article.title) a
+JOIN vote
+ON a.articleID = vote.articleID
+GROUP BY a.title, a.articleID, a.groupedTags;
+
+
+
+
+
+SELECT a.title, a.articleID, a.groupedTags,  SUM(vote.upvote), SUM(vote.downvote), SUM(vote.upvote) + SUM(vote.downvote)
+FROM( 
+	SELECT article.title, article.articleID, GROUP_CONCAT(articleTag.tag,';') as groupedTags
+	FROM article
+	JOIN articleTag
+	ON article.articleID = articleTag.articleID
+	WHERE article.articleID > 0 AND article.articleID < 10
+	GROUP BY article.articleID, article.title) a
+JOIN vote
+ON a.articleID = vote.articleID
+GROUP BY a.title, a.articleID, a.groupedTags;

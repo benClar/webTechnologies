@@ -6,12 +6,14 @@
 	<title>LearnHistory</title>
 	<script src="scripts.js"></script>
 	<script src="ajax.js"></script>
+	<script src="frontPageScripts.js"></script>
+	<script src="login_scripts.js"></script>
 	<link rel="stylesheet" type="text/css" href="FrontPageBannerStyle.css"/>
 	<link rel="stylesheet" type="text/css" href="FrontPageArticleStyle.css"/>
 	<link rel="stylesheet" type="text/css" href="FrontPageLeftNavigationStyle.css"/>
-	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700' rel='stylesheet' type='text/css'/>
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'/>
-	<link href='http://fonts.googleapis.com/css?family=Oxygen:700' rel='stylesheet' type='text/css'/>
+	<link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,700' rel='stylesheet' type='text/css'/>
+	<link href='//fonts.googleapis.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'/>
+	<link href='//fonts.googleapis.com/css?family=Oxygen:700' rel='stylesheet' type='text/css'/>
 </head>
 
 <body id="pageBody">
@@ -52,19 +54,19 @@
 		</div>
 		<div class = "LogInContents" id="LoginForm">
 			Sign In
-			<form action="UserPage.html">
-  				<input class ="LogInContents" type="text" placeholder="Username"/><br/>
-  				<input class ="LogInContents" type="password" placeholder="Password"/><br/>
- 			 	<input type="submit" value="Submit"/>
+			<form id="login_form">
+  				<input name="existingUsername" class ="LogInContents" type="text" placeholder="Username"/><br/>
+  				<input name="existingPassword" class ="LogInContents" type="password" placeholder="Password"/><br/>
+ 			 	<input id="login_submit" type="button" value="Submit"/>
 			</form>
 		</div>
 		<div class = "LogInContents" id="RegisterForm">
 			Create a new account
-			<form action="UserPage.html">
-  				<input class ="LogInContents" type="text" placeholder="Username"/><br/>
-  				<input class ="LogInContents" type="password" placeholder="Password"/><br/>
-  				<input class ="LogInContents" type="text" placeholder="Email (Optional)"/><br/>
- 			 	<input type="submit" value="Submit"/>
+			<form id="newUser_form">
+  				<input name="newUserName" class ="LogInContents" type="text" placeholder="Username"/><br/> <div class="errorMessage" id="newUserName_error"></div>
+  				<input name="newPassword" class ="LogInContents" type="password" placeholder="Password"/><br/> <div class="errorMessage" id="newPassword_error"></div>
+  				<input name="newEmail" class ="LogInContents" type="text" placeholder="Email (Optional)"/><br/> <div class="errorMessage" id="newEmail_error"></div>
+ 			 	<input id="newAccount_submit" type="button" value="Submit"/>
 			</form>
 		</div>
 	</div>

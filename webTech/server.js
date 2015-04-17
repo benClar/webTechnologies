@@ -4,6 +4,11 @@ var http = require('http');
 var fs = require('fs');
 var net = require('net');
 var sqlQuery = require("./do/getArticles.js");
+var accounts = require("./do/createAccount.js");
+var https = require('https');
+var tls = require('tls')
+var session = require('sesh/lib/core').session;
+
 
 var types = {
     'html' : 'text/html, application/xhtml+xml',
@@ -29,12 +34,43 @@ var types = {
               'contains unsharable personal and printer preferences, use .pdf',
 };
 
-var httpServer = new http.Server();
-var body="";
-httpServer.listen(8000);
-//Each http request
-httpServer.on("request",function (request, response)	{
+function start()	{
+	http.createServer(serve).listen(8000);
+	var body="";
+	// httpServer;
+	//Each http request
+	// httpServer.on("request",serve);
+	var options = {
+	  key: fs.readFileSync('key.pem'),
+	  cert: fs.readFileSync('cert.pem')
+	};
+	var a = https.createServer(options, serve).listen(8001);
+
+
+}
+
+function redirect(response, url)	{
+	var locationHeader = { 'Location': url };
+	response.writeHead(307,locationHeader);
+	response.end();
+}
+
+function needs_redirect(request)	{
+	if(!request.connection.encrypted)	{
+		return "https://" + request['headers']['host'].split(":")[0] + ":8001" + request.url;
+	}
+	return false;
+}
+
+
+function serve(request,response)	{
+	session(request, response, function(request, response){
+	console.log(request.session);
 	var url = require('url').parse(request.url); //Take a URL string, and return an object.
+	var new_url;
+	if((new_url = needs_redirect(request))) { 
+		return redirect(response,new_url);
+	}
 	switch(request["headers"]["content-type"])	{
 		case "application/x-www-form-urlencoded":
 			return formRequest(request, response);
@@ -64,7 +100,8 @@ httpServer.on("request",function (request, response)	{
 			response.end();
 		}
 	}
-});
+	});
+}
 
 //https://docs.nodejitsu.com/articles/HTTP/servers/how-to-read-POST-data
 function formRequest(request, response)	{
@@ -78,23 +115,43 @@ function formRequest(request, response)	{
 	 
 	//only run when all POST data has been recieved
 	request.on('end', function () {
-		action = body.split('=');
-		switch(action[0])	{
+		action = JSON.parse(body);
+		switch(action["request"])	{
 			case "articleRequest":
-				sqlQuery.query("SELECT * from articles", response, finishResponse);
+				var queryString = "SELECT a.title, a.articleID, a.groupedTags, (CAST(SUM(vote.upvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as upvotes, (CAST(SUM(vote.downvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as downvotes FROM( SELECT article.title, article.articleID, GROUP_CONCAT(articleTag.tag,';') as groupedTags FROM article JOIN articleTag ON article.articleID = articleTag.articleID WHERE article.articleID > "+ action["data"]["index"] + " AND article.articleID < " + (parseFloat(action["data"]["index"]) + 10 + " GROUP BY article.articleID, article.title) a JOIN vote ON a.articleID = vote.articleID GROUP BY a.title, a.articleID, a.groupedTags ORDER BY a.articleID");
+				sqlQuery.query(queryString, response, finishResponse);
+				break;
+			case "createNewAccount":
+				accounts.createAccounts(action["data"]["account"],action["data"]["password"],action["data"]["email"],response,finishResponse);
+			case "checkUserUnique":
+				var queryString = 'SELECT account FROM user WHERE account = "' + action["data"]["account"] + '"';
+				sqlQuery.query(queryString,response,finishResponse);
+				break;
+			case "login":
+				accounts.validateAccount(action["data"]['account'],action["data"]['password'],response,passwordMatch);
+				break;
+			case "loginSuccess":
+				request.session.data.user = action["data"]['account'];
+				console.log("log in");
+				finishResponse(null,response,"loggedIn");
 				break;
 			default:
 				break;
 		}
-		console.log(action[0]);
+		// console.log(action);
 	    // response.writeHead(200);
-	    // response.end(body);
+	    // response.end("test");
 	});
 
 }
 
+function passwordMatch(err,response,body)	{
+	response.writeHead(200);
+	response.write(body);
+    response.end();
+}
+
 function finishResponse(err,response,body)	{
-	// console.log(body);
 	response.writeHead(200);
 	var type = JSON.stringify(body);
 	response.write(type);
@@ -111,3 +168,4 @@ function fail(response, code) {
     response.end();
 }
 
+start();

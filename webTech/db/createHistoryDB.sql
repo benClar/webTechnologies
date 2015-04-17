@@ -1,5 +1,6 @@
 CREATE TABLE user(
-	account VARCHAR(20) PRIMARY KEY NOT NULL
+	account VARCHAR(20) PRIMARY KEY NOT NULL,
+	email VARCHAR(40)
 );
 
 CREATE TABLE password(
@@ -41,6 +42,9 @@ CREATE TABLE vote(
 INSERT INTO user (account)
 VALUES ("bclarke");
 
+INSERT INTO user (account)
+VALUES ("swood");
+
 INSERT INTO tag(tag)
 VALUES("WW2"),
 	("War"),
@@ -62,4 +66,13 @@ VALUES("Why WW2 Ended",
 INSERT INTO articleTag(articleID,tag)
  VALUES("1","WW2"),
  	("1","War"),
- 	("1","Conflict");
+ 	("1","Conflict"),
+ 	("2","USA"),
+ 	("2", "US Presidents"),
+ 	("2", "Civil Rights");
+
+ INSERT INTO vote(upvote,downvote, articleID, account)
+ VALUES("1","0","1","bclarke"),
+ 	("1","0","1","swood"),
+ 	("1","0","2","swood"),
+ 	("0","1","2","bclarke");
