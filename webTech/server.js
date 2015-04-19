@@ -50,8 +50,11 @@ function start()	{
 }
 
 function redirect(response, url)	{
-	var locationHeader = { 'Location': url };
-	response.writeHead(307,locationHeader);
+	// response.redirect(url);
+	console.log(url);
+	response.writeHead(302,{
+  		'Location': url
+	});
 	response.end();
 }
 
@@ -65,41 +68,44 @@ function needs_redirect(request)	{
 
 function serve(request,response)	{
 	session(request, response, function(request, response){
-	console.log(request.session);
-	var url = require('url').parse(request.url); //Take a URL string, and return an object.
-	var new_url;
-	if((new_url = needs_redirect(request))) { 
-		return redirect(response,new_url);
-	}
-	switch(request["headers"]["content-type"])	{
-		case "application/x-www-form-urlencoded":
-			return formRequest(request, response);
-			break;
-		default:
-			break;
-	}
 
-	var filename = url.pathname.substring(1);
-	if(!filename.length) filename = "index.html";
-	var type = findType(filename.substring(filename.lastIndexOf(".") + 1));
-	if(!type) return fail(response,http.STATUS_CODES["404"]);
-	
-	fs.readFile(filename, ready);
+		console.log(request.session.data.user);
+		var url = require('url').parse(request.url); //Take a URL string, and return an object.
+		var new_url;
 
-	function ready(error, content)	{
-		if(error)	{
-			response.writeHead(404, {
-				"Content-Type" : "text/plain; charset=UTF-8"});
-			response.write(error.message);
-			response.end();
-		} else	{
-			response.writeHead(200,
-				{"Content-Type" : type
-			});
-			response.write(content);
-			response.end();
+		if((new_url = needs_redirect(request))) { 
+			return redirect(response,new_url);
 		}
-	}
+
+		switch(request["headers"]["content-type"])	{
+			case "application/x-www-form-urlencoded":
+				return formRequest(request, response);
+				break;
+			default:
+				break;
+		}
+
+		var filename = url.pathname.substring(1);
+		if(!filename.length) filename = "index.html";
+		var type = findType(filename.substring(filename.lastIndexOf(".") + 1));
+		if(!type) return fail(response,http.STATUS_CODES["404"]);
+		
+		fs.readFile(filename, ready);
+
+		function ready(error, content)	{
+			if(error)	{
+				response.writeHead(404, {
+					"Content-Type" : "text/plain; charset=UTF-8"});
+				response.write(error.message);
+				response.end();
+			} else	{
+				response.writeHead(200,
+					{"Content-Type" : type
+				});
+				response.write(content);
+				response.end();
+			}
+		}
 	});
 }
 
@@ -111,14 +117,14 @@ function formRequest(request, response)	{
 		 body += chunk; //Waiting to recieve all of POST data
 	});
 	// 
-
+	console.log("new request");
 	 
 	//only run when all POST data has been recieved
 	request.on('end', function () {
 		action = JSON.parse(body);
 		switch(action["request"])	{
 			case "articleRequest":
-				var queryString = "SELECT a.title, a.articleID, a.groupedTags, (CAST(SUM(vote.upvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as upvotes, (CAST(SUM(vote.downvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as downvotes FROM( SELECT article.title, article.articleID, GROUP_CONCAT(articleTag.tag,';') as groupedTags FROM article JOIN articleTag ON article.articleID = articleTag.articleID WHERE article.articleID > "+ action["data"]["index"] + " AND article.articleID < " + (parseFloat(action["data"]["index"]) + 10 + " GROUP BY article.articleID, article.title) a JOIN vote ON a.articleID = vote.articleID GROUP BY a.title, a.articleID, a.groupedTags ORDER BY a.articleID");
+				var queryString = "SELECT a.title, a.articleID, a.groupedTags, (CAST(SUM(vote.upvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as upvotes, (CAST(SUM(vote.downvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as downvotes FROM( SELECT article.title, article.articleID, GROUP_CONCAT(articleTag.tag,';') as groupedTags FROM article JOIN articleTag ON article.articleID = articleTag.articleID WHERE article.articleID > "+ action["data"]["index"] + " AND article.articleID < " + (parseFloat(action["data"]["index"]) + 10 + " GROUP BY article.articleID, article.title) a LEFT JOIN vote ON a.articleID = vote.articleID GROUP BY a.title, a.articleID, a.groupedTags ORDER BY a.articleID");
 				sqlQuery.query(queryString, response, finishResponse);
 				break;
 			case "createNewAccount":
@@ -128,12 +134,29 @@ function formRequest(request, response)	{
 				sqlQuery.query(queryString,response,finishResponse);
 				break;
 			case "login":
-				accounts.validateAccount(action["data"]['account'],action["data"]['password'],response,passwordMatch);
+				accounts.validateAccount(action["data"]['account'],action["data"]['password'],response,finishResponse_String);
 				break;
 			case "loginSuccess":
 				request.session.data.user = action["data"]['account'];
-				console.log("log in");
-				finishResponse(null,response,"loggedIn");
+				// console.log(request.session.data.user);
+				finishResponse_String(null,response,"LoggedIn");
+				break;
+			case "logInStatus":
+				if(request.session.data.user != "Guest")	{
+					finishResponse_String(null,response,'{"response":"logInStatus", "data" : { "loggedIn" : true } }');
+				} else	{
+					finishResponse_String(null,response,'{"response":"logInStatus", "data" : { "loggedIn" : false } }');
+				}
+				break;
+			case "logout":
+				request.session.data.user = "Guest"
+				finishResponse_String(null,response,"LoggedOut");
+				break;
+			case "redirect":
+				// redirect(response,"https://" + request['headers']['host'].split(":")[0] + ":8001" + "/" + action["data"]["target"]);
+				break;
+			case "createNewArticle":
+				sqlQuery.addNewArticle(action["data"],request.session.data.user,response,finishResponse_String);
 				break;
 			default:
 				break;
@@ -145,7 +168,7 @@ function formRequest(request, response)	{
 
 }
 
-function passwordMatch(err,response,body)	{
+function finishResponse_String(err,response,body)	{
 	response.writeHead(200);
 	response.write(body);
     response.end();

@@ -21,21 +21,19 @@
     <div id="bImage"> 
     	<a id="bText" href="./index.html">learnHistory</a>
     		<ul id="wideNavBar" class="Navigation">
-  				<li class="navItem">
-  					<a class="navHyper" id="logInNav" href="javascript:void(0)">Log In</a>
-  				</li>
-  				<li class="navItem">
-  					<a class="navHyper" href="./about.html">About</a>
-  				</li>
+  				<li class="navItem"><a class="navHyper" id="logged_out_menu" href="javascript:void(0)">Log In</a></li>
+  				<li class="navItem"><a class="navHyper" id="logged_in_menu_pref" href="javascript:void(0)">Preferences</a></li>
+  				<li class="navItem"><a class="navHyper" id="logged_in_menu_logout" href="javascript:void(0)">Log Out</a></li>
+  				<li class="navItem"><a class="navHyper" href="./about.html">About</a></li>
 			</ul>
 			<div id='cssmenu'>
 				<ul>
 				 <li class='has-sub '><a href='#'><img alt="smallMenu" src="./images/smallMenu.png"/></a>
 				    <ul>
-				       <li class='has-sub '><a href='#'>Log In</a>
-				       </li>
-				       <li class='has-sub '><a href='#'>About</a>
-				       </li>
+				       <li id="logged_out_menu" class='has-sub '><a href='#'>Log In</a></li>
+				       <li id="logged_in_menu" class='has-sub '><a href='#'>Preferences</a></li>
+				       <li id="logged_in_menu" class='has-sub '><a href='#'>Log Out</a></li>
+				       <li class='has-sub '><a href='#'>About</a></li>
 				    </ul>
 				 </li>
 				</ul>
@@ -55,6 +53,7 @@
 		<div class = "LogInContents" id="LoginForm">
 			Sign In
 			<form id="login_form">
+				<div class="errorMessage" id="login_error"></div>
   				<input name="existingUsername" class ="LogInContents" type="text" placeholder="Username"/><br/>
   				<input name="existingPassword" class ="LogInContents" type="password" placeholder="Password"/><br/>
  			 	<input id="login_submit" type="button" value="Submit"/>
@@ -71,7 +70,7 @@
 		</div>
 	</div>
 	<div class ="LeftNavBar">
-		<a class="topLeftBrowser" id="createNew" href="./newArticle.html">Submit Article</a>
+		<a class="topLeftBrowser" id="createNew">Submit Article</a>
 		<div class="topLeftBrowser" id="goTo">
 			<div id="goToClose"></div>
 			<div id="goToText">Go To</div>

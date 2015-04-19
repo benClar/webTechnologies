@@ -62,10 +62,6 @@ function serverValidation(data)	{
 	checkUsernameUnique(data,createAccount);
 }
 
-function setError(id,error)	{
-	document.getElementById(id).innerHTML = error;
-}
-
 function validateEmail(email)	{
 
 	if(email.length == 0)	{

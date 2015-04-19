@@ -21,6 +21,7 @@ function create_new_account(details)	{
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 			var databaseResult = JSON.parse(xmlhttp.responseText)
+			console.log(databaseResult);
 		}
 	}
 	xmlhttp.open("POST","https://localhost:8001/",true);
@@ -28,13 +29,68 @@ function create_new_account(details)	{
 	xmlhttp.send('{"request":"createNewAccount","data" : { "account":"' + details['newUserName'] + '", "password":"' + details['newPassword'] + '","email":"' + details['newEmail'] + '"} }');
 }
 
+function logout()	{
+	xmlhttp.onreadystatechange=function() {
+		hideElement('logged_in_menu_logout'); 
+		hideElement('logged_in_menu_pref'); 
+		showElement('logged_out_menu');
+	}
+	xmlhttp.open("POST","https://localhost:8001/",true);
+	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+	xmlhttp.send('{"request":"logout"}');
+}
+
+function submitArticleClick(callback)	{
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			var loggedInResult = JSON.parse(xmlhttp.responseText);
+			if(loggedInResult["data"]["loggedIn"] == true)	{
+				redirectToPage("newArticle.html");
+			} else	{
+				callback();
+			}
+		}
+	}
+	xmlhttp.open("POST","https://localhost:8001/",true);
+	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+	xmlhttp.send('{"request":"logInStatus"}');
+}
+
+function redirectToPage(articlePage)	{
+	window.location.href = 'https://localhost:8001/' + articlePage;
+}
+
+function setLoginInterface()	{
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			var loggedInResult = JSON.parse(xmlhttp.responseText);
+			if(loggedInResult["data"]["loggedIn"] == true)	{
+				console.log(loggedInResult["data"]["loggedIn"]);
+	    		hideElement('logged_out_menu'); 
+	    		showElement('logged_in_menu');
+	   		} else	{
+	   			console.log(loggedInResult["data"]["loggedIn"]);
+	    		hideElement('logged_in_menu_logout'); 
+	    		hideElement('logged_in_menu_pref'); 
+	    		showElement('logged_out_menu');
+	    	}
+		}
+
+	}
+	
+	xmlhttp.open("POST","https://localhost:8001/",true);
+	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+	xmlhttp.send('{"request":"logInStatus"}');
+}
+
 function login(details)	{
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 			var passwordResult = JSON.parse(xmlhttp.responseText);
 			if(passwordResult["data"]["passwordMatched"]==true)	{
-				console.log(details);
 				successfulLogin(details["existingUsername"]);
+			} else	{
+				setError("login_error","Username-Password combination incorrect");
 			}
 		}
 	}
@@ -44,15 +100,29 @@ function login(details)	{
 }
 
 function successfulLogin(username)	{
-	xmlhttp.onreadystatechange=function() {
-		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			var response = JSON.parse(xmlhttp.responseText);
-
-		}
-	}
+	console.log("successfulLogin");
 	xmlhttp.open("POST","https://localhost:8001/",true);
 	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
 	xmlhttp.send('{"request":"loginSuccess","data" : { "account":"' + username + '"} }');
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			window.location.href = 'https://localhost:8001/userpage.html'
+		}
+	}
+
+}
+
+
+function createArticle(details)	{
+	// xmlhttp.onreadystatechange=function() {
+	// 	if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+
+	// 	}
+	// }
+	console.log(details);
+	xmlhttp.open("POST","https://localhost:8001/",true);
+	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+	xmlhttp.send('{"request":"createNewArticle", "data" : { "title": "' + details["ArticleTitleBox"] + '", "tags" : "' + details["TagBox"] + '", "articleBody" : "' + details["ArticleBodyBox"] + '" } }');
 }
 
 function checkUsernameUnique(details,callback)	{
@@ -90,8 +160,10 @@ function getArticles(type,target) {
 				// console.log(output[article]);
 				document.getElementById(target).innerHTML += output[article];
 
-				document.getElementById("upvote_" + databaseResult[article]["articleID"]).innerHTML = databaseResult[article]["upvotes"]+"%";
-				document.getElementById("downvote_" + databaseResult[article]["articleID"]).innerHTML = databaseResult[article]["downvotes"]+"%";
+				if(databaseResult[article]["upvotes"] != null)	{
+					document.getElementById("upvote_" + databaseResult[article]["articleID"]).innerHTML = databaseResult[article]["upvotes"]+"%";
+					document.getElementById("downvote_" + databaseResult[article]["articleID"]).innerHTML = databaseResult[article]["downvotes"]+"%";
+				}
 
 				document.getElementById("upvote_" + databaseResult[article]["articleID"]).style.width=  databaseResult[article]["upvotes"]+"%";
 				document.getElementById("downvote_" + databaseResult[article]["articleID"]).style.width=  databaseResult[article]["downvotes"]+"%";

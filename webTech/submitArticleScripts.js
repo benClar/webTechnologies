@@ -6,7 +6,7 @@ var TAG_MAX = 4;
 var tags = {tagCount: 0};
 var titleCount = 0;
 var articleCount = 0;
-
+var articleMinimum = 50;
 
 addEventListener('load',function() {
   submitArticleStart(); 
@@ -66,11 +66,75 @@ function submitArticleStart()	{
 		},1);
 	});
 
-	// document.getElementById("ArticleSubmitButton").addEventListener('click',function(e)	{
-	// 	localStorage.setItem("slide", current);
-	// 	current = localStorage.getItem("slide");
-	// 	location.href="index.html";
-	// });
+	document.getElementById("ArticleSubmitButton").addEventListener('click',function(e)	{
+		var formElements = document.getElementById('newArticle_form').elements;
+		var data = {};
+		for( var i = 0; i < formElements.length; i++)	{
+			if(formElements[i].type != "button")	{
+				data[formElements[i].name] = formElements[i].value;
+			}
+		}
+		if(validateArticle())	{
+			// data = formatTags(data);
+			console.log(data);
+			createArticle(data);
+		}
+	});
+}
+
+
+function validateArticle()	{
+	if(validateTitle() && validateTags() && validateArticleBody())	{
+		return true;
+	}
+
+	return false;
+}
+
+function validateTags()	{
+	if(tags["tagCount"] > TAG_MAX)	{
+		setError("articleTag_error","Number of tags Cannot be more than  " + TAG_MAX);
+		return false;
+	}
+
+	if(tags["tagCount"] <= 0)	{
+		setError("articleTag_error","Article must have at least one tag");
+		return false;
+	}
+
+	setError("articleTag_error","");
+	return true;	
+
+}
+
+function validateTitle()	{
+	if(titleCount > TITLE_MAX)	{
+		setError("articleTitle_error","Article Cannot be more than  " + TITLE_MAX + " Words." );
+		return false;
+	}
+
+	if(titleCount <= 0)	{
+		setError("articleTitle_error","Article Must be at least one word long." );
+		return false;
+	}
+
+
+	setError("articleTitle_error","");
+	return true;
+}
+
+function validateArticleBody()	{
+	if(articleCount > ARTICLE_MAX)	{
+		setError("articleBody_error","Article Cannot be more than "+ ARTICLE_MAX + " words." );
+		return false;
+	}
+
+	if(articleCount < articleMinimum)	{
+		setError("articleBody_error","Article Must be at least "+ articleMinimum + " words." );
+		return false;
+	}
+	setError("articleBody_error","");
+	return true;
 }
 
 function setTextToColor(tagID, color)	{
@@ -101,8 +165,18 @@ function countTagBox(tagData)	{
 	document.getElementById("TagCount").innerHTML = words.length + "/" + TAG_MAX;
 	tagData.tagCount = words.length;
 	tagData["tagString"] = words;
-	console.log(tagData.tagString);
 	return tagData;
+}
+
+function formatTags(data)	{
+	data["TagBox"] = data["TagBox"].split(";");
+	for(var i = 0; i < data["TagBox"].length; i++)	{
+		data["TagBox"][i] = data["TagBox"][i].trim();
+		if(data["TagBox"][i] == "")	{
+			data["TagBox"].splice(i,1);
+		}
+	}
+	return data;
 }
 
 function count(max, countTag, displayTag)	{

@@ -12,6 +12,10 @@ function changeElement(elementID,content) {
    document.getElementById(elementID).innerHTML = content;
 }
 
+function setError(id,error)	{
+	document.getElementById(id).innerHTML = error;
+}
+
 //Displays alert with content of p1
 function displayAlert(content)	{
 	window.alert(content);
@@ -115,10 +119,8 @@ function start()	{
     	}
     });
 
-    document.getElementById("logInNav").addEventListener('click',function(e)	{
-    	showClass('blurBackground');
-    	showClass('LogIn');
-    	transitionVerticlePosition('LogIn','10');
+    document.getElementById("logged_out_menu").addEventListener('click',function(e)	{
+		showLogin();
     });
 
     document.getElementById("closeLogin").addEventListener('click',function(e)	{
@@ -137,6 +139,24 @@ function start()	{
     window.addEventListener('resize',function(e)	{
     	changeNavigation();
     });
+
+    document.getElementById('logged_in_menu_logout').addEventListener('click',function(e)	{
+    	logout();
+    });
+
+    document.getElementById('createNew').addEventListener('click',function(e)	{
+    	console.log("here");
+    	submitArticleClick(showLogin);
+    });
+
+    setLoginInterface();
+
+}
+
+function showLogin()	{
+    showClass('blurBackground');
+	showClass('LogIn');
+	transitionVerticlePosition('LogIn','10');
 }
 
 function swap(element,image)	{
