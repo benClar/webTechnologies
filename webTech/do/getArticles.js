@@ -18,7 +18,7 @@ function closeDB()	{
 function query(queryString,response,callback)	{
 	openDB();
 	db.all(queryString, function(err, row) {
-		console.log(row);
+		// console.log(row);
 		callback(null,response,row);
 	});
 	closeDB();
@@ -33,6 +33,93 @@ function addNewArticle(data, user, response,callback)	{
 
 	console.log(data);
 	console.log(user);
+	closeDB();
+}
+
+function logVote(data,user,response,callback)	{
+	console.log(data);
+	openDB();
+		db.all("SELECT * FROM vote WHERE articleID = ? AND account = ?",[data["articleID"],user], function(err, row) {
+		if(row.length > 0)	{
+			console.log(row);
+			resetVote(data,row[0], user,response,callback);
+		} else	{
+			newVote(data,row, user,response,callback);
+		}
+		
+	});
+	closeDB();
+}
+
+function newVote(data,row, user,response,callback)	{
+	switch(data["voteType"])	{
+		case "like":
+			db.all("INSERT INTO vote (upvote,downvote,articleID,account) VALUES(?,?,?,?)",[1,0,data["articleID"],user],function(err,row)	{
+				getPercentageVotes(data["articleID"],response,callback);
+			});
+			break;
+		case "dislike":
+			db.all("INSERT INTO vote (upvote,downvote,articleID,account) VALUES(?,?,?,?)",[0,1,data["articleID"],user],function(err,row)	{
+				getPercentageVotes(data["articleID"],response,callback);
+			});
+			break;
+		default:
+			break;	
+	}
+
+}
+
+function resetVote(data,results, user,response,callback)	{
+	db.all("UPDATE vote SET upvote=0, downvote=0 WHERE articleID=? AND account = ?",[data["articleID"],user],function(err,row)	{
+		updateVote(data,results, user,response,callback);
+	});
+}
+
+function updateVote(data,results, user,response,callback)	{
+		switch(data["voteType"])	{
+			case "like":
+				console.log("LIKE VOTE IS:");
+				results["upvote"] = (1 + results["upvote"]) % 2;
+				console.log(results["upvote"]);
+				console.log(user);
+				console.log(results["articleID"]);
+				db.all("UPDATE vote SET upvote=? WHERE articleID=? AND account = ?",[results["upvote"], results["articleID"],user], function(err,row){
+					cleanUpVotes(data,results,user,response,callback);
+				});
+				break;
+			case "dislike":
+				console.log("DISLIKE VOTE IS:");
+				results["downvote"] = (1 + results["downvote"]) % 2;
+				console.log(results["downvote"]);
+				console.log(user);
+				console.log(results["articleID"]);
+				db.all("UPDATE vote SET downvote=? WHERE articleID=? AND account = ?",[results["downvote"], results["articleID"],user],function(err,row){
+					cleanUpVotes(data,results,user,response,callback);
+				});
+				break;
+			default:
+				break;
+		}
+}
+
+function cleanUpVotes(data,results, user,response,callback)	{
+	db.run("DELETE FROM vote WHERE upvote=0 AND downvote=0;",function(err,row)	{
+		console.log("HERE:")
+		console.log(results);
+		getPercentageVotes(results["articleID"],response,callback);
+	});
+}
+
+function getPercentageVotes(articleID,response,callback)	{
+	console.log(articleID);
+	db.all("SELECT (CAST(SUM(vote.upvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as upvotes, (CAST(SUM(vote.downvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as downvotes FROM vote WHERE articleID = ?",[articleID],function(err,row){
+		if(row.length>0)	{
+			callback(null,response,row[0]);
+		}	else	{
+			row = { upvotes: 50, downvotes: 50 };
+			callback(null,response,row);
+		}
+	});
 }
 
 function insertTags(tags)	{
@@ -79,3 +166,4 @@ function handleResult(err,rows)	{
 
 module.exports.query = query;
 module.exports.addNewArticle = addNewArticle;
+module.exports.logVote = logVote;

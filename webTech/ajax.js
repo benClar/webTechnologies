@@ -17,6 +17,20 @@ if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
 	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 }
 
+function generateArticle(articleID)	{
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			var databaseResult = JSON.parse(xmlhttp.responseText);
+			formatArticle(databaseResult);
+		}
+	}
+	xmlhttp.open("POST","https://localhost:8001/",true);
+	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+	xmlhttp.send('{"request":"loadArticle","data" : { "articleID":"' + articleID +'"} }');
+}
+
+
+
 function create_new_account(details)	{
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
@@ -31,9 +45,11 @@ function create_new_account(details)	{
 
 function logout()	{
 	xmlhttp.onreadystatechange=function() {
-		hideElement('logged_in_menu_logout'); 
-		hideElement('logged_in_menu_pref'); 
-		showElement('logged_out_menu');
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			hideElement('logged_in_menu_logout'); 
+			hideElement('logged_in_menu_pref'); 
+			showElement('logged_out_menu');
+		}
 	}
 	xmlhttp.open("POST","https://localhost:8001/",true);
 	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
@@ -56,6 +72,44 @@ function submitArticleClick(callback)	{
 	xmlhttp.send('{"request":"logInStatus"}');
 }
 
+function voteClick(vote, articleid, callback,ev)	{
+
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			var loggedInResult = JSON.parse(xmlhttp.responseText);
+			if(loggedInResult["data"]["loggedIn"] == true)	{
+				castVote(vote,articleid,ev);
+			} else	{
+				callback();
+			}
+		}
+	}
+	xmlhttp.open("POST","https://localhost:8001/",true);
+	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+	xmlhttp.send('{"request":"logInStatus"}');
+}
+
+function castVote(vote,articleID,ev)	{
+	if(vote == "like")	{
+		ev.preventDefault();
+		ToggleLike();
+	} else if (vote == "dislike") {
+		ev.preventDefault();
+		ToggleDislike();
+	}
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			var newVotePercentage = JSON.parse(xmlhttp.responseText);
+			console.log(newVotePercentage);
+			generateArticleVotes(newVotePercentage);
+
+		}
+	}
+	xmlhttp.open("POST","https://localhost:8001/",true);
+	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+	xmlhttp.send('{"request":"castVote", "data":{"articleID": "' + articleID + '", "voteType" : "' + vote + '"} }');
+}
+
 function redirectToPage(articlePage)	{
 	window.location.href = 'https://localhost:8001/' + articlePage;
 }
@@ -69,7 +123,6 @@ function setLoginInterface()	{
 	    		hideElement('logged_out_menu'); 
 	    		showElement('logged_in_menu');
 	   		} else	{
-	   			console.log(loggedInResult["data"]["loggedIn"]);
 	    		hideElement('logged_in_menu_logout'); 
 	    		hideElement('logged_in_menu_pref'); 
 	    		showElement('logged_out_menu');
@@ -109,7 +162,6 @@ function successfulLogin(username)	{
 			window.location.href = 'https://localhost:8001/userpage.html'
 		}
 	}
-
 }
 
 
@@ -149,7 +201,6 @@ function getArticles(type,target) {
 
 	formatQuery(type,target);
 
-
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 			var databaseResult = JSON.parse(xmlhttp.responseText)
@@ -178,6 +229,42 @@ function getArticles(type,target) {
 
 }
 
+function formatArticle(article)	{
+	console.log(article);
+	document.getElementById("bannerText").innerHTML = article[0]["title"];
+	generateArticleVotes(article[0]);
+
+	document.getElementById("ArticleBodyContent").innerHTML= article[0]["articleContent"];
+	document.getElementById('InArticle_ArticleKeyWords').innerHTML = addTags(article[0]["groupedTags"]);
+}
+
+function generateArticleVotes(article)	{
+	if(article["upvotes"] == null)	{
+		document.getElementById("articleUpvotes").innerHTML = "50%";
+		document.getElementById("articleUpvotes").style.width= "50%";
+	} else	{
+		document.getElementById("articleUpvotes").innerHTML = String(article["upvotes"]).split(".")[0] + "%";
+		document.getElementById("articleUpvotes").style.width= article["upvotes"] + "%";
+	}
+
+	if(article["downvotes"] == null)	{
+		document.getElementById("articleDownvotes").innerHTML = "50%";
+		document.getElementById("articleDownvotes").style.width= "50%";
+	} else	{
+		document.getElementById("articleDownvotes").innerHTML = String(article["downvotes"]).split(".")[0] + "%";
+		document.getElementById("articleDownvotes").style.width= article["downvotes"] + "%";
+	}	
+}
+
+function addTags(tags)	{
+	var output="";
+	tags = tags.split(";")
+	for(var i = 0; i < tags.length; i++)	{
+		output = output.concat('<li class="keywordItem"><a class="keywordHyper" href="sub_page.html?' + tags[i] + '">'+tags[i] + '</a></li> ');
+	}
+	return output;
+}
+
 function formatRows(result)	{
 
 	var rowCount = countJSON(result);
@@ -192,7 +279,7 @@ function formatRows(result)	{
 		
 		for(cTag = 0; cTag < result[cRow]["groupedTags"].length; cTag++)	{	
 			tagFormat = result[cRow]["groupedTags"][cTag].replace(" ", "+");
-			article = article.concat('<li class="keywordItem"><a class="keywordHyper" href="sub_page.html?' + tagFormat + '">' + result[cRow]["groupedTags"][cTag] + '</a></li>');
+			article = article.concat('<li class="keywordItem"><a class="keywordHyper" href="sub_page.html?subPage=' + tagFormat + '">' + result[cRow]["groupedTags"][cTag] + '</a></li>');
 		}
 		article = article.concat('</ul> </div> <div class="ArticleRatings"> <div id = "upvote_' + result[cRow]["articleID"] + '" class="upvotes">50%</div> <div id="downvote_' + result[cRow]["articleID"] + '" class="downvotes">50%</div> </div> </div>')
 		output.push(article);

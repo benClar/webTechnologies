@@ -279,6 +279,8 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
     right: 99.5%;
 }
 
+
+
 .LogIn{
     display: none;
     position: absolute;

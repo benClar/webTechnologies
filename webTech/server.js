@@ -118,7 +118,6 @@ function formRequest(request, response)	{
 	});
 	// 
 	console.log("new request");
-	 
 	//only run when all POST data has been recieved
 	request.on('end', function () {
 		action = JSON.parse(body);
@@ -158,6 +157,13 @@ function formRequest(request, response)	{
 			case "createNewArticle":
 				sqlQuery.addNewArticle(action["data"],request.session.data.user,response,finishResponse_String);
 				break;
+			case "loadArticle":
+				var queryString = "SELECT a.title, a.articleContent, a.groupedTags, (CAST(SUM(vote.upvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as upvotes, (CAST(SUM(vote.downvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as downvotes FROM( SELECT article.title, article.articleContent, article.articleID, GROUP_CONCAT(articleTag.tag,';') as groupedTags FROM article JOIN articleTag ON article.articleID = articleTag.articleID WHERE article.articleID =" + action["data"]["articleID"] + ") a LEFT JOIN vote ON a.articleID = vote.articleID GROUP BY a.title, a.articleID, a.groupedTags ORDER BY a.articleID";
+				sqlQuery.query(queryString, response, finishResponse);
+				break;
+			case "castVote":
+				sqlQuery.logVote(action["data"],request.session.data.user,response,finishResponse);
+				break;
 			default:
 				break;
 		}
@@ -175,6 +181,7 @@ function finishResponse_String(err,response,body)	{
 }
 
 function finishResponse(err,response,body)	{
+	console.log("SUCESS");
 	response.writeHead(200);
 	var type = JSON.stringify(body);
 	response.write(type);

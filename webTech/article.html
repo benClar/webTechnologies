@@ -4,8 +4,9 @@
 <head>
 	<meta charset="UTF-8"/>
 	<title>LearnHistory</title>
+	<script src="ajax.js"></script>
 	<script src="scripts.js"></script>
-	<script src="articleScripts.js"></script>
+	<script src="login_scripts.js"></script>
 	<link rel="stylesheet" type="text/css" href="FrontPageBannerStyle.css"/>
 	<link rel="stylesheet" type="text/css" href="FrontPageArticleStyle.css"/>
 	<link rel="stylesheet" type="text/css" href="FrontPageLeftNavigationStyle.css"/>
@@ -16,33 +17,30 @@
 </head>
 
 
-
 <body id="pageBody">
 	<div class="banner">
     <div id="bImage"> 
     	<a id="bText" href="./index.html">learnHistory</a>
     		<ul id="wideNavBar" class="Navigation">
-  				<li class="navItem">
-  					<a class="navHyper" id="logInNav" href="javascript:void(0)">Log In</a>
-  				</li>
-  				<li class="navItem">
-  					<a class="navHyper" href="./about.html">About</a>
-  				</li>
+  				<li class="navItem"><a class="navHyper" id="logged_out_menu" href="javascript:void(0)">Log In</a></li>
+  				<li class="navItem"><a class="navHyper" id="logged_in_menu_pref" href="javascript:void(0)">Preferences</a></li>
+  				<li class="navItem"><a class="navHyper" id="logged_in_menu_logout" href="javascript:void(0)">Log Out</a></li>
+  				<li class="navItem"><a class="navHyper" href="./about.html">About</a></li>
 			</ul>
 			<div id='cssmenu'>
 				<ul>
 				 <li class='has-sub '><a href='#'><img alt="smallMenu" src="./images/smallMenu.png"/></a>
 				    <ul>
-				       <li class='has-sub '><a href='#'>Log In</a>
-				       </li>
-				       <li class='has-sub '><a href='#'>About</a>
-				       </li>
+				       <li id="logged_out_menu" class='has-sub '><a href='#'>Log In</a></li>
+				       <li id="logged_in_menu" class='has-sub '><a href='#'>Preferences</a></li>
+				       <li id="logged_in_menu" class='has-sub '><a href='#'>Log Out</a></li>
+				       <li class='has-sub '><a href='#'>About</a></li>
 				    </ul>
 				 </li>
 				</ul>
 			</div>
 		<div class="SearchBar"> 
-			<input type="search" style="width:200px" id="inputOne" value="Search LearnHistory.org" />
+			<input type="search" style="width:200px" id="inputOne" value="Search LearnHistory.org"/>
 		</div>
     </div>
  </div>
@@ -55,24 +53,25 @@
 		</div>
 		<div class = "LogInContents" id="LoginForm">
 			Sign In
-			<form action="UserPage.html">
-  				<input class ="LogInContents" type="text" placeholder="Username"/><br/>
-  				<input class ="LogInContents" type="password" placeholder="Password"/><br/>
- 			 	<input type="submit" value="Submit"/>
+			<form id="login_form">
+				<div class="errorMessage" id="login_error"></div>
+  				<input name="existingUsername" class ="LogInContents" type="text" placeholder="Username"/><br/>
+  				<input name="existingPassword" class ="LogInContents" type="password" placeholder="Password"/><br/>
+ 			 	<input id="login_submit" type="button" value="Submit"/>
 			</form>
 		</div>
 		<div class = "LogInContents" id="RegisterForm">
 			Create a new account
-			<form action="UserPage.html">
-  				<input class ="LogInContents" type="text" placeholder="Username"/><br/>
-  				<input class ="LogInContents" type="password" placeholder="Password"/><br/>
-  				<input class ="LogInContents" type="text" placeholder="Email (Optional)"/><br/>
- 			 	<input type="submit" value="Submit"/>
+			<form id="newUser_form">
+  				<input name="newUserName" class ="LogInContents" type="text" placeholder="Username"/><br/> <div class="errorMessage" id="newUserName_error"></div>
+  				<input name="newPassword" class ="LogInContents" type="password" placeholder="Password"/><br/> <div class="errorMessage" id="newPassword_error"></div>
+  				<input name="newEmail" class ="LogInContents" type="text" placeholder="Email (Optional)"/><br/> <div class="errorMessage" id="newEmail_error"></div>
+ 			 	<input id="newAccount_submit" type="button" value="Submit"/>
 			</form>
 		</div>
 	</div>
 	<div class ="LeftNavBar">
-		<a class="topLeftBrowser" id="createNew" href="./newArticle.html">Submit Article</a>
+		<a class="topLeftBrowser" id="createNew">Submit Article</a>
 		<div class="topLeftBrowser" id="goTo">
 			<div id="goToClose"></div>
 			<div id="goToText">Go To</div>
@@ -204,7 +203,7 @@
       <div class="parallax__layer parallax__layer--back">
           <div id="container">
             <div id="block"></div> 
-            <div id="text">The US Moon Landing</div>
+            <div id="bannerText"></div>
         </div>
       </div>
     </div>
@@ -214,32 +213,30 @@
      		<div class="ArticlePageContent">
      			<div class="ArticleHeader">
      				<div class="ArticleVotesHeader">
-						<div class="upvotes">50%</div>
-						<div class="downvotes">50%</div>
+						<div id ="articleUpvotes" class="upvotes"></div>
+						<div id ="articleDownvotes" class="downvotes"></div>
 					</div>
      				<div id="dislike"></div>
      				<div id="like"></div>
 						<ul id="InArticle_ArticleKeyWords">
-						<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">USA</a></li>
+							<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">USA</a></li>
 							<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">Cold War</a></li>
 							<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">Leaders</a></li>
-							<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">Kennedy</a>
-							</li>
+							<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">Kennedy</a></li>
 						</ul>
      			</div>
 
      			<hr id="ArticleBreak" />
 
      			<div id="ArticleBodyContent" class="ArticleBody">
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec tortor id nulla ultrices placerat eu consectetur turpis. Fusce tristique iaculis mauris, eget scelerisque nisl. Morbi vestibulum placerat dui, sit amet mollis odio mollis ut. Aenean consequat, lectus vel consequat pulvinar, dolor purus congue sem, id feugiat mi ante ut sem. Etiam efficitur dolor sapien, non ornare metus maximus non. Maecenas at dui nec est ornare vehicula. Fusce cursus felis nec mauris dignissim convallis. Donec tellus ipsum, congue sit amet dignissim in, mollis ac est. Quisque augue neque, malesuada dictum faucibus vitae, pellentesque vel ex. Ut efficitur et justo ac lobortis. Nullam vitae odio pellentesque, sodales est cursus, ullamcorper tellus. Donec rhoncus fermentum viverra. Pellentesque maximus, massa eget consectetur luctus, erat purus venenatis est, quis gravida purus lorem nec nisl.</p>
-<br/>
-
-<p>Phasellus elit arcu, auctor vitae suscipit et, dictum sit amet nisl. Vestibulum id lobortis ante. Vestibulum pretium augue lectus, id euismod orci rhoncus in. Phasellus nibh purus, mattis eget mi vitae, dignissim lobortis arcu. Duis aliquet porta ex, id tristique felis porta nec. Praesent hendrerit sed mauris sed dignissim. Nam quis leo orci. Cras nulla purus, faucibus non sodales malesuada, iaculis eget leo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas cursus, mauris eget efficitur hendrerit, sapien risus posuere lacus, nec suscipit arcu mauris non purus. Curabitur imperdiet est nunc, non condimentum lacus tempor eget. Pellentesque congue vulputate felis in sollicitudin.</p>
-	     			</div>
+	     		</div>
 	     		</div>
 	      </div>
 	    </div>
 </div>
 </div>
 </body>
+<footer>
+	<script src="articleScripts.js"></script>
+</footer>
 </html>

@@ -25,7 +25,6 @@ function display() {
      {
          var def = params[i].split("=");
          var name = def[0];
-
         switch(name)    {
             case "ArticleTitleBox":
                 value = cleanUpString(def[1]);

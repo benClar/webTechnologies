@@ -39,12 +39,6 @@ CREATE TABLE vote(
 	FOREIGN KEY(account) REFERENCES user ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO user (account)
-VALUES ("bclarke");
-
-INSERT INTO user (account)
-VALUES ("swood");
-
 INSERT INTO tag(tag)
 VALUES("WW2"),
 	("War"),
@@ -72,7 +66,7 @@ INSERT INTO articleTag(articleID,tag)
  	("2", "Civil Rights");
 
  INSERT INTO vote(upvote,downvote, articleID, account)
- VALUES("1","0","1","bclarke"),
+ VALUES("1","0","1","benjiC"),
  	("1","0","1","swood"),
  	("1","0","2","swood"),
- 	("0","1","2","bclarke");
+ 	("0","1","2","benjiC");
