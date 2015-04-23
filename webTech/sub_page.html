@@ -5,6 +5,9 @@
 	<meta charset="UTF-8"/>
 	<title>LearnHistory</title>
 	<script src="scripts.js"></script>
+	<script src="subPageScripts.js"></script>
+	<script src="ajax.js"></script>
+	<script src="login_scripts.js"></script>
 	<link rel="stylesheet" type="text/css" href="FrontPageBannerStyle.css"/>
 	<link rel="stylesheet" type="text/css" href="FrontPageArticleStyle.css"/>
 	<link rel="stylesheet" type="text/css" href="FrontPageLeftNavigationStyle.css"/>
@@ -18,27 +21,25 @@
     <div id="bImage"> 
     	<a id="bText" href="./index.html">learnHistory</a>
     		<ul id="wideNavBar" class="Navigation">
-  				<li class="navItem">
-  					<a class="navHyper" id="logInNav" href="javascript:void(0)">Log In</a>
-  				</li>
-  				<li class="navItem">
-  					<a class="navHyper" href="./about.html">About</a>
-  				</li>
+  				<li class="navItem"><a class="navHyper" id="logged_out_menu" href="javascript:void(0)">Log In</a></li>
+  				<li class="navItem"><a class="navHyper" id="logged_in_menu_pref" href="javascript:void(0)">Preferences</a></li>
+  				<li class="navItem"><a class="navHyper" id="logged_in_menu_logout" href="javascript:void(0)">Log Out</a></li>
+  				<li class="navItem"><a class="navHyper" href="./about.html">About</a></li>
 			</ul>
 			<div id='cssmenu'>
 				<ul>
 				 <li class='has-sub '><a href='#'><img alt="smallMenu" src="./images/smallMenu.png"/></a>
 				    <ul>
-				       <li class='has-sub '><a href='#'>Log In</a>
-				       </li>
-				       <li class='has-sub '><a href='#'>About</a>
-				       </li>
+				       <li id="logged_out_menu" class='has-sub '><a href='#'>Log In</a></li>
+				       <li id="logged_in_menu" class='has-sub '><a href='#'>Preferences</a></li>
+				       <li id="logged_in_menu" class='has-sub '><a href='#'>Log Out</a></li>
+				       <li class='has-sub '><a href='#'>About</a></li>
 				    </ul>
 				 </li>
 				</ul>
 			</div>
 		<div class="SearchBar"> 
-			<input type="search" style="width:200px" id="inputOne" value="Search LearnHistory.org" />
+			<input type="search" style="width:200px" id="inputOne" value="Search LearnHistory.org"/>
 		</div>
     </div>
  </div>
@@ -51,24 +52,25 @@
 		</div>
 		<div class = "LogInContents" id="LoginForm">
 			Sign In
-			<form action="UserPage.html">
-  				<input class ="LogInContents" type="text" placeholder="Username"/><br/>
-  				<input class ="LogInContents" type="password" placeholder="Password"/><br/>
- 			 	<input type="submit" value="Submit"/>
+			<form id="login_form">
+				<div class="errorMessage" id="login_error"></div>
+  				<input name="existingUsername" class ="LogInContents" type="text" placeholder="Username"/><br/>
+  				<input name="existingPassword" class ="LogInContents" type="password" placeholder="Password"/><br/>
+ 			 	<input id="login_submit" type="button" value="Submit"/>
 			</form>
 		</div>
 		<div class = "LogInContents" id="RegisterForm">
 			Create a new account
-			<form action="UserPage.html">
-  				<input class ="LogInContents" type="text" placeholder="Username"/><br/>
-  				<input class ="LogInContents" type="password" placeholder="Password"/><br/>
-  				<input class ="LogInContents" type="text" placeholder="Email (Optional)"/><br/>
- 			 	<input type="submit" value="Submit"/>
+			<form id="newUser_form">
+  				<input name="newUserName" class ="LogInContents" type="text" placeholder="Username"/><br/> <div class="errorMessage" id="newUserName_error"></div>
+  				<input name="newPassword" class ="LogInContents" type="password" placeholder="Password"/><br/> <div class="errorMessage" id="newPassword_error"></div>
+  				<input name="newEmail" class ="LogInContents" type="text" placeholder="Email (Optional)"/><br/> <div class="errorMessage" id="newEmail_error"></div>
+ 			 	<input id="newAccount_submit" type="button" value="Submit"/>
 			</form>
 		</div>
 	</div>
 	<div class ="LeftNavBar">
-		<a class="topLeftBrowser" id="createNew" href="./newArticle.html">Submit Article</a>
+		<a class="topLeftBrowser" id="createNew">Submit Article</a>
 		<div class="topLeftBrowser" id="goTo">
 			<div id="goToClose"></div>
 			<div id="goToText">Go To</div>
@@ -194,120 +196,43 @@
 	</div>
 
 <div class="PageContent">
-	<ul class="tabs">
+<ul class="tabs">
 			<li class="currentkeywordItem">
-				<a id="PageTag" class="currentkeywordHyper" href="sub_page.html">20th Century Iraq</a>
+				<a id="PageTag" class="currentkeywordHyper" href="none.asp">Front Page</a>
 			</li>
     	<li>
         	<input type="radio" checked="checked" name="tabs" id="tab1"/>
-         	<label for="tab1">All</label>
+         	<label for="tab1">New</label>
          	<div id="tab-content1" class="tab-content animated fadeIn">
-				<div class="ArticleElement">
-					<div class="ArticleThumbNail">
-						<img alt="thumbnail" src="./images/IRAQ_1.jpg"/>
-					</div>
+			<div id="NewContent">
 
-					<div class="ArticleTitle">
-						<a href="./article.html">WW1 British Occupation</a> 
-						<ul class="ArticleKeyWords">
-							<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">20th Century Iraq</a></li>
-								<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">WW1</a></li>
-								<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">British Empire</a></li>
-						</ul>
-					</div>
-					<div class="ArticleRatings">
-						<div class="upvotes">50%</div>
-						<div class="downvotes">50%</div>
-					</div>
-				</div>
+			</div>
 
-				<div class="ArticleElement">
-					<div class="ArticleThumbNail">
-						<img alt="thumbnail" src="./images/IRAQ_2.jpg"/>
-					</div>
+			<div class="ArticleNavigationButtons" id="articleListNavigation_new">
+				<button class="nextButton" id="nextArticleNew" type="button">Next</button>
+				<button class="previousButton" id="prevArticleNew" type="button">Previous</button>
+			</div>
 
-					<div class="ArticleTitle">
-						<a href="./article.html">Rise of the Ba'ath Party</a> 
-						<ul class="ArticleKeyWords">
-							<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">20th Century Iraq</a></li>
-								<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">Slavery</a></li>
-						</ul>
-					</div>
-					<div class="ArticleRatings">
-						<div class="upvotes">50%</div>
-						<div class="downvotes">50%</div>
-					</div>
-				</div>
-
-				<div class="ArticleElement">
-					<div class="ArticleThumbNail">
-						<img alt="thumbnail" src="./images/IRAQ_3.jpg"/>
-					</div>
-
-					<div class="ArticleTitle">
-						<a href="./article.html">British Legacy in Iraq</a> 
-						<ul class="ArticleKeyWords">
-							<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">20th Century Iraq</a></li>
-							<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">British Empire</a></li>
-						</ul>
-					</div>
-					<div class="ArticleRatings">
-						<div class="upvotes">50%</div>
-						<div class="downvotes">50%</div>
-					</div>
-				</div>
 
          	</div>
         </li>
         <li>
           <input type="radio" name="tabs" id="tab2"/>
-          <label for="tab2">New</label>
+          <label for="tab2">Controversial</label>
           <div id="tab-content2" class="tab-content animated fadeIn">
-            <div class="ArticleElement">
-					<div class="ArticleThumbNail">
-						<img alt="thumbnail" src="./images/spaceRace.jpg"/>
-					</div>
+			<div id="ControversialContent">
 
-					<div class="ArticleTitle">
-						The Space Race 
-						<ul class="ArticleKeyWords">
-							<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">Russia</a></li>
-								<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">Cold War</a></li>
-								<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">Technology</a></li>
-						</ul>
-					</div>
-					<div class="ArticleRatings">
-						<div class="upvotes">50%</div>
-						<div class="downvotes">50%</div>
-					</div>
-				</div>
+			</div>
+
+			<div class="ArticleNavigationButtons" id="articleListNavigation_ControversialContent">
+				<button class="nextButton" id="nextArticleControversial" type="button">Next</button>
+				<button class="previousButton" id="prevArticleControversial" type="button">Previous</button>
+			</div>
+
+            
           </div>
         </li>
-        <li>
-          <input type="radio" name="tabs" id="tab3"/>
-          <label for="tab3">Controversial</label>
-          <div id="tab-content3" class="tab-content animated fadeIn">
-            <div class="ArticleElement">
-					<div class="ArticleThumbNail">
-						<img alt="thumbnail" src="./images/Iran_k.jpg"/>
-					</div>
-
-					<div class="ArticleTitle">
-						Iran's Cultural Revolution
-						<ul class="ArticleKeyWords">
-							<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">Iran</a></li>
-								<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">Middle East</a></li>
-								<li class="keywordItem"><a class="keywordHyper" href="sub_page.html">Islam</a></li>
-						</ul>
-					</div>
-					<div class="ArticleRatings">
-						<div class="upvotes">50%</div>
-						<div class="downvotes">50%</div>
-					</div>
-				</div>
-          </div>
-        </li>
-</ul>
+</ul>	
 </div>
 </body>
 </html>

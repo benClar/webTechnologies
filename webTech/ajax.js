@@ -1,11 +1,5 @@
 "use strict"
 
-var articleData = {
-	'AllContent': 0,
-	'NewContent': 0,
-	'ControversialContent':0
-};
-
 var ARTICLES_PER_PAGE = 10;
 
 var xmlhttp;
@@ -35,7 +29,6 @@ function create_new_account(details)	{
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 			var databaseResult = JSON.parse(xmlhttp.responseText)
-			console.log(databaseResult);
 		}
 	}
 	xmlhttp.open("POST","https://localhost:8001/",true);
@@ -100,7 +93,6 @@ function castVote(vote,articleID,ev)	{
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 			var newVotePercentage = JSON.parse(xmlhttp.responseText);
-			console.log(newVotePercentage);
 			generateArticleVotes(newVotePercentage);
 
 		}
@@ -197,18 +189,24 @@ function checkUsernameUnique(details,callback)	{
 }
 
 
-function getArticles(type,target) {
-
-	formatQuery(type,target);
+function getArticles(type,target,tag,articleData) {
+	tag = tag.replace("+"," ");
+	setPageTag(tag);
 
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 			var databaseResult = JSON.parse(xmlhttp.responseText)
 			var output = formatRows(databaseResult);
-			// console.log(output);
+			console.log("AJAX");
+			console.log(output.length);
+			if(output == "none"){ return; }
+			console.log(output.length);
+			if(type != "curr")	{
+				setArticleIndex(type,target,articleData);
+			}
+
 			document.getElementById(target).innerHTML = "";
 			for(var article = 0; article < output.length; article++)	{
-				// console.log(output[article]);
 				document.getElementById(target).innerHTML += output[article];
 
 				if(databaseResult[article]["upvotes"] != null)	{
@@ -220,22 +218,45 @@ function getArticles(type,target) {
 				document.getElementById("downvote_" + databaseResult[article]["articleID"]).style.width=  databaseResult[article]["downvotes"]+"%";
 			}
 			output =[];
-		// xmlhttp.responseText
 		}
 	}
 	xmlhttp.open("POST","https://localhost:8001/",true);
 	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-	xmlhttp.send('{"request":"articleRequest","data" : { "index":"' + articleData[target] + '"} }');
+	xmlhttp.send('{"request":"articleRequest","data" : { "index":"' + articleData[target] + '","aTag":"' + tag +'","order":"'+ target +'"} }');
+}
 
+function setPageTag(tag)	{
+	if(tag == "all")	{
+		document.getElementById("PageTag").innerHTML = "Front Page";
+	} else	{
+		document.getElementById("PageTag").innerHTML = tag;
+	}
 }
 
 function formatArticle(article)	{
-	console.log(article);
 	document.getElementById("bannerText").innerHTML = article[0]["title"];
 	generateArticleVotes(article[0]);
-
 	document.getElementById("ArticleBodyContent").innerHTML= article[0]["articleContent"];
 	document.getElementById('InArticle_ArticleKeyWords').innerHTML = addTags(article[0]["groupedTags"]);
+	setVotingButtons(articleID);
+}
+
+function setVotingButtons(articleID)	{
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			var databaseResult = JSON.parse(xmlhttp.responseText);
+			if(databaseResult.length > 0)	{
+				if(databaseResult[0]["downvote"] == 1)	{
+					ToggleDislike();
+				} else if(databaseResult[0]["upvote"] == 1){
+					ToggleLike();
+				}
+			}
+		}
+	}	
+	xmlhttp.open("POST","https://localhost:8001/",true);
+	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+	xmlhttp.send('{"request":"getUserVote","data" : { "articleID":"' + articleID + '"} }');
 }
 
 function generateArticleVotes(article)	{
@@ -273,6 +294,8 @@ function formatRows(result)	{
 	var output = [];
 	var article;
 	var tagFormat;
+	if(result == "none")	{ return "none"; }
+
 	for(cRow = 0; cRow < rowCount; cRow++)	{
 		result[cRow]["groupedTags"] = result[cRow]["groupedTags"].split(";");
 		article = '<div class="ArticleElement"> <div class="ArticleThumbNail"> <img alt="thumbnail" src="./images/pres_Kennedy.jpg"/> </div> <div class="ArticleTitle"> <a href="./article.html?articleTag=' + result[cRow]["articleID"] + '">' + result[cRow]["title"] + '</a> <ul class="ArticleKeyWords">';
@@ -296,7 +319,7 @@ function countJSON(jsonObject)	{
 	return i;
 }
 
-function formatQuery(type, target)	{
+function setArticleIndex(type,target,articleData)	{
 
 	switch(type)	{
 		case "next":

@@ -51,7 +51,6 @@ function start()	{
 
 function redirect(response, url)	{
 	// response.redirect(url);
-	console.log(url);
 	response.writeHead(302,{
   		'Location': url
 	});
@@ -69,7 +68,6 @@ function needs_redirect(request)	{
 function serve(request,response)	{
 	session(request, response, function(request, response){
 
-		console.log(request.session.data.user);
 		var url = require('url').parse(request.url); //Take a URL string, and return an object.
 		var new_url;
 
@@ -117,14 +115,19 @@ function formRequest(request, response)	{
 		 body += chunk; //Waiting to recieve all of POST data
 	});
 	// 
-	console.log("new request");
 	//only run when all POST data has been recieved
 	request.on('end', function () {
 		action = JSON.parse(body);
 		switch(action["request"])	{
 			case "articleRequest":
-				var queryString = "SELECT a.title, a.articleID, a.groupedTags, (CAST(SUM(vote.upvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as upvotes, (CAST(SUM(vote.downvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as downvotes FROM( SELECT article.title, article.articleID, GROUP_CONCAT(articleTag.tag,';') as groupedTags FROM article JOIN articleTag ON article.articleID = articleTag.articleID WHERE article.articleID > "+ action["data"]["index"] + " AND article.articleID < " + (parseFloat(action["data"]["index"]) + 10 + " GROUP BY article.articleID, article.title) a LEFT JOIN vote ON a.articleID = vote.articleID GROUP BY a.title, a.articleID, a.groupedTags ORDER BY a.articleID");
-				sqlQuery.query(queryString, response, finishResponse);
+				if(action["data"]["aTag"] == "all")	{
+					console.log(action["data"]["index"])
+					var queryString = "SELECT a.title, a.articleID, a.groupedTags, a.submissionDate, (CAST(SUM(vote.upvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as upvotes, (CAST(SUM(vote.downvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as downvotes FROM( SELECT article.title, article.submissionDate, article.articleID, GROUP_CONCAT(articleTag.tag,';') as groupedTags FROM article JOIN articleTag ON article.articleID = articleTag.articleID GROUP BY article.articleID, article.title) a LEFT JOIN vote ON a.articleID = vote.articleID GROUP BY a.title, a.articleID, a.groupedTags ORDER BY a.submissionDate DESC;"
+					sqlQuery.getArticleList(queryString,action["data"]["index"],response,finishResponse);
+				} else {
+					var queryString ="SELECT a.title, a.articleID, a.submissionDate, a.groupedTags, (CAST(SUM(vote.upvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as upvotes, (CAST(SUM(vote.downvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as downvotes FROM( SELECT articleTag.articleID, article.submissionDate, GROUP_CONCAT(articleTag.tag,';') as groupedTags , article.title FROM( SELECT * FROM articleTag WHERE articleTag.tag = '"+ action["data"]["aTag"] +"') matchedArticles JOIN articleTag ON articleTag.articleID = matchedArticles.articleID JOIN article on article.articleID = matchedArticles.articleID GROUP BY article.title, articleTag.articleID) a LEFT JOIN vote ON a.articleID = vote.articleID GROUP BY a.title, a.articleID, a.groupedTags ORDER BY a.submissionDate DESC";
+				}
+				// sqlQuery.query(queryString, response, finishResponse);
 				break;
 			case "createNewAccount":
 				accounts.createAccounts(action["data"]["account"],action["data"]["password"],action["data"]["email"],response,finishResponse);
@@ -164,6 +167,9 @@ function formRequest(request, response)	{
 			case "castVote":
 				sqlQuery.logVote(action["data"],request.session.data.user,response,finishResponse);
 				break;
+			case "getUserVote":
+				var queryString = "SELECT * FROM vote WHERE articleID = "+ action["data"]["articleID"] + " AND account = '" + request.session.data.user + "'";
+				sqlQuery.query(queryString,response,finishResponse);
 			default:
 				break;
 		}
@@ -181,7 +187,6 @@ function finishResponse_String(err,response,body)	{
 }
 
 function finishResponse(err,response,body)	{
-	console.log("SUCESS");
 	response.writeHead(200);
 	var type = JSON.stringify(body);
 	response.write(type);

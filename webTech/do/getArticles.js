@@ -25,6 +25,25 @@ function query(queryString,response,callback)	{
 	return result;
 }
 
+function getArticleList(queryString,upperBoundary,response,callback)	{
+	openDB();
+	db.all(queryString, function(err, row) {
+		result =[];
+		for(var start = upperBoundary - 10; start < upperBoundary && start < row.length; start++ )	{
+			console.log(start);
+			console.log(row[start]);
+			result.push(row[start]);
+		}
+		console.log(result.length);
+		if(result.length == 0)	{
+			callback(null,response,"none");
+		} else	{
+			callback(null,response,result);
+		}
+	});
+	closeDB();	
+}
+
 function addNewArticle(data, user, response,callback)	{
 	openDB();
 	formatTags(data);
@@ -167,3 +186,4 @@ function handleResult(err,rows)	{
 module.exports.query = query;
 module.exports.addNewArticle = addNewArticle;
 module.exports.logVote = logVote;
+module.exports.getArticleList = getArticleList;

@@ -4,25 +4,34 @@ addEventListener("load",function() {
     startArticleScripts(); 
 });
 
-function startArticleScripts()	{
-	document.getElementById("nextArticleAll").addEventListener('click',function(e)	{
-		getArticles("next","AllContent");
-	});
+var articleData = {
+	'NewContent': 10,
+	'ControversialContent':10
+};
 
-	document.getElementById("prevArticleAll").addEventListener('click',function(e)	{
-		getArticles("prev","AllContent");
-	});
+function startArticleScripts()	{
+	getArticles("next","NewContent","all",articleData);
+
 	document.getElementById("nextArticleNew").addEventListener('click',function(e)	{
-		getArticles("next","NewContent");
+		getArticles("next","NewContent","all",articleData);
+		console.log(articleData["NewContent"]);
 	});
 	document.getElementById("prevArticleNew").addEventListener('click',function(e)	{
-		getArticles("prev","NewContent");
+		getArticles("prev","NewContent","all",articleData);
+		console.log(articleData["NewContent"]);
 	});
 	document.getElementById("nextArticleControversial").addEventListener('click',function(e)	{
-		getArticles("next","ControversialContent");
+		getArticles("next","ControversialContent","all",articleData);
+		console.log(articleData["ControversialContent"]);
 	});
 
 	document.getElementById("prevArticleControversial").addEventListener('click',function(e)	{
-		getArticles("prev","ControversialContent");
+		getArticles("prev","ControversialContent","all",articleData);
+		console.log(articleData["ControversialContent"]);
 	});
+
+	document.getElementById("tab2").addEventListener('click',function(e)	{
+		getArticles("curr","ControversialContent","all",articleData);
+	});
+
 }
