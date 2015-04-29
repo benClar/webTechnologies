@@ -1,43 +1,27 @@
 "use strict";
 
-// addEventListener('load',function() {
-
-//     aStart(); 
-// });
 var articleID;
 
-document.addEventListener("load",aStart())
 
-// function addLoadEvent(func) {
-//   var oldonload = window.onload;
-//   if (typeof window.onload != 'function') {
-//     window.onload = func;
-//   } else {
-//     window.onload = function() {
-//       if (oldonload) {
-//         oldonload();
-//       }
-//       func();
-//     }
-//   }
-// }
 
-// addLoadEvent(aStart());
+addEventListener("load",function() {
+    start();
+    startLoginScripts();
+    aStart();
+});
 
 
 
 function aStart()	{
     document.getElementById("dislike").addEventListener('click', function(e) {
         voteClick("dislike",articleID,showLogin,e);
-        console.log(articleID);
      });
 
     document.getElementById("like").addEventListener('click',function(e)	{
         voteClick("like",articleID,showLogin,e);
-        console.log(articleID);
     });
 
-    loadArticleContent()
+    loadArticleContent();
 
 }
 
@@ -46,7 +30,7 @@ function loadArticleContent() {
     var url = location.href;
     var parts = url.split("?");
     articleID = parts[1].split("=")[1]
-    generateArticle(articleID);
+    generateArticle(articleID,setLoginInterface);
 }
 
 function ToggleLike() {

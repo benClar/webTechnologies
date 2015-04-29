@@ -75,6 +75,10 @@ function serve(request,response)	{
 			return redirect(response,new_url);
 		}
 
+		if(url['path']=="/blank.html")	{
+			return redirect(response,"https://" + request['headers']['host'].split(":")[0] + ":8001/blank.html?subPage=all");
+		}
+
 		switch(request["headers"]["content-type"])	{
 			case "application/x-www-form-urlencoded":
 				return formRequest(request, response);
@@ -121,13 +125,12 @@ function formRequest(request, response)	{
 		switch(action["request"])	{
 			case "articleRequest":
 				if(action["data"]["aTag"] == "all")	{
-					console.log(action["data"]["index"])
 					var queryString = "SELECT a.title, a.articleID, a.groupedTags, a.submissionDate, (CAST(SUM(vote.upvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as upvotes, (CAST(SUM(vote.downvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as downvotes FROM( SELECT article.title, article.submissionDate, article.articleID, GROUP_CONCAT(articleTag.tag,';') as groupedTags FROM article JOIN articleTag ON article.articleID = articleTag.articleID GROUP BY article.articleID, article.title) a LEFT JOIN vote ON a.articleID = vote.articleID GROUP BY a.title, a.articleID, a.groupedTags ORDER BY a.submissionDate DESC;"
-					sqlQuery.getArticleList(queryString,action["data"]["index"],response,finishResponse);
+					sqlQuery.getArticleList(queryString,action["data"]["index"],action["data"]["type"],response,finishResponse);
 				} else {
 					var queryString ="SELECT a.title, a.articleID, a.submissionDate, a.groupedTags, (CAST(SUM(vote.upvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as upvotes, (CAST(SUM(vote.downvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as downvotes FROM( SELECT articleTag.articleID, article.submissionDate, GROUP_CONCAT(articleTag.tag,';') as groupedTags , article.title FROM( SELECT * FROM articleTag WHERE articleTag.tag = '"+ action["data"]["aTag"] +"') matchedArticles JOIN articleTag ON articleTag.articleID = matchedArticles.articleID JOIN article on article.articleID = matchedArticles.articleID GROUP BY article.title, articleTag.articleID) a LEFT JOIN vote ON a.articleID = vote.articleID GROUP BY a.title, a.articleID, a.groupedTags ORDER BY a.submissionDate DESC";
+					sqlQuery.getArticleList(queryString,action["data"]["index"],action["data"]["type"],response,finishResponse);
 				}
-				// sqlQuery.query(queryString, response, finishResponse);
 				break;
 			case "createNewAccount":
 				accounts.createAccounts(action["data"]["account"],action["data"]["password"],action["data"]["email"],response,finishResponse);
@@ -158,6 +161,7 @@ function formRequest(request, response)	{
 				// redirect(response,"https://" + request['headers']['host'].split(":")[0] + ":8001" + "/" + action["data"]["target"]);
 				break;
 			case "createNewArticle":
+				console.log("Creating new article");
 				sqlQuery.addNewArticle(action["data"],request.session.data.user,response,finishResponse_String);
 				break;
 			case "loadArticle":
@@ -170,6 +174,65 @@ function formRequest(request, response)	{
 			case "getUserVote":
 				var queryString = "SELECT * FROM vote WHERE articleID = "+ action["data"]["articleID"] + " AND account = '" + request.session.data.user + "'";
 				sqlQuery.query(queryString,response,finishResponse);
+				break;
+			case "getAllTags":
+				if(action["data"]["searchString"] === "all")	{
+					var queryString = "SELECT GROUP_CONCAT(tag.tag,';') AS tags FROM tag" + 
+									" LEFT JOIN(" + 
+									"SELECT * FROM userTag" + 
+									" WHERE account = '" + request.session.data.user + "') userTags" + 
+									" ON userTags.tag = tag.tag" + 
+									" WHERE userTags.tag IS NULL";
+									// console.log(queryString);
+					sqlQuery.query(queryString,response,finishResponse);
+				} else {
+					
+				}
+				break;
+			case "getUserTags":
+				var queryString = "SELECT GROUP_CONCAT(tag,';') AS tags FROM userTag WHERE account = '" + request.session.data.user + "'";
+				sqlQuery.query(queryString,response,finishResponse)
+				break;
+			case "linkUserWithTag":
+				sqlQuery.linkUser(request.session.data.user,action["data"]["tag"],response,finishResponse_String);
+				break;
+			case "unlinkTagWithUser":
+				var queryString = "DELETE from userTag WHERE account = '" + request.session.data.user + "' AND tag = '" +  action["data"]["tag"] + "'";
+				sqlQuery.query(queryString,response,finishResponse);
+				break;
+			case "getSpecificTags":
+				queryString = "SELECT GROUP_CONCAT(tag.tag,';') AS tags FROM tag" + 
+									" LEFT JOIN(" + 
+									"SELECT * FROM userTag" + 
+									" WHERE account = '" + request.session.data.user + "') userTags" + 
+									" ON userTags.tag = tag.tag" + 
+									" WHERE userTags.tag IS NULL AND tag.tag like '%" + action["data"]["searchString"] + "%'";
+				console.log(queryString);
+				sqlQuery.query(queryString,response,finishResponse);
+				break;
+			case "userInterestsArticleRequest":
+			var queryString = "SELECT a.title AS title, a.articleID AS articleID, a.submissionDate AS submissionDate, a.groupedTags as groupedTags, (CAST(SUM(vote.upvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as upvotes, (CAST(SUM(vote.downvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as downvotes " +  
+							"FROM(" + 
+							"SELECT article.articleID, article.title, article.submissionDate, article.author, groupedTags " + 
+							"FROM(" + 
+							"SELECT allTags.articleID, GROUP_CONCAT(allTags.tag,';') AS groupedTags " + 
+							"FROM(" + 
+							"SELECT tag " + 
+							"FROM userTag " + 
+							"WHERE account = '" + request.session.data.user + "') usersTags " + 
+							"JOIN(" + 
+							"SELECT * " + 
+							"FROM articleTag) allTags " + 
+							"ON usersTags.tag = allTags.tag " + 
+							"GROUP BY allTags.articleID) userArticles " + 
+							"JOIN article " + 
+							"ON article.articleID = userArticles.articleID) a " + 
+							"LEFT JOIN vote " + 
+							"ON a.articleID = vote.articleID " + 
+							"GROUP BY a.title, a.articleID, a.groupedTags " + 
+							"ORDER BY a.submissionDate DESC";
+			sqlQuery.query(queryString,response,finishResponse);
+
 			default:
 				break;
 		}
@@ -181,6 +244,7 @@ function formRequest(request, response)	{
 }
 
 function finishResponse_String(err,response,body)	{
+	console.log(body);
 	response.writeHead(200);
 	response.write(body);
     response.end();
@@ -188,6 +252,7 @@ function finishResponse_String(err,response,body)	{
 
 function finishResponse(err,response,body)	{
 	response.writeHead(200);
+	console.log(body);
 	var type = JSON.stringify(body);
 	response.write(type);
     response.end();

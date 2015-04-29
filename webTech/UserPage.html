@@ -5,7 +5,9 @@
 	<meta charset="UTF-8"/>
 	<title>LearnHistory</title>
 	<script src="scripts.js"></script>
+	<script src="ajax.js"></script>
 	<script src="userloginscripts.js"></script>
+	<script src="login_scripts.js"></script>
 	<link rel="stylesheet" type="text/css" href="FrontPageBannerStyle.css"/>
 	<link rel="stylesheet" type="text/css" href="FrontPageArticleStyle.css"/>
 	<link rel="stylesheet" type="text/css" href="FrontPageLeftNavigationStyle.css"/>
@@ -21,27 +23,25 @@
     <div id="bImage"> 
     	<a id="bText" href="./index.html">learnHistory</a>
     		<ul id="wideNavBar" class="Navigation">
-  				<li class="navItem">
-  					<a class="navHyper" id="logInNav" href="javascript:void(0)">Log In</a>
-  				</li>
-  				<li class="navItem">
-  					<a class="navHyper" href="./about.html">About</a>
-  				</li>
+  				<li class="navItem"><a class="navHyper" id="logged_out_menu" href="javascript:void(0)">Log In</a></li>
+  				<li class="navItem"><a class="navHyper" id="logged_in_menu_pref" href="userpage.html">Preferences</a></li>
+  				<li class="navItem"><a class="navHyper" id="logged_in_menu_logout" href="javascript:void(0)">Log Out</a></li>
+  				<li class="navItem"><a class="navHyper" href="./about.html">About</a></li>
 			</ul>
 			<div id='cssmenu'>
 				<ul>
 				 <li class='has-sub '><a href='#'><img alt="smallMenu" src="./images/smallMenu.png"/></a>
 				    <ul>
-				       <li class='has-sub '><a href='#'>Log In</a>
-				       </li>
-				       <li class='has-sub '><a href='#'>About</a>
-				       </li>
+				       <li id="logged_out_menu_mini" class='has-sub '><a href='#'>Log In</a></li>
+				       <li id="logged_in_menu_pref_mini" class='has-sub '><a href="userpage.html">Preferences</a></li>
+				       <li id="logged_in_menu_logout_mini" class='has-sub '><a href='#'>Log Out</a></li>
+				       <li class='has-sub '><a href='#'>About</a></li>
 				    </ul>
 				 </li>
 				</ul>
 			</div>
 		<div class="SearchBar"> 
-			<input type="search" style="width:200px" id="inputOne" value="Search LearnHistory.org" />
+			<input type="search" style="width:200px" id="inputOne" value="Search LearnHistory.org"/>
 		</div>
     </div>
  </div>
@@ -54,24 +54,25 @@
 		</div>
 		<div class = "LogInContents" id="LoginForm">
 			Sign In
-			<form action="UserPage.html">
-  				<input class ="LogInContents" type="text" placeholder="Username"/><br/>
-  				<input class ="LogInContents" type="password" placeholder="Password"/><br/>
- 			 	<input type="submit" value="Submit"/>
+			<form id="login_form">
+				<div class="errorMessage" id="login_error"></div>
+  				<input name="existingUsername" class ="LogInContents" type="text" placeholder="Username"/><br/>
+  				<input name="existingPassword" class ="LogInContents" type="password" placeholder="Password"/><br/>
+ 			 	<input id="login_submit" type="button" value="Submit"/>
 			</form>
 		</div>
 		<div class = "LogInContents" id="RegisterForm">
 			Create a new account
-			<form action="UserPage.html">
-  				<input class ="LogInContents" type="text" placeholder="Username"/><br/>
-  				<input class ="LogInContents" type="password" placeholder="Password"/><br/>
-  				<input class ="LogInContents" type="text" placeholder="Email (Optional)"/><br/>
- 			 	<input type="submit" value="Submit"/>
+			<form id="newUser_form">
+  				<input name="newUserName" class ="LogInContents" type="text" placeholder="Username"/><br/> <div class="errorMessage" id="newUserName_error"></div>
+  				<input name="newPassword" class ="LogInContents" type="password" placeholder="Password"/><br/> <div class="errorMessage" id="newPassword_error"></div>
+  				<input name="newEmail" class ="LogInContents" type="text" placeholder="Email (Optional)"/><br/> <div class="errorMessage" id="newEmail_error"></div>
+ 			 	<input id="newAccount_submit" type="button" value="Submit"/>
 			</form>
 		</div>
 	</div>
 	<div class ="LeftNavBar">
-		<a class="topLeftBrowser" id="createNew" href="./newArticle.html">Submit Article</a>
+		<a class="topLeftBrowser" id="createNew">Submit Article</a>
 		<div class="topLeftBrowser" id="goTo">
 			<div id="goToClose"></div>
 			<div id="goToText">Go To</div>
@@ -196,8 +197,12 @@
 		</div>
 	</div>
 
+
 <div class="PageContent">
 	<ul class="tabs">
+			<li class="currentkeywordItem">
+				<a id="PageTag" class="currentkeywordHyper" href="none.asp"></a>
+			</li>
     	<li>
         	<input type="radio" checked="checked" name="tabs" id="tab1"/>
          	<label for="tab1">Your Tags</label>
@@ -206,14 +211,13 @@
          		<input id="TagSearch" type="text" placeholder="Find Tags"/>
          			<div id="TagBoxWrapper">
          				<div id="aTagLabel">Your Tags</div>
-         				<div id="UserTags" ondragenter="return dragEnter(event)" ondrop="return dragDrop(event)" ondragover="return dragOver(event)">
-
+         				<div id="UserTags" draggable="true" ondragstart="return dragStart(event)"  ondragenter="return dragEnter(event)" ondrop="return dragDrop(event)" ondragover="return dragOver(event)">
          				</div>
          			</div>
 					
 					<div id="TagBoxWrapper">
 						<div id="aTagLabel">All Tags</div>
-						<div id="AllTags" ondragenter="return dragEnter(event)" ondrop="return dragDrop(event)" ondragover="return dragOver(event)">
+						<div id="AllTags" draggable="true" ondragstart="return dragStart(event)" ondragenter="return dragEnter(event)" ondrop="return dragDrop(event)" ondragover="return dragOver(event)">
 							<ul class="ArticleKeyWords" id="allTags">
 
 							</ul>

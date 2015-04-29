@@ -1,7 +1,6 @@
 "use strict";
 
 addLoadEvent(function() {
-    start(); 
     hideElement('cssmenu');
 });
 
@@ -89,6 +88,7 @@ function transitionVerticlePosition(classID, FinalHeight)	{
 }
 
 function showElement(elementID)	{
+	// console.log(elementID);
 	document.getElementById(elementID).style.display = "block";
 }
 
@@ -163,8 +163,6 @@ function start()	{
     	console.log("here");
     	submitArticleClick(showLogin);
     });
-
-    setLoginInterface();
 
 }
 

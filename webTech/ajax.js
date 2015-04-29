@@ -1,6 +1,8 @@
 "use strict"
 
 var ARTICLES_PER_PAGE = 10;
+var STEP_FORWARD = 10;
+var STEP_BACK = 10;
 
 var xmlhttp;
 
@@ -11,11 +13,11 @@ if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
 	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 }
 
-function generateArticle(articleID)	{
+function generateArticle(articleID,callback)	{
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 			var databaseResult = JSON.parse(xmlhttp.responseText);
-			formatArticle(databaseResult);
+			formatArticle(databaseResult,callback);
 		}
 	}
 	xmlhttp.open("POST","https://localhost:8001/",true);
@@ -23,12 +25,12 @@ function generateArticle(articleID)	{
 	xmlhttp.send('{"request":"loadArticle","data" : { "articleID":"' + articleID +'"} }');
 }
 
-
-
 function create_new_account(details)	{
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			var databaseResult = JSON.parse(xmlhttp.responseText)
+			var databaseResult = JSON.parse(xmlhttp.responseText);
+			
+			window.location.href = 'https://localhost:8001/userpage.html'
 		}
 	}
 	xmlhttp.open("POST","https://localhost:8001/",true);
@@ -40,8 +42,12 @@ function logout()	{
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 			hideElement('logged_in_menu_logout'); 
+			hideElement('logged_in_menu_logout_mini');
 			hideElement('logged_in_menu_pref'); 
+			hideElement('logged_in_menu_pref_mini')
+
 			showElement('logged_out_menu');
+			showElement('logged_out_menu_mini');
 		}
 	}
 	xmlhttp.open("POST","https://localhost:8001/",true);
@@ -110,30 +116,81 @@ function setLoginInterface()	{
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 			var loggedInResult = JSON.parse(xmlhttp.responseText);
-			if(loggedInResult["data"]["loggedIn"] == true)	{
-				console.log(loggedInResult["data"]["loggedIn"]);
+			console.log(loggedInResult);
+			if(loggedInResult["data"]["loggedIn"] === true)	{
 	    		hideElement('logged_out_menu'); 
-	    		showElement('logged_in_menu');
+	    		hideElement('logged_out_menu_mini');
+
+	    		showElement('logged_in_menu_pref');
+	    		showElement('logged_in_menu_pref_mini');
+
+	    		showElement('logged_in_menu_logout');
+	    		showElement('logged_in_menu_logout_mini');
+	    		
+	    		if(document.getElementById('tab-content3') != null)	{
+	    			console.log("HERE");
+	    			// showElement('tab3');
+	    			// showElement('tab_3');
+	    			// showElement('tab-content3');
+	    			document.getElementById('tab_3').style.display = "inline";
+	    		}
 	   		} else	{
 	    		hideElement('logged_in_menu_logout'); 
+	    		hideElement('logged_in_menu_logout_mini');
+
 	    		hideElement('logged_in_menu_pref'); 
+	    		hideElement('logged_in_menu_pref_mini');
+
 	    		showElement('logged_out_menu');
+	    		showElement('logged_out_menu_mini');
+	    		if(document.getElementById('tab-content3') != null)	{
+	    			console.log("HERE4");
+	    			hideElement('tab_3');
+	    			hideElement('tab3');
+	    			hideElement('tab-content3');
+	    		}
 	    	}
 		}
 
 	}
-	
 	xmlhttp.open("POST","https://localhost:8001/",true);
 	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
 	xmlhttp.send('{"request":"logInStatus"}');
 }
 
-function login(details)	{
+function linkTagWithUser(tag,callback)	{
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			var result = xmlhttp.responseText
+			console.log(result);
+			callback();
+		}
+	}
+	xmlhttp.open("POST","https://localhost:8001/",true);
+	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+	xmlhttp.send('{"request":"linkUserWithTag","data" : { "tag":"' + tag + '"} }');
+}
+
+function unlinkTagWithUser(tag,callback)	{
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			var result = xmlhttp.responseText
+			console.log(result);
+			callback();
+
+		}
+	}
+	xmlhttp.open("POST","https://localhost:8001/",true);
+	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+	xmlhttp.send('{"request":"unlinkTagWithUser","data" : { "tag":"' + tag + '"} }');
+}
+
+function login(username,password)	{
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 			var passwordResult = JSON.parse(xmlhttp.responseText);
 			if(passwordResult["data"]["passwordMatched"]==true)	{
-				successfulLogin(details["existingUsername"]);
+				successfulLogin(username);
 			} else	{
 				setError("login_error","Username-Password combination incorrect");
 			}
@@ -141,7 +198,7 @@ function login(details)	{
 	}
 	xmlhttp.open("POST","https://localhost:8001/",true);
 	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-	xmlhttp.send('{"request":"login","data" : { "account":"' + details['existingUsername'] + '", "password":"' + details['existingPassword'] + '"} }');
+	xmlhttp.send('{"request":"login","data" : { "account":"' + username + '", "password":"' + password + '"} }');
 }
 
 function successfulLogin(username)	{
@@ -158,11 +215,12 @@ function successfulLogin(username)	{
 
 
 function createArticle(details)	{
-	// xmlhttp.onreadystatechange=function() {
-	// 	if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-
-	// 	}
-	// }
+	xmlhttp.onreadystatechange=function() {
+	 	if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+	 		var response = JSON.parse(xmlhttp.responseText);
+	 		// window.location.href = 'https://localhost:8001/article.html?articleTag=' + response["articleID"];
+		}
+	}
 	console.log(details);
 	xmlhttp.open("POST","https://localhost:8001/",true);
 	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
@@ -173,7 +231,7 @@ function checkUsernameUnique(details,callback)	{
 	var result;
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			var databaseResult = JSON.parse(xmlhttp.responseText)
+			var databaseResult = JSON.parse(xmlhttp.responseText);
 			if(databaseResult.length == 0){
 				result =  true;
 				callback(details,result);
@@ -189,22 +247,33 @@ function checkUsernameUnique(details,callback)	{
 }
 
 
-function getArticles(type,target,tag,articleData) {
+function getArticles(type,target,tag,articleData,callback) {
 	tag = tag.replace("+"," ");
 	setPageTag(tag);
 
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			var databaseResult = JSON.parse(xmlhttp.responseText)
+
+			var databaseResult = JSON.parse(xmlhttp.responseText);
 			var output = formatRows(databaseResult);
-			console.log("AJAX");
-			console.log(output.length);
-			if(output == "none"){ return; }
-			console.log(output.length);
+
+			if(callback != undefined)	{
+				callback();
+			}
+
+			if(output == "none"){
+				STEP_BACK =  articleData[target] % ARTICLES_PER_PAGE;
+				STEP_FORWARD = 0;
+				return; 
+			}
+
+			adjustStepping(output);
+
 			if(type != "curr")	{
 				setArticleIndex(type,target,articleData);
 			}
 
+			console.log("for next request lower bound is " + articleData[target]);
 			document.getElementById(target).innerHTML = "";
 			for(var article = 0; article < output.length; article++)	{
 				document.getElementById(target).innerHTML += output[article];
@@ -220,9 +289,28 @@ function getArticles(type,target,tag,articleData) {
 			output =[];
 		}
 	}
+	console.log("lower bound before request: " + articleData[target])
+	console.log(target);
 	xmlhttp.open("POST","https://localhost:8001/",true);
 	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-	xmlhttp.send('{"request":"articleRequest","data" : { "index":"' + articleData[target] + '","aTag":"' + tag +'","order":"'+ target +'"} }');
+	switch(target){
+		case "yourInterestsContent":
+			xmlhttp.send('{"request":"userInterestsArticleRequest","data" : { "index":"' + articleData[target] + '","aTag":"' + tag +'","order":"'+ target +'","type":"' + type + '"} }');
+		break;
+		default:
+			xmlhttp.send('{"request":"articleRequest","data" : { "index":"' + articleData[target] + '","aTag":"' + tag +'","order":"'+ target +'","type":"' + type + '"} }');
+		break;
+	}
+}
+
+function adjustStepping(output)	{
+	if(output.length < ARTICLES_PER_PAGE)	{
+		STEP_BACK = output.length;
+		STEP_FORWARD = 0;
+	} else	{
+		STEP_FORWARD = 10;
+		STEP_BACK = 10;
+	}	
 }
 
 function setPageTag(tag)	{
@@ -233,15 +321,69 @@ function setPageTag(tag)	{
 	}
 }
 
-function formatArticle(article)	{
+function formatArticle(article,callback)	{
 	document.getElementById("bannerText").innerHTML = article[0]["title"];
 	generateArticleVotes(article[0]);
 	document.getElementById("ArticleBodyContent").innerHTML= article[0]["articleContent"];
 	document.getElementById('InArticle_ArticleKeyWords').innerHTML = addTags(article[0]["groupedTags"]);
-	setVotingButtons(articleID);
+	setVotingButtons(articleID,callback);
 }
 
-function setVotingButtons(articleID)	{
+function getAvailableTags(callback)	{
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			var databaseResult = JSON.parse(xmlhttp.responseText);
+			if(databaseResult[0]["tags"] != null)	{
+				generateTags("allTags",databaseResult[0]["tags"].split(";"));
+
+			}
+			getUserTags(callback);
+		}
+	}
+
+	xmlhttp.open("POST","https://localhost:8001/",true);
+	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+	xmlhttp.send('{"request":"getAllTags","data" : {"searchString":"all"} }');
+}
+
+function searchTags(searchTerm)	{
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			var databaseResult = JSON.parse(xmlhttp.responseText);
+			console.log(databaseResult);
+			if(databaseResult[0]["tags"] != null)	{
+				generateTags("allTags",databaseResult[0]["tags"].split(";"));
+			} else {
+				generateTags("allTags",[]);
+			}
+		}
+	}
+
+	xmlhttp.open("POST","https://localhost:8001/",true);
+	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+	xmlhttp.send('{"request":"getSpecificTags","data" : {"searchString":"'+ searchTerm +'"} }');
+}	
+
+
+function getUserTags(callback)	{
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			var databaseResult = JSON.parse(xmlhttp.responseText);
+			if(databaseResult[0]["tags"] != null)	{
+				generateTags("UserTags",databaseResult[0]["tags"].split(";"))
+				if(callback != undefined)	{
+					callback();
+				}
+			}
+		}
+	}
+
+	xmlhttp.open("POST","https://localhost:8001/",true);
+	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+	xmlhttp.send('{"request":"getUserTags","data" : {"searchString":"User"} }');
+}
+
+function setVotingButtons(articleID,callback)	{
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 			var databaseResult = JSON.parse(xmlhttp.responseText);
@@ -252,6 +394,7 @@ function setVotingButtons(articleID)	{
 					ToggleLike();
 				}
 			}
+			callback();
 		}
 	}	
 	xmlhttp.open("POST","https://localhost:8001/",true);
@@ -281,7 +424,7 @@ function addTags(tags)	{
 	var output="";
 	tags = tags.split(";")
 	for(var i = 0; i < tags.length; i++)	{
-		output = output.concat('<li class="keywordItem"><a class="keywordHyper" href="sub_page.html?' + tags[i] + '">'+tags[i] + '</a></li> ');
+		output = output.concat('<li class="keywordItem"><a class="keywordHyper" href="blank.html?subPage=' + tags[i] + '">'+tags[i] + '</a></li> ');
 	}
 	return output;
 }
@@ -294,15 +437,15 @@ function formatRows(result)	{
 	var output = [];
 	var article;
 	var tagFormat;
-	if(result == "none")	{ return "none"; }
-
+	console.log(result);
+	if(result === "none")	{ return "none"; }
 	for(cRow = 0; cRow < rowCount; cRow++)	{
+		console.log(result[cRow]["groupedTags"]);
 		result[cRow]["groupedTags"] = result[cRow]["groupedTags"].split(";");
 		article = '<div class="ArticleElement"> <div class="ArticleThumbNail"> <img alt="thumbnail" src="./images/pres_Kennedy.jpg"/> </div> <div class="ArticleTitle"> <a href="./article.html?articleTag=' + result[cRow]["articleID"] + '">' + result[cRow]["title"] + '</a> <ul class="ArticleKeyWords">';
-		
 		for(cTag = 0; cTag < result[cRow]["groupedTags"].length; cTag++)	{	
 			tagFormat = result[cRow]["groupedTags"][cTag].replace(" ", "+");
-			article = article.concat('<li class="keywordItem"><a class="keywordHyper" href="sub_page.html?subPage=' + tagFormat + '">' + result[cRow]["groupedTags"][cTag] + '</a></li>');
+			article = article.concat('<li class="keywordItem"><a class="keywordHyper" href="blank.html?subPage=' + tagFormat + '">' + result[cRow]["groupedTags"][cTag] + '</a></li>');
 		}
 		article = article.concat('</ul> </div> <div class="ArticleRatings"> <div id = "upvote_' + result[cRow]["articleID"] + '" class="upvotes">50%</div> <div id="downvote_' + result[cRow]["articleID"] + '" class="downvotes">50%</div> </div> </div>')
 		output.push(article);
@@ -310,6 +453,8 @@ function formatRows(result)	{
 
 	return output;
 }
+
+
 
 function countJSON(jsonObject)	{
 	var i = 0
@@ -323,12 +468,15 @@ function setArticleIndex(type,target,articleData)	{
 
 	switch(type)	{
 		case "next":
-			articleData[target] += ARTICLES_PER_PAGE;
+			articleData[target] += STEP_FORWARD;
 			break;
 		case "prev":
-			if(articleData[target] > 0)	{
-				articleData[target] -= ARTICLES_PER_PAGE;
-			}
+			if (articleData[target] === 10)	{
+
+			} else{
+				articleData[target] -= STEP_BACK;
+			} 
+			
 			break;
 		default:
 			break;

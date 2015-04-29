@@ -1,5 +1,5 @@
 addEventListener("load",function() {
-    startLoginScripts(); 
+     
 });
 
 var MINIMUM_USER_NAME_LENGTH = 6;
@@ -9,10 +9,6 @@ var MAXIMUM_PASSWORD_LENGTH = 8;
 
 
 function startLoginScripts()	{
-	document.getElementById("login_submit").addEventListener('click',function(e)	{
-
-	});
-
 	document.getElementById("newAccount_submit").addEventListener('click',function(e)	{
 		var formElements = document.getElementById('newUser_form').elements;
 		var data = {};
@@ -26,7 +22,7 @@ function startLoginScripts()	{
 
 	document.getElementById("login_submit").addEventListener('click',function(e)	{
 		var data = getFormData(document.getElementById('login_form').elements);
-		login(data);
+		login(data['existingUsername'],data['existingPassword']);
 	});
 }
 

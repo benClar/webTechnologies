@@ -9,10 +9,13 @@ var articleCount = 0;
 var articleMinimum = 50;
 
 addEventListener('load',function() {
+  start();
   submitArticleStart(); 
   count(ARTICLE_MAX,"ASubBox","ArticleWordCount");
   count(TITLE_MAX,"titleSubBox","ArticleTitleCount");
   countTagBox(tags);
+  startLoginScripts();
+  setLoginInterface();
 });
 
 function submitArticleStart()	{
@@ -76,10 +79,20 @@ function submitArticleStart()	{
 		}
 		if(validateArticle())	{
 			// data = formatTags(data);
+			data["TagBox"] = toCapitalCase(data["TagBox"]);
 			console.log(data);
 			createArticle(data);
 		}
 	});
+}
+
+// http://stackoverflow.com/questions/4878756/javascript-how-to-capitalize-first-letter-of-each-word-like-a-2-word-city
+function toCapitalCase(str)	{
+	str = str.toLowerCase()
+    return str.replace(/\w\S*/g, function(txt){
+    	return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+
 }
 
 
@@ -171,7 +184,7 @@ function countTagBox(tagData)	{
 function formatTags(data)	{
 	data["TagBox"] = data["TagBox"].split(";");
 	for(var i = 0; i < data["TagBox"].length; i++)	{
-		data["TagBox"][i] = data["TagBox"][i].trim();
+		data["TagBox"][i] = data["TagBox"][i].trim().toLowerCase();
 		if(data["TagBox"][i] == "")	{
 			data["TagBox"].splice(i,1);
 		}

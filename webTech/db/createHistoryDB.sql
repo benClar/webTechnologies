@@ -39,34 +39,41 @@ CREATE TABLE vote(
 	FOREIGN KEY(account) REFERENCES user ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO tag(tag)
-VALUES("WW2"),
-	("War"),
-	("Conflict"),
-	("US Presidents"),
-	("USA"),
-	("Civil Rights");
+CREATE TABLE userTag(
+	account VARCHAR(20) NOT NULL,
+	tag VARCHAR(20) NOT NULL,
+	FOREIGN KEY(account) REFERENCES user ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(tag) REFERENCES tag on DELETE CASCADE ON UPDATE CASCADE
+)
 
-INSERT INTO article (title, articleContent, author, submissionDate)
-VALUES("Why WW2 Ended",
-	"This is the content of my test article.  This article is about why WW2 ended.",
-	"bclarke",
-	"2015-04-05"),
-	("The Election of Preseident Obama",
-	"This is the content of my test article.  This article is about the Election of President Obama",
-	"bclarke",
-	"2015-04-05");
+-- INSERT INTO tag(tag)
+-- VALUES("WW2"),
+-- 	("War"),
+-- 	("Conflict"),
+-- 	("US Presidents"),
+-- 	("USA"),
+-- 	("Civil Rights");
 
-INSERT INTO articleTag(articleID,tag)
- VALUES("1","WW2"),
- 	("1","War"),
- 	("1","Conflict"),
- 	("2","USA"),
- 	("2", "US Presidents"),
- 	("2", "Civil Rights");
+-- INSERT INTO article (title, articleContent, author, submissionDate)
+-- VALUES("Why WW2 Ended",
+-- 	"This is the content of my test article.  This article is about why WW2 ended.",
+-- 	"bclarke",
+-- 	"2015-04-05"),
+-- 	("The Election of Preseident Obama",
+-- 	"This is the content of my test article.  This article is about the Election of President Obama",
+-- 	"bclarke",
+-- 	"2015-04-05");
 
- INSERT INTO vote(upvote,downvote, articleID, account)
- VALUES("1","0","1","benjiC"),
- 	("1","0","1","swood"),
- 	("1","0","2","swood"),
- 	("0","1","2","benjiC");
+-- INSERT INTO articleTag(articleID,tag)
+--  VALUES("1","WW2"),
+--  	("1","War"),
+--  	("1","Conflict"),
+--  	("2","USA"),
+--  	("2", "US Presidents"),
+--  	("2", "Civil Rights");
+
+ -- INSERT INTO vote(upvote,downvote, articleID, account)
+ -- VALUES("1","0","1","benjiC"),
+ -- 	("1","0","1","swood"),
+ -- 	("1","0","2","swood"),
+ -- 	("0","1","2","benjiC");

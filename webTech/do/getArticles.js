@@ -18,23 +18,16 @@ function closeDB()	{
 function query(queryString,response,callback)	{
 	openDB();
 	db.all(queryString, function(err, row) {
-		// console.log(row);
 		callback(null,response,row);
 	});
 	closeDB();
 	return result;
 }
 
-function getArticleList(queryString,upperBoundary,response,callback)	{
+function getArticleList(queryString,boundary,type,response,callback)	{
 	openDB();
 	db.all(queryString, function(err, row) {
-		result =[];
-		for(var start = upperBoundary - 10; start < upperBoundary && start < row.length; start++ )	{
-			console.log(start);
-			console.log(row[start]);
-			result.push(row[start]);
-		}
-		console.log(result.length);
+		var result = getRows(type,row,boundary);
 		if(result.length == 0)	{
 			callback(null,response,"none");
 		} else	{
@@ -44,23 +37,61 @@ function getArticleList(queryString,upperBoundary,response,callback)	{
 	closeDB();	
 }
 
+function linkUser(username,tag,response,callback)	{
+	openDB();
+	db.all("SELECT * FROM userTag WHERE account = ? AND tag = ?",[username,tag],function(err,row){
+		if(row.length == 0)	{
+			db.all("INSERT INTO userTag(account,tag) VALUES(?,?)",[username,tag],function(err,row){
+				callback(null,response,"accountLInked");
+			});
+		} else	{
+			callback(null,response,"noAction");
+		}
+	});
+	
+	closeDB();
+}
+
+function getRows(type,row,boundary)	{
+	result =[];
+
+	if(type === "prev")	{
+		// console.log("Boundary  " + boundary);
+		// console.log("Start row " + (parseInt(boundary) - 10));
+		// console.log("result length: " + row.length)
+		for(var curr = parseInt(boundary) - 20; (curr < parseInt(boundary - 10)) && (curr < row.length) && (curr >= 0); curr++ )	{
+			console.log(curr);
+			result.push(row[curr]);
+			// console.log(row[curr]);
+		}
+	} else if (type === "next" || type === "curr")	{
+		for(var curr = boundary, boundary = parseInt(boundary) + 10 ; curr < boundary && curr < row.length; curr++ )	{
+			// console.log("boundary: " + boundary);
+			// console.log("article: " + curr);
+			result.push(row[curr]);
+		}
+	}
+	return result;
+}
+
 function addNewArticle(data, user, response,callback)	{
 	openDB();
+	// console.log("HERE2");
 	formatTags(data);
-	insertTags(data["tags"]);
-	insertArticle(data,user);
+	insertTags(data["tags"],0,data,user,response,callback);
+	// insertArticle(data,user);
 
-	console.log(data);
-	console.log(user);
+	// console.log(data);
+	// console.log(user);
 	closeDB();
 }
 
 function logVote(data,user,response,callback)	{
-	console.log(data);
+	// console.log(data);
 	openDB();
 		db.all("SELECT * FROM vote WHERE articleID = ? AND account = ?",[data["articleID"],user], function(err, row) {
 		if(row.length > 0)	{
-			console.log(row);
+			// console.log(row);
 			resetVote(data,row[0], user,response,callback);
 		} else	{
 			newVote(data,row, user,response,callback);
@@ -97,21 +128,21 @@ function resetVote(data,results, user,response,callback)	{
 function updateVote(data,results, user,response,callback)	{
 		switch(data["voteType"])	{
 			case "like":
-				console.log("LIKE VOTE IS:");
+				// console.log("LIKE VOTE IS:");
 				results["upvote"] = (1 + results["upvote"]) % 2;
-				console.log(results["upvote"]);
-				console.log(user);
-				console.log(results["articleID"]);
+				// console.log(results["upvote"]);
+				// console.log(user);
+				// console.log(results["articleID"]);
 				db.all("UPDATE vote SET upvote=? WHERE articleID=? AND account = ?",[results["upvote"], results["articleID"],user], function(err,row){
 					cleanUpVotes(data,results,user,response,callback);
 				});
 				break;
 			case "dislike":
-				console.log("DISLIKE VOTE IS:");
+				// console.log("DISLIKE VOTE IS:");
 				results["downvote"] = (1 + results["downvote"]) % 2;
-				console.log(results["downvote"]);
-				console.log(user);
-				console.log(results["articleID"]);
+				// console.log(results["downvote"]);
+				// console.log(user);
+				// console.log(results["articleID"]);
 				db.all("UPDATE vote SET downvote=? WHERE articleID=? AND account = ?",[results["downvote"], results["articleID"],user],function(err,row){
 					cleanUpVotes(data,results,user,response,callback);
 				});
@@ -123,14 +154,11 @@ function updateVote(data,results, user,response,callback)	{
 
 function cleanUpVotes(data,results, user,response,callback)	{
 	db.run("DELETE FROM vote WHERE upvote=0 AND downvote=0;",function(err,row)	{
-		console.log("HERE:")
-		console.log(results);
 		getPercentageVotes(results["articleID"],response,callback);
 	});
 }
 
 function getPercentageVotes(articleID,response,callback)	{
-	console.log(articleID);
 	db.all("SELECT (CAST(SUM(vote.upvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as upvotes, (CAST(SUM(vote.downvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as downvotes FROM vote WHERE articleID = ?",[articleID],function(err,row){
 		if(row.length>0)	{
 			callback(null,response,row[0]);
@@ -141,31 +169,43 @@ function getPercentageVotes(articleID,response,callback)	{
 	});
 }
 
-function insertTags(tags)	{
-	for(var i = 0; i < tags.length; i++)	{
-		db.run("INSERT INTO tag VALUES (?)",tags[i],function(err, row) {
-		if(err){
-
-		}
-		});
+function insertTags(tags,tagNum, data,user,response, callback)	{
+	if(tagNum == tags.length)	{
+		insertArticle(data,user,response,callback);
+		return;
 	}
-	
+
+	db.run("INSERT INTO tag VALUES (?)",tags[tagNum],function(err, row) {
+		if(err){
+			
+		}
+		insertTags(tags,tagNum + 1, data,user,response, callback);
+	});
 }
 
-function insertArticle(data, user)	{
+function insertArticle(data, user, response, callback)	{
 	var submissionTime = new Date().getTime();
-	console.log(data);
 	db.run("INSERT INTO article(title, articleContent,submissionDate,author) VALUES (?,?,?,?)",[data['title'],data['articleBody'],submissionTime,user],function(err, row) {
 	 	if(err){
 
 	 	} else {
 			db.all("SELECT articleID from article WHERE submissionDate = ?",[submissionTime], function(err,row)	{
-				for(var i = 0; i < data["tags"].length; i++)	{
-					db.run("INSERT INTO articleTag(articleID,tag) VALUES (?,?)",[row[0]["articleID"],data["tags"][i]])
-				}
+				linkArticles(row, data, 0, response, callback)
 			});
 		}
 	});
+}
+
+function linkArticles(rows, data, tagNumber, response, callback)	{
+	if(tagNumber == data["tags"].length)	{
+		var articleID = '{"articleID":"' + rows[0]["articleID"] + '"}';
+		callback(null,response,articleID);
+		return;
+	}
+	db.all("INSERT INTO articleTag(articleID,tag) VALUES (?,?)",[rows[0]["articleID"],data["tags"][tagNumber]], function(err,row)	{
+		linkArticles(rows, data, tagNumber + 1, response, callback);
+	});
+
 }
 
 function formatTags(data)	{
@@ -187,3 +227,4 @@ module.exports.query = query;
 module.exports.addNewArticle = addNewArticle;
 module.exports.logVote = logVote;
 module.exports.getArticleList = getArticleList;
+module.exports.linkUser = linkUser;
