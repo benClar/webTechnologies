@@ -54,7 +54,7 @@ function linkUser(username,tag,response,callback)	{
 
 function getRows(type,row,boundary)	{
 	result =[];
-
+	console.log("BOUNDARY" + boundary);
 	if(type === "prev")	{
 		// console.log("Boundary  " + boundary);
 		// console.log("Start row " + (parseInt(boundary) - 10));

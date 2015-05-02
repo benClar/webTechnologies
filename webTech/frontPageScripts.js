@@ -15,6 +15,9 @@ var articleData = {
 function startArticleScripts()	{
 	var url = location.href;
     var parts = url.split("?");
+    if(parts[1] == undefined)	{
+    	window.location.href = 'https://localhost:8001/index.html?subPage=all'
+    }
     var subPageTag = parts[1].split("=")[1]
     console.log(url);
 	getArticles("next","NewContent",subPageTag,articleData,setLoginInterface);
@@ -39,12 +42,12 @@ function startArticleScripts()	{
 		console.log(articleData["ControversialContent"]);
 	});
 
-	document.getElementById("nextArticleControversial").addEventListener('click',function(e)	{
+	document.getElementById("nextArticleyourInterestsContent").addEventListener('click',function(e)	{
 		getArticles("next","yourInterestsContent",subPageTag,articleData);
 		console.log(articleData["ControversialContent"]);
 	});
 
-	document.getElementById("prevArticleControversial").addEventListener('click',function(e)	{
+	document.getElementById("prevArticleyourInterestsContent").addEventListener('click',function(e)	{
 		getArticles("prev","yourInterestsContent",subPageTag,articleData);
 		console.log(articleData["ControversialContent"]);
 	});

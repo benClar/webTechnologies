@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  lang="en-GB" xml:lang="en-GB">
+<head>
+<meta c="UTF-8"/>
+<title>Report</title>
+</head>
+<body>
+<h1>Introduction</h1>
+
+<p>In this assignment, I have successfully implemented the server side requirements of the previous, client-side only site.  I have kept the functionality of this final version closely in line with the original aims of the site.  My focus in this assignment has been on integrating the client-side with the server-side.  I have decided to avoid using third parties libraries such as express to try to gain a deeper knowledge of what these libraries actually do.  Thus, I have achieved good functionality using Node, Javascript and Ajax.
+<br/><br/>
+I have created an https-http server in node, a relatively complex DB schema using sqlite3, tried to ensure security, and implemented a good degree of different client-server functionality on each page of my website.</p>
+
+<h2>Aim of the Website</h2>
+
+<p>  It will be useful to reiterate the aim of my website.  The website aims to to provide a platform for users to quickly learn and share information on a variety of historical topics.  The site is made up of articles, which are stored and groups by 'tags'.  Articles can have four tags.
+<br/><br/>
+All users can submit articles, which have a limit of 300 characters and can be voted as "liked" or "disliked". The site aims to build on elements of Wikipedia, Reddit and Twitter.</p>
+
+<h1>Functionality</h1>
+
+<h2>Server</h2>
+
+As above, I wrote my server in Node without the use of third parties libraries (apart from the implementation of sessions).  I took ideas for the test server supplied in the previous assignment, however, I re-wrote this server from scratch.  Initially, i wrote the http section.  Then implemented https and the key/ certificate.  Then, I incorporated functionality for my server to recognise special requests coming in, which were those with the header "application/x-www-form-urlencoded".  This is how I set up communication between the client and server.  When a request with this header came in, the server checked the body and performed a set action.  These actions were usually done by calling a function in the /do/getArticles.js module or /do/createAccounts.js module. This splits up my server functionality into two: firstly, to manipulate and display site content, secondly to manage user accounts.  My server ensures that files accessed are constrained to the current directory by prepending "." to all urls that come in.  Additionally, I have avoided static URLs by prepending site-[Random Letter] in a way similar to the development server.
+
+<h2>Database Schema</h2>
+
+<p>In order to deliver the required functionality for my site, it was necessary to have a relatively complex database schema.  The database needed to store the following data:
+
+<ol>
+  <li>All unique tags that have been associated with articles.  Tags are created when a user submits an article and enters words seperated with ';' in the submit article form.</li>
+  <li>All users that have registered with the site</li>
+  <li>The author of each article</li>
+  <li>The number of 'upvotes' and 'downvotes' that an article has recieved</li>
+  <li>all votes that each user has made on articles: We have to track this to stop users voting on articles multiple times, and also so users can see how they have voted on each article, and change it if desired.</li>
+  <li>Tags that users have specified an interest in</li>
+  <li>Association of tags and articles</li>
+</ol>
+
+<p>In this way, an appropriate schema for my database was central to the success of my aims for this server side assignment: All functionality depended on being able to get the above data.</p>
+
+<img alt="reportimg" src="Images/dbSchema.png"/>
+
+<ul>
+  <li><b>User</b>:Stores User details</li>
+  <li><b>Votes</b>:Stores votes on each article in relation to each user.</li>
+  <li><b>Article</b>: Stores article details</li>
+  <li><b>articleTag</b>:Relates articles to tags they are associated with</li>
+  <li><b>Tag</b>:Stores all unique tags</li>
+  <li><b>userTag</b>:Stores all tag relationship with each user: the tags that each user has identified as being interested in</li>
+  <li><b>Passwords</b>:Hashed Passwords and Salt for each account</li>
+</ul>
+
+
+<h2>AJAX : Client-Server Communication</h2>
+
+<p>I decided to use AJAX to send requests to my server.  I chose this as it allowed content to be delivered to the page without requiring a page refresh: This is a key requirement for my site to allow lists of articles to be browsed and deliver the functionality in user preferences that will be discussed later in this report.
+
+For this assignment, the basic data flow of server requests are as follows:</p>
+<ol>
+  <li>Event listeners added to specified elements on page load</li>
+  <li>AJAX functions send xmlhttp request with customised header and body to server as JSON object</li>
+  <li>Server interprets request in via header and body</li>
+  <li>Server sends back required data</li>
+  <li>AJAX waits for response with xmlhttp.onreadystatechange</li>
+  <li>Data used to make any changes on client side</li>
+</ol>
+
+<p>Each page of the site has quite different server requirements.  Thus, each page has a dedicated script: for example, index.html uses frontPageScripts.js.  Each page's  script sets up all the required server side communication in the way described above.  It was important to get the ordering of requests right, especially when multiple page load requests were required.  For example, on the main page, we have to check if the user is logged in and we have to load articles on page load: these AJAX requests interupted each other if they were sent at the same time (due to their asynchronous nature).  It was nesseary to put thought into how callbacks were used to ensure requests were sent in sequence to the server.</p>
+
+<h2>Creating Accounts, Logging in and Security</h2>
+
+<p>My website revolves around users' creating accounts and submitting articles.  To create an account, users can click on the login icon.  When a user creates an account, I have included some client-side validation that was not in the previous submission.  I felt it was relevant to include this now as data needs to be validated before being put into the database.  It is also necessary to validate that the account name is unique, which requires a server request: </p>
+<img alt="reportimg" src="Images/login_1.png"/>
+<br/><br/>
+<p>Thus, after the information in the form had been validated (the account name has to be a certain length and the password had to have special characters etc.), we validate if the account already exists in the server.  Due to the asynchronous nature of node, the function that sends the request to create the account has to be passed as a callback to the function that checks if the account name is unique, so that if the request that the account name is unique is true, the account is then created.
+<br/><br/>
+Passwords are stored hashed with sha512 and stored with 32 bytes of salt.  All the functions required to create accounts and validate passwords on log in are in do/createAccount.js.
+<br/><br/>
+The client-side elements and functionality available to the user depend on whether the user is logged in or not.  Thus, on page load of <b>every page on the site, a request goes to the server to check whether there is an active session.</b>  For example, on every page if a user is not logged in the banner will look like this:
+<img alt="reportimg" src="Images/banner_loggedout.png"/>
+<br/><br/>
+If the user is logged in, the banner will look like:
+<img alt="reportimg" src="Images/banner_loggedin.png"/>
+<br/><br/>
+Allowing the user to access their preference page or log out. 
+<br/><br/>
+I implemented cookies for this server side assignment using session.js[1].  
+<br/><br/>
+Finally, with regards to security, I implemented HTTPS in all pages of my site.  I deemed this necessary as you are able to log in and send passwords from every page, due to the banner.  If you try to visit the website on an http connection, you will get redirected to an HTTPS connection to that page.  I implemented my own key and certificate for this.
+
+</p> 
+
+<h2>index.html</h2>
+
+<p>This page is used to display a list of articles to the user.  It is used to display "all" articles, acting as the front page for the site.  It is also used to display a specified 'sub' article page, showing all articles that have a particular tag.
+<br/><br/>
+Depending on whether the request is coming from a logged in user, a 'your interests' tag is visible, or not:</p>
+<img alt="reportimg" src="Images/interests_login.png"/>
+<br/><br/>
+<p>A request is sent to the server to retrieve the first 10 articles.  The information that has to be returned to display each article is as follows:
+<ul>
+  <li>Article Title</li>
+  <li>Tags associated with that article</li>
+  <li>Article ID</li>
+  <li>Upvotes and Down votes as a percentage</li>
+</ul>
+The page maintains an object that holds the current 'boundary' for currently displayed articles.  For example, after displaying the first 10 'new' articles, this boundary is set to 10.  This boundary value is sent along with the request, so that the server can decide which rows of data need to be return for display.  If the request is a 'next' request, the server would then return rows 10-20, and the 'boundary' would be set to 20.  In this example, if the request is a 'prev' request, the request would return articles 0-10 again (The page would not change).  A boundary value is maintained for the 'new' tab, the 'controversial' tab and the 'your interests' tab.  In this way, I have used the server side to perform the computationally expensive work of manipulating the results before sending them back to the client.
+<br></br>
+To get all new articles, the following following SQL statement is ran: <br>
+	<code>
+	SELECT a.title, a.articleID,  <br>
+	&nbsp a.groupedTags, <br>
+	&nbsp a.submissionDate, <br>
+	&nbsp (CAST(SUM(vote.upvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as upvotes, <br>
+	&nbsp (CAST(SUM(vote.downvote) AS FLOAT)/ (SUM(vote.upvote) + SUM(vote.downvote))) * 100 as downvotes <br>
+	FROM( <br>
+	&nbsp SELECT article.title, article.submissionDate, article.articleID, GROUP_CONCAT(articleTag.tag,';') as groupedTags <br>
+	&nbsp FROM article <br>
+	&nbsp JOIN articleTag ON article.articleID = articleTag.articleID <br>
+	&nbsp GROUP BY article.articleID, article.title) a<br> 
+	LEFT JOIN vote ON a.articleID = vote.articleID <br>
+	GROUP BY a.title, a.articleID, a.groupedTags <br>
+	ORDER BY a.submissionDate DESC;
+	</code>
+<br></br>
+This is an example that demonstrates the nature of the SQL statements that had to be ran to get data in a required format.  I tried to get the SQL database to do as much computation, such as working out precentages of votes and formatting the results (concatonating tags), to make requests as efficient as possible.  The upvote and downvote percentages were then used to set bars which represented these values:
+</p>
+<img alt="reportimg" src="Images/votesFormat.png"/>
+
+<p>index.html is also used for sub article pages.  If you click on a tag icon on the main page, it will take you to a page listing all articles that have that tag.  When the html is generated from results on the main page, the html for tags looks like this, for example:
+<code>href="index.html?subPage=' + tagFormat</code>
+Which appends the tag onto the link.  When the index.html page is loaded, it parses the URL, and sends a request to the server to either load ALL articles, or load a subset of articles:
+</p>
+<img alt="reportimg" src="Images/exampleMainURL.png"/>
+
+<h2>article.html</h2>
+
+<p>This is the template page used for displaying article content.  When an article URL is encoded into index.html, the URL that it linked to has the article ID that identifies an article in the database, for example:</p>
+<code>href="index.html?subPage=' + tagFormat</code>
+<p>'tagFormat' is the variable holding the article ID, which is retrieved from the database when index.html is populated.  When a user clicks on a link, this ID is then stored in the URL.  Upon the load even in article.html, the URL is parsed and all relevant details for that article are populated.  Additionally, when article.html loads, a request is sent to the server to determine if the user has voted on that article: if the user has voted on the article, the appropriate voting button is set to the correct state:</p>
+<img alt="reportimg" src="Images/voting_history.png"/>
+
+<p> When a user clicks the voting button, this sends a request to the server and changes the voting records in the database.  The response to this request holds the new "percentage" of upvotes and down votes, which is reflected in the voting bar, without having to reload the page. </p> 
+
+<h2>userpage.html</h2>
+ 
+<p>This page allows the user to set what tags they are interested in.</p>
+<img alt="reportimg" src="Images/userpage.png"/>
+<p>The 'All Tags' and the 'Your Tags' box are populated on page load.  All tags is all of the tags that exist in the database that a user has not selected that they are interested in.  Users can drag Any tag in the "all Tags" box, to the "your Tags" box, which will send a request to the server, with the tag ID, to link the currently logged in user account with the tag that has been dragged.  This list of tags that a user has selected as being interested in will then be shown on the "your interests" tab on the main page.</p>
+
+<p>There is also a search box on this page.  When a user searches for a tag, ths site sends a request to the server with that search string.  All tags that match that search string are displayed in the all Tags box.</p>
+
+<h2>newArticle.html</h2>
+
+<p>This page is the main way that users can submit input to the website database, rather than just seeing the output.  When "go" is pressed, and if all validation is passed on the form, the information will be sent to the server and the user is forwarded to the article that they have just submitted.</p>
+<img alt="reportimg" src="Images/formsubmit.png"/>
+
+<h1>Future Work</h1>
+
+<p>There are various items of future work that could be done with the website, however they are very similar to what has already been achieved:</p>
+
+<ul>
+  <li>The side bar of this site is still static</li>
+  <li>Search bar for articles doesn't work.</li>
+  <li>"your articles" on the user page doesn't work.</li>
+  <li>Controversial tab displays articles in same order as "new".</li>
+</ul>
+
+<h1>Evaluation</h1>
+
+<p>I am pleased with the final result of this site.  I think I have successfully created a client-side and server side assignment that work well with each other and combine to make a credible website.
+<br></br>
+The organization of my code is strong, with each script page having a well defined purpose, and all pages sharing the 'ajax.js' functionality to reuse code.  I have placed an emphasis on security, including hashing passwords, https and avoiding static URLs, and have achieved a lot of functionality without relying heavily on third party libraries doing the work for me.  I am also happy with the functionality that I managed to achieve with the database schema, whose design faciltated the site's aims very well.
+</p>
+
+<h1>References</h1>
+[1]https://github.com/marak/session.js
+</body>
+</html>

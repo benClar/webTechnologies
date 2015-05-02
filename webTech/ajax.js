@@ -116,7 +116,6 @@ function setLoginInterface()	{
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 			var loggedInResult = JSON.parse(xmlhttp.responseText);
-			console.log(loggedInResult);
 			if(loggedInResult["data"]["loggedIn"] === true)	{
 	    		hideElement('logged_out_menu'); 
 	    		hideElement('logged_out_menu_mini');
@@ -250,16 +249,15 @@ function checkUsernameUnique(details,callback)	{
 function getArticles(type,target,tag,articleData,callback) {
 	tag = tag.replace("+"," ");
 	setPageTag(tag);
-
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-
 			var databaseResult = JSON.parse(xmlhttp.responseText);
-			var output = formatRows(databaseResult);
+			var output = formatRows(databaseResult,target);
 
 			if(callback != undefined)	{
 				callback();
 			}
+
 
 			if(output == "none"){
 				STEP_BACK =  articleData[target] % ARTICLES_PER_PAGE;
@@ -279,18 +277,17 @@ function getArticles(type,target,tag,articleData,callback) {
 				document.getElementById(target).innerHTML += output[article];
 
 				if(databaseResult[article]["upvotes"] != null)	{
-					document.getElementById("upvote_" + databaseResult[article]["articleID"]).innerHTML = databaseResult[article]["upvotes"]+"%";
-					document.getElementById("downvote_" + databaseResult[article]["articleID"]).innerHTML = databaseResult[article]["downvotes"]+"%";
+					document.getElementById(target + "_upvote_" + databaseResult[article]["articleID"]).innerHTML = String(databaseResult[article]["upvotes"]).split(".")[0] + "%";
+					document.getElementById(target + "_downvote_" + databaseResult[article]["articleID"]).innerHTML = String(databaseResult[article]["downvotes"]).split(".")[0] + "%";
 				}
-
-				document.getElementById("upvote_" + databaseResult[article]["articleID"]).style.width=  databaseResult[article]["upvotes"]+"%";
-				document.getElementById("downvote_" + databaseResult[article]["articleID"]).style.width=  databaseResult[article]["downvotes"]+"%";
+				console.log(databaseResult[article]["upvotes"]);
+				document.getElementById(target + "_upvote_" + databaseResult[article]["articleID"]).style.width =  databaseResult[article]["upvotes"]+"%";
+				document.getElementById(target + "_downvote_" + databaseResult[article]["articleID"]).style.width =  databaseResult[article]["downvotes"]+"%";
 			}
 			output =[];
 		}
 	}
 	console.log("lower bound before request: " + articleData[target])
-	console.log(target);
 	xmlhttp.open("POST","https://localhost:8001/",true);
 	xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
 	switch(target){
@@ -429,7 +426,7 @@ function addTags(tags)	{
 	return output;
 }
 
-function formatRows(result)	{
+function formatRows(result,target)	{
 
 	var rowCount = countJSON(result);
 	var cRow;
@@ -437,17 +434,15 @@ function formatRows(result)	{
 	var output = [];
 	var article;
 	var tagFormat;
-	console.log(result);
 	if(result === "none")	{ return "none"; }
 	for(cRow = 0; cRow < rowCount; cRow++)	{
-		console.log(result[cRow]["groupedTags"]);
 		result[cRow]["groupedTags"] = result[cRow]["groupedTags"].split(";");
-		article = '<div class="ArticleElement"> <div class="ArticleThumbNail"> <img alt="thumbnail" src="./images/pres_Kennedy.jpg"/> </div> <div class="ArticleTitle"> <a href="./article.html?articleTag=' + result[cRow]["articleID"] + '">' + result[cRow]["title"] + '</a> <ul class="ArticleKeyWords">';
+		article = '<div class="ArticleElement"> <div class="ArticleThumbNail"> <img alt="thumbnail" src="./images/logo_small.png"/> </div> <div class="ArticleTitle"> <a href="./article.html?articleTag=' + result[cRow]["articleID"] + '">' + result[cRow]["title"] + '</a> <ul class="ArticleKeyWords">';
 		for(cTag = 0; cTag < result[cRow]["groupedTags"].length; cTag++)	{	
 			tagFormat = result[cRow]["groupedTags"][cTag].replace(" ", "+");
-			article = article.concat('<li class="keywordItem"><a class="keywordHyper" href="blank.html?subPage=' + tagFormat + '">' + result[cRow]["groupedTags"][cTag] + '</a></li>');
+			article = article.concat('<li class="keywordItem"><a class="keywordHyper" href="index.html?subPage=' + tagFormat + '">' + result[cRow]["groupedTags"][cTag] + '</a></li>');
 		}
-		article = article.concat('</ul> </div> <div class="ArticleRatings"> <div id = "upvote_' + result[cRow]["articleID"] + '" class="upvotes">50%</div> <div id="downvote_' + result[cRow]["articleID"] + '" class="downvotes">50%</div> </div> </div>')
+		article = article.concat('</ul> </div> <div class="ArticleRatings"> <div id = "' + target + '_upvote_' + result[cRow]["articleID"] + '" class="upvotes">50%</div> <div id="' + target + '_downvote_' + result[cRow]["articleID"] + '" class="downvotes">50%</div> </div> </div>')
 		output.push(article);
 	}
 
@@ -476,7 +471,6 @@ function setArticleIndex(type,target,articleData)	{
 			} else{
 				articleData[target] -= STEP_BACK;
 			} 
-			
 			break;
 		default:
 			break;

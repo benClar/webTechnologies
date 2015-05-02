@@ -62,10 +62,5 @@ function validateAccount(username,password,response,callback)	{
 	closeDB();
 }
 
-function compareAccount(err,rows)	{
-	console.log("TEEEEEEEEST" + username);
-	console.log(rows);
-}
-
 module.exports.createAccounts = createAccounts;
 module.exports.validateAccount = validateAccount;

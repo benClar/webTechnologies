@@ -9,6 +9,8 @@ var https = require('https');
 var tls = require('tls')
 var session = require('sesh/lib/core').session;
 
+var letter = "abcdefghijklmnopqrstuvwxyz".charAt(Math.floor(Math.random()*26));
+var prefix = "site-" + letter + "/";
 
 var types = {
     'html' : 'text/html, application/xhtml+xml',
@@ -64,20 +66,21 @@ function needs_redirect(request)	{
 	return false;
 }
 
+function starts(file,prefix)	{
+	if(file.substring(0,prefix.length) == prefix)	{
+		console.log("TRUE"  + file.substring(0,prefix.length));
+		return true;
+	} else 	{
+		console.log("FALSE"  + file.substring(0,prefix.length));
+		return false;
+	}
+}
 
 function serve(request,response)	{
 	session(request, response, function(request, response){
 
 		var url = require('url').parse(request.url); //Take a URL string, and return an object.
 		var new_url;
-
-		if((new_url = needs_redirect(request))) { 
-			return redirect(response,new_url);
-		}
-
-		if(url['path']=="/blank.html")	{
-			return redirect(response,"https://" + request['headers']['host'].split(":")[0] + ":8001/blank.html?subPage=all");
-		}
 
 		switch(request["headers"]["content-type"])	{
 			case "application/x-www-form-urlencoded":
@@ -87,11 +90,29 @@ function serve(request,response)	{
 				break;
 		}
 
+		if((new_url = needs_redirect(request))) { 
+			return redirect(response,new_url);
+		}
 		var filename = url.pathname.substring(1);
-		if(!filename.length) filename = "index.html";
+		// console.log("FILENAME:"  + filename);
+		if(!starts(filename,prefix)){
+			return redirect(response,"https://" + request['headers']['host'].split(":")[0] + ":8001/" + prefix + filename);
+		}
+		console.log("HERE");
+		filename = filename.substring(prefix.length);
+		console.log(filename);
+		url['path'] = '.' + url['path'];
+		console.log("PATH" + url['path']);
+		if(url['path'] === "./" + prefix + "index.html" || url['path'] === "./" + prefix)	{
+			return redirect(response,"https://" + request['headers']['host'].split(":")[0] + ":8001/" + prefix + "index.html?subPage=all");
+		}
+
+
+
+
 		var type = findType(filename.substring(filename.lastIndexOf(".") + 1));
 		if(!type) return fail(response,http.STATUS_CODES["404"]);
-		
+		console.log(filename);
 		fs.readFile(filename, ready);
 
 		function ready(error, content)	{
@@ -118,7 +139,7 @@ function formRequest(request, response)	{
 	request.on('data', function (chunk) {
 		 body += chunk; //Waiting to recieve all of POST data
 	});
-	// 
+
 	//only run when all POST data has been recieved
 	request.on('end', function () {
 		action = JSON.parse(body);
